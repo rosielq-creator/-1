@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "approvalInstruction": "验收通过",
+  "assets": [
+    {
+      "id": "closed-seed",
+      "reference": "/assets/01-closed-seed-black-4k-v3.webp",
+      "delivery": {
+        "glb": "/assets/3d/closed-seed.glb",
+        "blend": "/assets/3d/closed-seed.blend",
+        "preview": "/assets/3d/closed-seed.preview.webp"
+      },
+      "approvalStatus": "pending",
+      "placement": null
+    },
+    {
+      "id": "sprout",
+      "reference": "/assets/02-sprout-4k.webp",
+      "delivery": {
+        "glb": "/assets/3d/sprout.glb",
+        "blend": "/assets/3d/sprout.blend",
+        "preview": "/assets/3d/sprout.preview.webp"
+      },
+      "approvalStatus": "pending",
+      "placement": null
+    },
+    {
+      "id": "vine",
+      "reference": "/assets/03-vine-4k.webp",
+      "delivery": {
+        "glb": "/assets/3d/vine.glb",
+        "blend": "/assets/3d/vine.blend",
+        "preview": "/assets/3d/vine.preview.webp"
+      },
+      "approvalStatus": "pending",
+      "placement": null
+    },
+    {
+      "id": "flower",
+      "reference": "/assets/04-flower-4k.webp",
+      "delivery": {
+        "glb": "/assets/3d/flower.glb",
+        "blend": "/assets/3d/flower.blend",
+        "preview": "/assets/3d/flower.preview.webp"
+      },
+      "approvalStatus": "in_review",
+      "placement": {
+        "scale": [1, 1, 1],
+        "rotation": [0, 0, 0],
+        "notes": "Procedural GLB generated from the front-view reference; inspect the inferred rear geometry before approval."
+      }
+    },
+    {
+      "id": "faceted-leaves",
+      "reference": "/assets/05-faceted-leaves-4k.webp",
+      "delivery": {
+        "glb": "/assets/3d/faceted-leaves.glb",
+        "blend": "/assets/3d/faceted-leaves.blend",
+        "preview": "/assets/3d/faceted-leaves.preview.webp"
+      },
+      "approvalStatus": "pending",
+      "placement": null
+    },
+    {
+      "id": "hanging-pod",
+      "reference": "/assets/06-hanging-pod-4k.webp",
+      "delivery": {
+        "glb": "/assets/3d/hanging-pod.glb",
+        "blend": "/assets/3d/hanging-pod.blend",
+        "preview": "/assets/3d/hanging-pod.preview.webp"
+      },
+      "approvalStatus": "pending",
+      "placement": null
+    }
+  ]
+}
