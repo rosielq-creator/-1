@@ -52,7 +52,7 @@ function BotanicalStory() {
   const vineRef = useRef(null)
   const flowerRef = useRef(null)
   const continuationRef = useRef(null)
-  const [anchors, setAnchors] = useState({ vineX: 0, vineY: 0, continuationX: 0, continuationY: 0 })
+  const [anchors, setAnchors] = useState({ vineX: 0, vineY: 0, vineClip: 0, continuationX: 0, continuationY: 0 })
 
   const measureContent = useCallback((node) => {
     const story = storyRef.current
@@ -82,10 +82,16 @@ function BotanicalStory() {
     const vineAnchor = { x: vine.left + vine.width * 0.5, y: vine.top }
     const flowerAnchor = { x: flower.left + flower.width * 0.52, y: flower.top + flower.height }
     const continuationAnchor = { x: continuation.left + continuation.width * 0.5, y: continuation.top }
-    const overlap = 12
+    // Deep overlap hides the crystal stem beneath the flower's visible root.
+    const overlap = 112
+    const workTop = document.getElementById('work')?.offsetTop
+    const vineX = Math.round(sproutAnchor.x - vineAnchor.x)
+    const vineY = Math.round(sproutAnchor.y - vineAnchor.y - overlap)
     const next = {
-      vineX: Math.round(sproutAnchor.x - vineAnchor.x),
-      vineY: Math.round(sproutAnchor.y - vineAnchor.y - overlap),
+      vineX,
+      vineY,
+      // The vine belongs to Artists: remove only the portion that would enter Work.
+      vineClip: workTop == null ? 0 : Math.max(0, Math.ceil(vineRef.current.offsetTop + vineRef.current.offsetHeight + vineY - workTop)),
       continuationX: Math.round(flowerAnchor.x - continuationAnchor.x),
       continuationY: Math.round(flowerAnchor.y - continuationAnchor.y - overlap),
     }
@@ -111,7 +117,7 @@ function BotanicalStory() {
   return <div ref={storyRef} className="botanical-story" aria-hidden="true">
     <MediaFrame priority decorative fit="contain" className="story-plant story-seed" src={`${assets}transparent/seed.png`} />
     <MediaFrame priority decorative fit="contain" ref={sproutRef} className="story-plant story-sprout" src={`${assets}transparent/sprout.png`} />
-    <MediaFrame priority decorative fit="contain" ref={vineRef} className="story-plant story-vine" src={`${assets}transparent/vine-v2.png`} style={{ '--vine-x': `${anchors.vineX}px`, '--vine-y': `${anchors.vineY}px` }} />
+    <MediaFrame priority decorative fit="contain" ref={vineRef} className="story-plant story-vine" src={`${assets}transparent/vine-v2.png`} style={{ '--vine-x': `${anchors.vineX}px`, '--vine-y': `${anchors.vineY}px`, '--vine-clip': `${anchors.vineClip}px` }} />
     <MediaFrame priority decorative fit="contain" ref={flowerRef} className="story-plant story-flower" src={`${assets}transparent/flower-v2.png`} />
     <MediaFrame priority decorative fit="contain" ref={continuationRef} className="story-plant story-continuation" src={`${assets}transparent/continuation-v2.png`} style={{ '--continuation-x': `${anchors.continuationX}px`, '--continuation-y': `${anchors.continuationY}px` }} />
   </div>
