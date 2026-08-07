@@ -127,4 +127,14 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
   .story-continuation { width:92vw; height:23.2%; }
 }
 
+@media (min-width:761px) {
+  /* Maya is anchored on the main vine junction; the remaining cards radiate evenly from it. */
+  .artists-section .artist-tiles { --artist-axis:84%; --branch-offset:clamp(72px, 8vw, 120px); }
+  .artists-section .artist-tile--amber { left:calc(var(--artist-axis) - var(--artist-card) - var(--branch-offset)); }
+  .artists-section .artist-tile--ooona { left:calc(var(--artist-axis) + var(--branch-offset)); }
+  .artists-section .artist-tile--maya { left:var(--artist-axis); }
+  .artists-section .artist-tile--noah { left:calc(var(--artist-axis) - var(--artist-card) - var(--branch-offset)); }
+  .artists-section .artist-tile--mario { left:calc(var(--artist-axis) + var(--branch-offset)); }
+}
+
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
