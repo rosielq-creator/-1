@@ -2,6 +2,7 @@ import { useCallback, useLayoutEffect, useRef, useState } from 'react'
 import { Container, Eyebrow, MediaFrame, Section, TextLink } from './design-system'
 
 const assets = '/assets/'
+const vineScaleY = 1.035
 
 const copy = {
   en: {
@@ -91,7 +92,7 @@ function BotanicalStory() {
       vineX,
       vineY,
       // The vine belongs to Artists: remove only the portion that would enter Work.
-      vineClip: workTop == null ? 0 : Math.max(0, Math.ceil(vineRef.current.offsetTop + vineRef.current.offsetHeight + vineY - workTop)),
+      vineClip: workTop == null ? 0 : Math.max(0, Math.ceil(vineRef.current.offsetHeight - (workTop - vineRef.current.offsetTop - vineY) / vineScaleY)),
       continuationX: Math.round(flowerAnchor.x - continuationAnchor.x),
       continuationY: Math.round(flowerAnchor.y - continuationAnchor.y - overlap),
     }
@@ -117,7 +118,7 @@ function BotanicalStory() {
   return <div ref={storyRef} className="botanical-story" aria-hidden="true">
     <MediaFrame priority decorative fit="contain" className="story-plant story-seed" src={`${assets}transparent/seed.png`} />
     <MediaFrame priority decorative fit="contain" ref={sproutRef} className="story-plant story-sprout" src={`${assets}transparent/sprout.png`} />
-    <MediaFrame priority decorative fit="contain" ref={vineRef} className="story-plant story-vine" src={`${assets}transparent/vine-v2.png`} style={{ '--vine-x': `${anchors.vineX}px`, '--vine-y': `${anchors.vineY}px`, '--vine-clip': `${anchors.vineClip}px` }} />
+    <MediaFrame priority decorative fit="contain" ref={vineRef} className="story-plant story-vine" src={`${assets}transparent/vine-v2.png`} style={{ '--vine-x': `${anchors.vineX}px`, '--vine-y': `${anchors.vineY}px`, '--vine-clip': `${anchors.vineClip}px`, '--vine-scale-y': vineScaleY }} />
     <MediaFrame priority decorative fit="contain" ref={flowerRef} className="story-plant story-flower" src={`${assets}transparent/flower-v2.png`} />
     <MediaFrame priority decorative fit="contain" ref={continuationRef} className="story-plant story-continuation" src={`${assets}transparent/continuation-v2.png`} style={{ '--continuation-x': `${anchors.continuationX}px`, '--continuation-y': `${anchors.continuationY}px` }} />
   </div>
