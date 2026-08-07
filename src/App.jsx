@@ -3,6 +3,13 @@ import { Container, Eyebrow, MediaFrame, Section, TextLink } from './design-syst
 
 const assets = '/assets/'
 const vineScaleY = 1.035
+const artists = [
+  { name: 'Amber', slug: 'amber', src: `${assets}artists/amber.png`, position: '50% 26%' },
+  { name: 'Ooona', slug: 'ooona', src: `${assets}artists/ooona.png`, position: '50% 34%' },
+  { name: 'Maya', slug: 'maya', src: `${assets}artists/maya.png`, position: '50% 34%' },
+  { name: 'Noah', slug: 'noah', src: `${assets}artists/noah.png`, position: '54% 20%' },
+  { name: 'Mario', slug: 'mario', src: `${assets}artists/mario.jpg`, position: '45% 24%' },
+]
 
 const copy = {
   en: {
@@ -171,7 +178,7 @@ export default function App() {
       <Section id="artists" tone="dark" className="artists-section">
         <Container className="artists-layout">
           <div className="section-copy"><Eyebrow number="03">Artists</Eyebrow><h2>{t.artistsTitle}</h2><p>{t.artistsBody}</p><TextLink href="#work">View all artists</TextLink></div>
-          <div className="artist-tiles" aria-label="Artist placeholders">{[1, 2, 3, 4, 5].map((item) => <div key={item} className="artist-tile" />)}</div>
+          <div className="artist-tiles" aria-label="Artist portraits">{artists.map((artist) => <figure key={artist.slug} className={`artist-tile artist-tile--${artist.slug}`}><img src={artist.src} alt={`Portrait of ${artist.name}`} style={{ objectPosition: artist.position }} loading="lazy" decoding="async" /></figure>)}</div>
         </Container>
       </Section>
 
