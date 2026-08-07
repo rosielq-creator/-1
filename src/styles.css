@@ -29,4 +29,102 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
   .world-copy ul { margin:0; line-height:1.6; }
 }
 
+/* Site-density scale: mirrors an 80% browser zoom without scaling the DOM. */
+:root { --site-scale:.8; }
+
+@media (min-width:761px) {
+  .container { width:min(100% - 52px, 1152px); }
+  .site-header { height:64px; }
+  .brand-signature { gap:11px; font-size:21px; letter-spacing:-1.12px; }
+  .brand-signature span { width:8px; height:8px; }
+  .main-nav { gap:32px; font-size:11px; }
+  .menu-toggle { gap:4px; padding:6px 0 6px 6px; }
+  .menu-toggle span { width:14px; }
+
+  .hero { --section-h:calc(100svh - 64px); }
+  .about-section { --section-h:672px; }
+  .artists-section,.work-section { --section-h:840px; }
+  .brands-section { --section-h:736px; }
+  .contact-section { --section-h:608px; }
+  .hero-grid { grid-template-rows:51px 1fr 64px; }
+  .eyebrow { gap:16px; font-size:13px; }
+  .eyebrow span { min-width:27px; }
+  h2 { margin-bottom:26px; font-size:clamp(38px, 4vw, 74px); }
+  .section-copy p { max-width:288px; font-size:16px; }
+
+  h1 { font-size:clamp(80px, 12vw, 208px); transform:translate(6vw, 4vh); }
+  h1 span:first-child { transform:translate(-5.6vw, 0); }
+  .outline { -webkit-text-stroke-width:1.6px; transform:translateX(11.2vw); }
+  .hero-copy { max-width:416px; transform:translateY(26.4vh); font-size:18px; }
+  .hero-credit,.scroll-note { font-size:11px; }
+  .split-layout,.artists-layout,.work-layout,.brands-layout,.contact-layout { padding-top:38px; }
+  .about-section .section-copy { padding-top:48px; }
+  .about-section .section-copy h2 { font-size:clamp(45px, 4.48vw, 86px); }
+  .about-section .section-copy p { font-size:18px; }
+  .section-copy h2,.contact-layout h2 { margin-top:70px; }
+  .artists-section .section-copy h2,.work-section .section-copy h2 { margin-top:102px; }
+  .text-link { gap:19px; margin-top:26px; font-size:13px; }
+
+  .artist-tiles { height:576px; }
+  .artists-section .artist-tiles { --artist-card:clamp(112px, 9.44vw, 142px); --branch-offset:clamp(51px, 6vw, 90px); }
+  .artists-section .artist-tile--amber,.artists-section .artist-tile--ooona { top:8px; }
+  .artists-section .artist-tile--noah,.artists-section .artist-tile--mario { bottom:8px; }
+  .work-grid { gap:26px; padding:38px 0 70px; }
+  .work-card span { font-size:13px; }
+  .work-section .section-copy h2 { font-size:clamp(35px, 2.84vw, 51px); }
+
+  .brands-layout { grid-template-rows:344px 1fr; }
+  .brands-section .section-copy h2,.world-copy h2 { font-size:clamp(35px, 2.84vw, 51px); }
+  .brands-section .section-copy h2 { margin-top:54px; margin-bottom:19px; }
+  .brand-list,.world-copy ul { font-size:13px; }
+  .brand-list { margin-top:19px; }
+  .world-copy { padding-top:26px; }
+  .world-copy h2 { margin-bottom:18px; }
+  .contact-form { max-width:368px; margin-top:38px; }
+  .contact-form input,.contact-form textarea { padding:10px 0; font-size:13px; }
+  .contact-form button { margin-top:19px; padding:10px 13px; font-size:13px; }
+  .site-footer { padding:26px 0; }
+  .site-footer span { font-size:11px; }
+
+  .story-seed { width:min(17.6vw,256px); }
+  .story-sprout { top:calc(100svh - 64px + 8px); width:min(25.6vw,384px); height:576px; }
+  .story-vine { top:calc(100svh + 400px); width:min(41.6vw,640px); }
+  .story-flower { width:min(56vw,880px); -webkit-mask-image:linear-gradient(to bottom,#000 0,#000 calc(100% - 168px),rgba(0,0,0,.52) calc(100% - 70px),transparent 100%); mask-image:linear-gradient(to bottom,#000 0,#000 calc(100% - 168px),rgba(0,0,0,.52) calc(100% - 70px),transparent 100%); }
+  .story-continuation { width:min(33.6vw,520px); -webkit-mask-image:linear-gradient(to bottom,transparent 0,rgba(0,0,0,.38) 58px,rgba(0,0,0,.82) 122px,#000 182px); mask-image:linear-gradient(to bottom,transparent 0,rgba(0,0,0,.38) 58px,rgba(0,0,0,.82) 122px,#000 182px); }
+}
+
+@media (max-width:760px) {
+  .container { width:min(100% - 26px, 1152px); }
+  .site-header { height:52px; }
+  .brand-signature { gap:9px; font-size:21px; }
+  .main-nav { top:52px; gap:13px; padding:13px; }
+  .section,.section .container { min-height:608px; }
+  .hero,.hero .container { min-height:calc(100svh - 52px); }
+  .hero-grid { grid-template-rows:32px 1fr 32px; }
+  .hero h1 { font-size:clamp(48px,17.6vw,88px); }
+  .hero-copy { margin-bottom:11vh; font-size:13px; }
+  .split-layout,.artists-layout,.work-layout,.brands-layout,.contact-layout { min-height:608px; padding:26px 0; }
+  .section-copy h2,.contact-layout h2 { margin-top:45px; }
+  .artists-section,.artists-section .container { min-height:960px; }
+  .artist-tiles { gap:10px; margin:240px 0 0 31%; }
+  .work-section,.work-section .container { min-height:736px; }
+  .work-grid { gap:13px; padding:240px 0 26px 29%; }
+  .brands-section,.brands-section .container { min-height:840px; }
+  .world-copy { margin-top:384px; }
+  .contact-section,.contact-section .container { min-height:736px; }
+  .contact-form { margin-top:32px; }
+}
+
+@media (max-width:760px) {
+  .eyebrow { gap:13px; font-size:13px; }
+  h2 { margin-bottom:26px; font-size:clamp(38px, 4vw, 74px); }
+  .section-copy p { max-width:288px; font-size:16px; }
+  .text-link { gap:19px; margin-top:26px; font-size:13px; }
+  .story-seed { width:100vw; }
+  .story-sprout { width:70.4vw; height:11.2%; }
+  .story-vine { width:96vw; height:19.2%; }
+  .story-flower { width:112vw; height:16%; }
+  .story-continuation { width:92vw; height:23.2%; }
+}
+
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }

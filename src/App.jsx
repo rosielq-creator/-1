@@ -90,8 +90,9 @@ function BotanicalStory() {
     const vineAnchor = { x: vine.left + vine.width * 0.5, y: vine.top }
     const flowerAnchor = { x: flower.left + flower.width * 0.52, y: flower.top + flower.height }
     const continuationAnchor = { x: continuation.left + continuation.width * 0.5, y: continuation.top }
-    // Deep overlap hides the crystal stem beneath the flower's visible root.
-    const overlap = 112
+    // Keep the visible joins proportional when the site density is scaled.
+    const siteScale = Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--site-scale')) || 1
+    const overlap = Math.round(112 * siteScale)
     const workTop = document.getElementById('work')?.offsetTop
     const vineX = Math.round(sproutAnchor.x - vineAnchor.x)
     const vineY = Math.round(sproutAnchor.y - vineAnchor.y - overlap)
