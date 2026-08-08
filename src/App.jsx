@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Container, Eyebrow, MediaFrame, Section, TextLink } from './design-system'
 
-const assets = '/assets/'
+// Vite supplies `/` locally and `/-1/` on GitHub Pages.
+const assets = `${import.meta.env.BASE_URL}assets/`
 const vineScaleY = 1.035
 
 const artists = [
