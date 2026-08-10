@@ -117,18 +117,27 @@ function useRoute() {
 const artistProfileMedia = {
   amber: {
     hero: 'night-portrait.jpg', gallery: ['denim-editorial.jpg', 'festival-stage.jpg', 'festival-wheel.jpg'],
+    poses: { walk: 'walk.webp', lean: 'lean.webp', seat: 'seat.webp' },
     bio: 'Amber is a Korean-American music producer whose identity brings together genre-defying sound, fashion-forward restraint and the rhythm of city culture.',
     dossier: [['Height', '175 cm'], ['Weight', '50 kg'], ['Measurements', '85 / 63 / 89'], ['Shoe size', '38'], ['Based in', 'Los Angeles / Seoul'], ['Languages', 'English / Korean'], ['Followers', '13,094']],
   },
   mario: {
     hero: 'mario-hero.jpg', gallery: ['mario-editorial.jpg', 'mario-campaign.jpg', 'mario-portrait.jpg'],
+    poses: { walk: 'walk.webp', lean: 'lean.webp', seat: 'seat.webp' },
     bio: 'Mario is a Chinese lifestyle creator and independent photographer. His world moves between city streets, sport, travel and the quiet details of everyday life.',
     dossier: [['Height', '185 cm'], ['Weight', '80 kg'], ['Measurements', '100 / 80 / 96'], ['Shoe size', '44'], ['Based in', 'Guangdong'], ['Languages', 'Mandarin / Cantonese / English'], ['Followers', '13.5K']],
   },
   ooona: {
     hero: 'hero.jpg', gallery: ['mirror.jpg', 'stairs.jpg', 'sport.jpg'],
+    poses: { walk: 'walk.webp', lean: 'lean.webp', seat: 'seat.webp' },
     bio: 'Ooona is a beauty, wellness and lifestyle talent. Her world combines yoga, clean beauty and a gentle Seoul sensibility that feels light and approachable.',
     dossier: [['Height', '165 cm'], ['Weight', '45 kg'], ['Measurements', '82 / 60 / 86'], ['Shoe size', '38'], ['Based in', 'Seoul'], ['Languages', 'Korean / English'], ['Followers', '15.1K']],
+  },
+  noah: {
+    hero: 'hero.png', gallery: ['black-portrait.png', 'cafe-portrait.png', 'apple-portrait.jpg'],
+    poses: { walk: 'walk.webp', lean: 'lean.webp', seat: 'seat.webp' },
+    bio: 'Noah Jae is a visual storyteller whose work moves between fashion, film and travel, balancing a precise point of view with an understated urban energy.',
+    dossier: [['Height', '183 cm'], ['Weight', '70 kg'], ['Measurements', '88 / 77 / 91'], ['Shoe size', '43'], ['Based in', 'Hong Kong / Seoul / Tokyo'], ['Languages', 'Cantonese / Mandarin / English'], ['Followers', '8,254']],
   },
 }
 
@@ -500,15 +509,17 @@ function ArtistDetail({ artist, language }) {
 function ArtistProfile({ artist, language, media }) {
   const labels = directoryLabels[language]
   const role = language === 'zh' ? artist.role_zh : artist.role_en
+  const pose = (name) => `${assets}artists/profile-poses/${artist.id}/${media.poses[name]}`
   return <main id="main" className="artist-profile-page subpage--dark">
     <Container>
       <a className="back-link" href="#/artists">← {labels.back}</a>
       <section className="artist-profile-hero">
         <div><Eyebrow number={artist.number}>Artist profile</Eyebrow><h1>{artist.display_name}</h1><p className="artist-profile-role">{role}</p><p className="artist-profile-bio">{media.bio}</p><a className="artist-contact-link" href="#contact">Work with {artist.display_name} →</a></div>
-        <figure><img src={`${assets}artists/profile-media/${artist.id}/${media.hero}`} alt={`${artist.display_name} portrait`} fetchPriority="high" /></figure>
+        <figure className="artist-profile-hero-pose"><img src={pose('walk')} alt={`${artist.display_name} in motion`} fetchPriority="high" /></figure>
       </section>
       <section className="artist-profile-section"><Eyebrow number="02">Personal dossier</Eyebrow><dl className="artist-profile-dossier">{media.dossier.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl></section>
-      <section className="artist-profile-section artist-profile-gallery"><Eyebrow number="03">Selected frames</Eyebrow><div>{media.gallery.map((file) => <figure key={file}><img src={`${assets}artists/profile-media/${artist.id}/${file}`} alt={`${artist.display_name} visual diary`} loading="lazy" /></figure>)}</div></section>
+      <section className="artist-profile-section artist-profile-motion"><div><Eyebrow number="03">In motion</Eyebrow><h2>Built to move.</h2><p>Each profile holds the same visual identity through a quieter, more editorial series of poses.</p></div><div className="artist-profile-motion-figures"><figure><img src={pose('lean')} alt={`${artist.display_name} leaning pose`} loading="lazy" /></figure><figure><img src={pose('seat')} alt={`${artist.display_name} seated pose`} loading="lazy" /></figure></div></section>
+      <section className="artist-profile-section artist-profile-gallery"><Eyebrow number="04">Selected frames</Eyebrow><div>{media.gallery.map((file) => <figure key={file}><img src={`${assets}artists/profile-media/${artist.id}/${file}`} alt={`${artist.display_name} visual diary`} loading="lazy" /></figure>)}</div></section>
     </Container>
   </main>
 }
