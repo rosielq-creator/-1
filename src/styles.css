@@ -386,26 +386,117 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
   .artist-index-card,.artist-index-card img,.work-index-card,.artist-tile,.artist-tile img { transition:none; }
 }
 
-/* Maya is a continuous scroll-driven camera stage, independent from the home story. */
-.maya-profile { --maya-blush:#f0a8b0; --maya-ink:#111111; position:relative; min-height:100svh; overflow:clip; color:var(--maya-ink); background:#f4f1ec; }
+/* Maya profile uses one continuous camera subject and five non-overlapping information zones. */
+.maya-profile { --maya-blush:#efa7b1; --maya-ink:#111; position:relative; min-height:100svh; overflow:clip; color:var(--maya-ink); background:#f3efe9; }
 .maya-stage { position:relative; height:100svh; overflow:hidden; isolation:isolate; }
-.maya-scene { position:absolute; inset:0; z-index:1; visibility:hidden; opacity:0; pointer-events:none; }
-.maya-scene::before { content:""; position:absolute; inset:0; z-index:-1; background:radial-gradient(circle at 72% 43%,rgba(245,209,214,.32),transparent 31%),#f4f1ec; }
-.maya-scene--dossier::before { background:radial-gradient(circle at 12% 52%,rgba(232,143,158,.2),transparent 28%),radial-gradient(circle at 82% 18%,rgba(244,241,236,.1),transparent 25%),#171617; }.maya-scene--world::before { background:radial-gradient(circle at 74% 52%,rgba(246,223,226,.64),transparent 31%),#e8e1dc; }.maya-scene--about::before { background:radial-gradient(circle at 24% 75%,rgba(246,231,227,.7),transparent 32%),linear-gradient(115deg,#d9d0d3,#e9dbdd 54%,#d5c6ce); }.maya-scene--social::before { background:radial-gradient(circle at 80% 20%,rgba(255,244,241,.58),transparent 27%),var(--maya-blush); }
-.maya-scene .container { position:relative; height:100%; }
+.maya-atmosphere { position:absolute; inset:-8%; z-index:0; background:#ebe3de; box-shadow:inset 0 0 160px rgba(130,96,103,.22); pointer-events:none; will-change:transform; }
+.maya-camera { position:absolute; z-index:2; top:7svh; right:4vw; width:clamp(330px,32vw,520px); height:88svh; margin:0; pointer-events:none; will-change:transform,opacity; }
+.maya-camera img { width:100%; height:100%; object-fit:contain; object-position:center bottom; filter:drop-shadow(0 24px 22px rgba(20,15,17,.16)); }
+.maya-scene { position:absolute; inset:0; z-index:4; visibility:hidden; opacity:0; pointer-events:none; overflow:hidden; }
+.maya-scene::before { display:none; }
+.maya-scene .container { position:relative; z-index:2; height:100%; }
 .maya-safe { position:absolute; z-index:5; pointer-events:auto; }
-.maya-safe .eyebrow { margin-bottom:18px; }
-.maya-safe h1,.maya-safe h2 { margin:0; font-weight:700; letter-spacing:-.095em; line-height:.78; }
-.maya-safe h2 { font-size:clamp(54px,7vw,118px); }
-.maya-safe--hero { top:16%; left:0; width:43%; }.maya-safe--hero .back-link { display:inline-block; margin-bottom:clamp(54px,9vh,104px); }.maya-safe--hero h1 { font-size:clamp(128px,20vw,304px); }.maya-role { margin:30px 0 0; font:600 clamp(13px,1.1vw,17px)/1 var(--mono); letter-spacing:.12em; text-transform:uppercase; }.maya-hello { margin:42px 0 0; font-size:clamp(22px,2vw,34px); font-weight:600; }
-.maya-guide { position:absolute; z-index:3; top:7vh; right:3vw; width:min(31vw,465px); height:88svh; pointer-events:none; will-change:transform,opacity; }.maya-guide-pose { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:center bottom; opacity:0; filter:drop-shadow(0 22px 18px rgba(23,18,20,.14)); will-change:opacity; }
-.maya-stage-progress { position:absolute; z-index:7; right:clamp(24px,4vw,72px); bottom:clamp(20px,3vh,42px); display:flex; gap:7px; }.maya-stage-progress i { width:20px; height:2px; background:rgba(17,17,17,.28); }.maya-scene--dossier ~ .maya-stage-progress i,.maya-scene--about ~ .maya-stage-progress i { background:rgba(244,241,236,.35); }
-.maya-safe--dossier { top:13%; right:0; width:45%; color:#f4f1ec; }.maya-dossier-layout { display:grid; grid-template-columns:minmax(190px,.83fr) minmax(180px,1fr); gap:clamp(26px,4vw,70px); }.maya-dossier { display:grid; grid-template-columns:1fr 1fr; margin:0; border-top:1px solid rgba(244,241,236,.34); }.maya-dossier > div { min-height:76px; padding:13px 0; border-bottom:1px solid rgba(244,241,236,.28); }.maya-dossier > div:nth-child(odd):not(.maya-dossier-wide) { padding-right:16px; border-right:1px solid rgba(244,241,236,.28); }.maya-dossier > div:nth-child(even) { padding-left:16px; }.maya-dossier dt,.maya-audience dt { margin-bottom:8px; color:rgba(244,241,236,.58); font:600 9px/1 var(--mono); letter-spacing:.08em; text-transform:uppercase; }.maya-dossier dd,.maya-audience dd { margin:0; font-size:clamp(17px,1.55vw,26px); font-weight:600; line-height:1; letter-spacing:-.055em; }.maya-dossier-wide { grid-column:1/-1; padding-right:0!important; border-right:0!important; }.maya-personality-list { display:grid; align-content:start; gap:14px; }.maya-personality-list article { position:relative; padding:0 0 13px 30px; border-bottom:1px solid rgba(244,241,236,.26); }.maya-personality-list b { position:absolute; top:3px; left:0; color:rgba(244,241,236,.48); font:600 9px/1 var(--mono); }.maya-personality-list h2 { font-size:clamp(22px,2vw,34px); letter-spacing:-.075em; }.maya-personality-list p { max-width:240px; margin:7px 0 0; color:rgba(244,241,236,.7); font-size:clamp(12px,1vw,15px); line-height:1.25; }
-.maya-safe--world { top:11%; left:0; width:46%; }.maya-safe--world > p { max-width:260px; margin:18px 0 0; font-size:clamp(15px,1.18vw,19px); line-height:1.35; }.maya-world-board { position:relative; width:100%; height:54svh; margin-top:25px; }.maya-world-card { position:absolute; width:clamp(112px,14vw,205px); margin:0; overflow:hidden; background:#aaa; box-shadow:0 18px 35px rgba(14,11,13,.14); }.maya-world-card:nth-child(1) { top:0; left:4%; aspect-ratio:3/4; }.maya-world-card:nth-child(2) { top:8%; left:45%; aspect-ratio:3/4; }.maya-world-card:nth-child(3) { bottom:0; left:14%; aspect-ratio:4/3; }.maya-world-card:nth-child(4) { right:0; bottom:7%; aspect-ratio:3/4; }.maya-world-card img { width:100%; height:100%; object-fit:cover; object-position:center; }.maya-world-card:nth-child(2) img,.maya-world-card:nth-child(4) img { object-fit:contain; background:#e5dbd4; }.maya-world-card figcaption { position:absolute; right:0; bottom:0; left:0; display:grid; gap:2px; padding:9px; color:#fff; background:linear-gradient(transparent,rgba(0,0,0,.74)); font:600 8px/1 var(--mono); letter-spacing:.06em; text-transform:uppercase; }.maya-world-card figcaption span { color:rgba(255,255,255,.72); }.maya-world-swipe { position:absolute; right:0; bottom:-23px; color:rgba(17,17,17,.58); font:600 9px/1 var(--mono); letter-spacing:.08em; text-transform:uppercase; }.maya-world-swipe b { margin-left:8px; color:var(--maya-ink); font-size:16px; vertical-align:-2px; }
-.maya-safe--about { top:19%; right:0; width:38%; }.maya-about-lines { display:grid; gap:0; margin-top:38px; border-top:1px solid rgba(17,17,17,.25); }.maya-about-lines p { display:grid; grid-template-columns:34px 1fr; gap:14px; margin:0; padding:16px 0; border-bottom:1px solid rgba(17,17,17,.25); font-size:clamp(16px,1.3vw,22px); font-weight:500; line-height:1.18; }.maya-about-lines b { color:rgba(17,17,17,.48); font:600 9px/1.4 var(--mono); letter-spacing:.08em; }
-.maya-safe--social { top:12%; left:0; width:55%; }.maya-social-layout { display:grid; grid-template-columns:minmax(240px,.95fr) minmax(230px,1fr); gap:clamp(30px,6vw,100px); align-items:end; }.maya-social-handle { display:inline-block; margin:25px 0 22px; border-bottom:1px solid currentColor; padding-bottom:5px; font:600 clamp(18px,1.7vw,30px)/1 var(--mono); letter-spacing:-.05em; }.maya-followers { display:flex; align-items:baseline; gap:14px; margin-bottom:25px; font-size:clamp(70px,9vw,145px); line-height:.72; letter-spacing:-.1em; }.maya-followers small { font:600 10px/1 var(--mono); letter-spacing:.08em; text-transform:uppercase; }.maya-audience { padding-top:14px; border-top:1px solid rgba(17,17,17,.24); }.maya-audience > p { margin:0 0 12px; color:rgba(17,17,17,.6); font:600 8px/1.2 var(--mono); letter-spacing:.08em; text-transform:uppercase; }.maya-audience dl { display:grid; grid-template-columns:1fr 1fr; margin:0; }.maya-audience dl > div { min-height:57px; padding:10px 0; border-top:1px solid rgba(17,17,17,.16); }.maya-audience dt { color:rgba(17,17,17,.6); }.maya-audience dd { font-size:clamp(15px,1.35vw,21px); }.maya-audience-cities { grid-column:1/-1; }.maya-cta { display:grid; justify-items:start; align-content:end; gap:20px; padding-bottom:10px; }.maya-cta h2 { max-width:280px; font-size:clamp(34px,3.6vw,62px); }.maya-primary-link { padding:15px 18px; color:#f4f1ec; background:#111; font:600 11px/1 var(--mono); letter-spacing:.08em; text-transform:uppercase; transition:transform 240ms ease,background 240ms ease; }.maya-primary-link:hover { transform:translateY(-3px); background:#383337; }.maya-secondary-link { border-bottom:1px solid currentColor; padding-bottom:5px; font:600 10px/1 var(--mono); letter-spacing:.07em; text-transform:uppercase; }
-.maya-fallback-pose { display:none; }
-@media (max-width:760px), (prefers-reduced-motion: reduce) { .maya-profile { overflow:visible; }.maya-stage { display:block; height:auto; overflow:visible; }.maya-stage-progress,.maya-guide { display:none; }.maya-scene { position:relative; display:block; min-height:100svh; padding:72px 0; visibility:visible!important; opacity:1!important; transform:none!important; }.maya-scene .container { min-height:calc(100svh - 144px); height:auto; }.maya-scene::before { z-index:-1; }.maya-safe { position:relative; top:auto!important; right:auto!important; left:auto!important; width:min(100%,620px)!important; }.maya-safe--hero { min-height:calc(100svh - 144px); }.maya-safe--hero h1 { font-size:clamp(100px,28vw,165px); }.maya-dossier-layout,.maya-social-layout { grid-template-columns:1fr; }.maya-dossier { margin-top:26px; }.maya-personality-list { margin-top:26px; }.maya-safe--world { width:100%!important; }.maya-world-board { height:500px; max-width:440px; }.maya-safe--about { margin-left:auto; }.maya-fallback-pose { position:absolute; z-index:0; right:-20vw; bottom:0; display:block; width:70vw; max-width:360px; height:65%; margin:0; opacity:.24; pointer-events:none; }.maya-fallback-pose img { width:100%; height:100%; object-fit:contain; object-position:right bottom; }.maya-scene--dossier .maya-fallback-pose,.maya-scene--about .maya-fallback-pose { right:auto; left:-22vw; }.maya-safe { z-index:2; }.maya-world-card { opacity:1!important; filter:none!important; transform:none!important; }.maya-social-layout { gap:44px; }.maya-followers { font-size:clamp(68px,20vw,110px); }.maya-cta { align-items:start; }.maya-safe--social { width:100%!important; } }
+.maya-safe .eyebrow { margin-bottom:20px; }
+.maya-safe h1,.maya-safe h2,.maya-safe h3 { margin:0; font-weight:700; letter-spacing:-.085em; }
+.maya-safe h2 { font-size:clamp(48px,5.2vw,86px); line-height:.86; }
+.maya-safe--hero { top:12%; left:0; width:43%; }
+.maya-safe--hero .back-link { display:inline-block; margin-bottom:clamp(36px,6svh,68px); }
+.maya-safe--hero h1 { font-size:clamp(122px,16vw,240px); line-height:.86; }
+.maya-role { margin:28px 0 0; font:600 clamp(12px,1vw,16px)/1 var(--mono); letter-spacing:.12em; text-transform:uppercase; }
+.maya-hello { margin:34px 0 0; font-size:clamp(24px,2.2vw,38px); font-weight:600; }
+.maya-about-intro { display:grid; gap:8px; max-width:390px; margin-top:24px; }
+.maya-about-intro p { margin:0; font-size:clamp(14px,1.08vw,18px); line-height:1.35; }
+.maya-safe--identity { top:10%; right:0; width:40%; color:#f4f1ec; }
+.maya-safe--identity h2 { margin-bottom:28px; }
+.maya-dossier { display:grid; grid-template-columns:1fr 1fr; margin:0; border-top:1px solid rgba(244,241,236,.32); }
+.maya-dossier > div { min-width:0; min-height:76px; padding:14px 0; border-bottom:1px solid rgba(244,241,236,.25); }
+.maya-dossier > div:nth-child(odd):not(.maya-dossier-wide) { padding-right:18px; border-right:1px solid rgba(244,241,236,.25); }
+.maya-dossier > div:nth-child(even) { padding-left:18px; }
+.maya-dossier dt,.maya-audience dt { margin:0 0 8px; color:rgba(244,241,236,.58); font:600 9px/1 var(--mono); letter-spacing:.08em; text-transform:uppercase; }
+.maya-dossier dd,.maya-audience dd { overflow-wrap:anywhere; margin:0; font-size:clamp(17px,1.45vw,25px); font-weight:600; line-height:1.02; letter-spacing:-.045em; }
+.maya-dossier-wide { grid-column:1/-1; padding-right:0!important; border-right:0!important; }
+.maya-safe--detail { top:9%; right:0; width:40%; color:#f4f1ec; }
+.maya-safe--detail h2 { margin-bottom:24px; }
+.maya-personality-list { display:grid; align-content:start; }
+.maya-personality-item { position:relative; display:grid; grid-template-columns:30px minmax(150px,.8fr) minmax(180px,1.2fr); gap:14px; align-items:baseline; min-height:82px; padding:15px 0; border-top:1px solid rgba(244,241,236,.24); opacity:.22; }
+.maya-personality-item:last-child { border-bottom:1px solid rgba(244,241,236,.24); }
+.maya-personality-item b { color:rgba(244,241,236,.48); font:600 9px/1 var(--mono); }
+.maya-personality-item h3 { font-size:clamp(23px,2vw,35px); line-height:.95; }
+.maya-personality-item p { max-width:250px; margin:0; color:rgba(244,241,236,.72); font-size:clamp(12px,.95vw,15px); line-height:1.28; }
+.maya-safe--world { inset:9% 0 auto; display:grid; grid-template-columns:minmax(240px,.8fr) minmax(280px,1fr); gap:clamp(50px,9vw,150px); align-items:center; width:100%; }
+.maya-world-copy { align-self:start; max-width:390px; padding-top:5svh; }
+.maya-world-copy p { max-width:320px; margin:18px 0 0; font-size:clamp(15px,1.15vw,19px); line-height:1.4; }
+.maya-phone { justify-self:start; display:grid; grid-template-rows:auto 1fr auto; width:clamp(260px,25vw,370px); aspect-ratio:9/17.2; overflow:hidden; color:#f6f2ed; background:#111; border:8px solid #111; border-radius:32px; box-shadow:0 24px 60px rgba(36,21,26,.22); }
+.maya-phone-top,.maya-phone-bottom { display:flex; align-items:center; justify-content:space-between; padding:11px 12px; font:600 9px/1 var(--mono); letter-spacing:.04em; }
+.maya-phone-rail { display:flex; min-width:0; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x mandatory; scrollbar-width:none; overscroll-behavior-x:contain; touch-action:pan-x; cursor:grab; }
+.maya-phone-rail:active { cursor:grabbing; }
+.maya-phone-rail::-webkit-scrollbar { display:none; }
+.maya-phone-rail figure { position:relative; flex:0 0 100%; min-width:100%; height:100%; margin:0; overflow:hidden; scroll-snap-align:start; }
+.maya-phone-rail img { width:100%; height:100%; object-fit:cover; object-position:center; }
+.maya-phone-rail figcaption { position:absolute; right:0; bottom:0; left:0; display:grid; gap:4px; padding:36px 16px 14px; color:#fff; background:rgba(12,10,11,.45); }
+.maya-phone-rail figcaption strong { font-size:17px; }
+.maya-phone-rail figcaption span { font:600 9px/1.2 var(--mono); letter-spacing:.05em; text-transform:uppercase; }
+.maya-safe--social { inset:10% 0 auto; width:100%; }
+.maya-social-layout { display:grid; grid-template-columns:minmax(240px,.9fr) minmax(300px,1.05fr) minmax(270px,.9fr); gap:clamp(28px,4vw,70px); align-items:end; margin-top:clamp(44px,7svh,78px); }
+.maya-social-handle { display:inline-block; max-width:100%; margin-bottom:28px; border-bottom:1px solid currentColor; padding-bottom:6px; font:600 clamp(18px,1.6vw,28px)/1 var(--mono); letter-spacing:-.04em; }
+.maya-followers { display:grid; gap:9px; font-size:clamp(82px,8vw,134px); line-height:.72; letter-spacing:-.09em; }
+.maya-followers small { font:600 9px/1 var(--mono); letter-spacing:.08em; text-transform:uppercase; }
+.maya-audience { align-self:end; padding-top:14px; border-top:1px solid rgba(17,17,17,.27); }
+.maya-audience > p { margin:0 0 12px; color:rgba(17,17,17,.62); font:600 8px/1.2 var(--mono); letter-spacing:.08em; text-transform:uppercase; }
+.maya-audience dl { display:grid; grid-template-columns:1fr 1fr; margin:0; }
+.maya-audience dl > div { min-height:62px; padding:11px 0; border-top:1px solid rgba(17,17,17,.18); }
+.maya-audience dt { color:rgba(17,17,17,.58); }
+.maya-audience dd { color:#111; font-size:clamp(17px,1.45vw,24px); }
+.maya-audience-cities { grid-column:1/-1; }
+.maya-cta { display:grid; justify-items:start; gap:18px; align-self:end; }
+.maya-cta h2 { max-width:360px; font-size:clamp(38px,4vw,70px); line-height:.9; }
+.maya-primary-link { padding:16px 19px; color:#f4f1ec; background:#111; font:600 11px/1 var(--mono); letter-spacing:.08em; text-transform:uppercase; transition:transform 240ms ease,background 240ms ease; }
+.maya-primary-link:hover { transform:translateY(-3px); background:#393236; }
+.maya-secondary-link { border-bottom:1px solid currentColor; padding-bottom:5px; font:600 10px/1 var(--mono); letter-spacing:.07em; text-transform:uppercase; }
+.maya-mobile-crop { display:none; }
+
+@media (max-width:1100px) and (min-width:821px) {
+  .maya-camera { right:0; width:38vw; }
+  .maya-safe--identity,.maya-safe--detail { width:47%; }
+  .maya-personality-item { grid-template-columns:24px minmax(120px,.8fr) minmax(150px,1.2fr); gap:10px; }
+  .maya-social-layout { grid-template-columns:.85fr 1fr .9fr; gap:24px; }
+}
+
+@media (max-width:820px), (prefers-reduced-motion: reduce) {
+  .maya-profile { overflow:visible; }
+  .maya-stage { height:auto; overflow:visible; }
+  .maya-atmosphere,.maya-camera { display:none; }
+  .maya-scene { position:relative; display:block; min-height:auto; padding:82px 0; visibility:visible!important; opacity:1!important; transform:none!important; pointer-events:auto!important; }
+  .maya-scene .container { height:auto; min-height:0; }
+  .maya-safe { position:relative; inset:auto!important; width:100%!important; }
+  .maya-safe--hero { min-height:70svh; }
+  .maya-safe--hero h1 { font-size:clamp(92px,25vw,150px); line-height:1.08; }
+  .maya-safe--hero .maya-role { margin-top:16px; }
+  .maya-safe--identity,.maya-safe--detail { width:min(100%,620px)!important; color:#f4f1ec; }
+  .maya-dossier { margin-top:24px; }
+  .maya-personality-item { grid-template-columns:28px 1fr; gap:10px 12px; opacity:1!important; transform:none!important; }
+  .maya-personality-item p { grid-column:2; max-width:420px; }
+  .maya-mobile-crop { display:block; width:min(58vw,310px); max-height:56svh; margin:34px 0 0 auto; object-fit:contain; object-position:center bottom; opacity:.9; }
+  .maya-mobile-crop--hero { margin:28px auto 0; }
+  .maya-safe--world { display:grid; grid-template-columns:1fr; gap:36px; }
+  .maya-world-copy { padding:0; }
+  .maya-phone { justify-self:center; width:min(82vw,350px); }
+  .maya-social-layout { grid-template-columns:1fr; gap:42px; margin-top:40px; }
+  .maya-followers { font-size:clamp(74px,20vw,118px); }
+  .maya-audience { width:100%; max-width:560px; }
+  .maya-cta h2 { max-width:520px; }
+}
+
+@media (max-width:520px) {
+  .maya-scene { padding:66px 0; }
+  .maya-safe h2 { font-size:clamp(44px,15vw,70px); }
+  .maya-dossier dd { font-size:16px; }
+  .maya-dossier > div { min-height:70px; }
+  .maya-dossier > div:nth-child(odd):not(.maya-dossier-wide) { padding-right:12px; }
+  .maya-dossier > div:nth-child(even) { padding-left:12px; }
+  .maya-phone { width:min(88vw,330px); border-radius:26px; }
+  .maya-audience dl { grid-template-columns:1fr 1fr; }
+}
 
 /* Meet All Artists is intentionally separate from the homepage vine composition. */
 .artist-directory { color:var(--paper); background:var(--ink); overflow:hidden; }

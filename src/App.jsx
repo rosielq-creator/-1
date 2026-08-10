@@ -478,13 +478,15 @@ function ArtistDetail({ artist, language }) {
   return <main id="main" className="subpage subpage--dark"><Container><div className="detail-grid detail-grid--artist"><div><PageHeader eyebrow={`${artist.number} / Artist`} title={artist.display_name} back="#/artists" backLabel={labels.back} /><p className="detail-role">{role}</p><dl className="artist-confirmed-fields"><div><dt>{labels.location}</dt><dd>{artist.locations.join(' · ')}</dd></div><div><dt>{labels.languages}</dt><dd>{artist.languages.join(' · ')}</dd></div><div><dt>{labels.talents}</dt><dd>{artist.creative_talents.join(' · ')}</dd></div></dl><p className="artist-coming-soon">{labels.comingSoon}</p></div><figure className="detail-media"><img src={artist.src} alt={`Portrait of ${artist.display_name}`} style={{ objectPosition: artist.position }} /></figure></div></Container></main>
 }
 
-const mayaGuidePoses = [
-  { id: 'standing', src: `${assets}artists/maya-guide/standing.png`, alt: 'Maya standing in a pink luxury fashion look' },
-  { id: 'walk', src: `${assets}artists/maya-guide/walk.png`, alt: 'Maya walking in a pink luxury fashion look' },
-  { id: 'gallery', src: `${assets}artists/maya-guide/gallery.png`, alt: 'Maya studying an art wall' },
-  { id: 'lean', src: `${assets}artists/maya-guide/lean.png`, alt: 'Maya in a poised editorial pose' },
-  { id: 'seat', src: `${assets}artists/maya-guide/seat.png`, alt: 'Maya seated in a pink luxury fashion look' },
-]
+const mayaStanding = { src: `${assets}artists/maya-guide/standing.png`, alt: 'Maya standing in a pink luxury fashion look' }
+
+const mayaWorldImages = [
+  ['01.jpg', 'Beauty', 'A quiet close-up'], ['02.jpg', 'Fashion', 'Pink, precisely'],
+  ['03.jpg', 'Beauty', 'A gesture in focus'], ['04.jpg', 'Beauty', 'Playful colour'],
+  ['05.jpg', 'Sport', 'Stadium light'], ['06.jpg', 'City life', 'After the game'],
+  ['07.jpg', 'Sport', 'Watching closely'], ['08.jpg', 'Art', 'A composed pause'],
+  ['09.jpg', 'Beauty', 'Identity study'], ['10.jpg', 'City life', 'A soft afternoon'],
+].map(([file, category, caption]) => ({ src: `${assets}artists/maya-world/${file}`, category, caption }))
 
 const mayaStoryCopy = {
   en: {
@@ -525,82 +527,78 @@ function useMayaProfileMotion() {
     const root = rootRef.current
     if (!root) return undefined
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduceMotion || window.innerWidth <= 760) { root.dataset.mayaMotion = 'static'; return undefined }
+    if (reduceMotion || window.innerWidth <= 820) { root.dataset.mayaMotion = 'static'; return undefined }
     root.dataset.mayaMotion = 'pinned'
     const ctx = gsap.context(() => {
       const stage = root.querySelector('.maya-stage')
       const scenes = gsap.utils.toArray('.maya-scene')
-      const poses = gsap.utils.toArray('.maya-guide-pose')
-      const worldCards = gsap.utils.toArray('.maya-world-card')
-      const guide = root.querySelector('.maya-guide')
-      const starts = [0, .7, 1.56, 2.48, 3.42]
-      const ends = [1.02, 1.88, 2.8, 3.72, 4.8]
-      const guideStops = [
-        [0, 0, 0, 1], [.75, -.18, -18, .88], [1.62, -.55, 6, .75], [2.56, -.29, 12, .7], [3.5, -.56, 12, .72], [4.3, .12, 70, .64],
-      ]
-      const clamp = gsap.utils.clamp(0, 1)
-      const lerp = (from, to, amount) => from + (to - from) * amount
-      const visibility = (progress, start, end) => {
-        const enter = start === 0 ? 1 : clamp((progress - start) / .22)
-        return Math.min(enter, clamp((end - progress) / .22))
+      const camera = root.querySelector('.maya-camera')
+      const atmosphere = root.querySelector('.maya-atmosphere')
+      const personality = gsap.utils.toArray('.maya-personality-item')
+      gsap.set(scenes, { autoAlpha: 0, y: 22, pointerEvents: 'none' })
+      gsap.set(scenes[0], { autoAlpha: 1, y: 0, pointerEvents: 'auto' })
+      gsap.set(personality, { opacity: .22, x: 0 })
+      gsap.set(camera, { xPercent: 0, yPercent: 0, scale: 1, transformOrigin: '50% 50%' })
+
+      const revealScene = (timeline, from, to, at) => {
+        timeline.to(from, { autoAlpha: 0, y: -20, pointerEvents: 'none', duration: .32 }, at)
+          .fromTo(to, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, pointerEvents: 'auto', duration: .42 }, at + .18)
       }
-      const updateStage = (progress) => {
-        const p = progress * 4.8
-        scenes.forEach((scene, index) => {
-          const alpha = visibility(p, starts[index], ends[index])
-          gsap.set(scene, { autoAlpha: alpha, y: lerp(18, 0, alpha) })
-          gsap.set(poses[index], { opacity: alpha })
-        })
-        let stop = guideStops[0]
-        let next = guideStops[guideStops.length - 1]
-        for (let index = 0; index < guideStops.length - 1; index += 1) {
-          if (p >= guideStops[index][0] && p <= guideStops[index + 1][0]) { stop = guideStops[index]; next = guideStops[index + 1]; break }
-        }
-        const amount = clamp((p - stop[0]) / (next[0] - stop[0]))
-        const guideAlpha = p > 4.18 ? 1 - clamp((p - 4.18) / .5) : 1
-        gsap.set(guide, { x: lerp(stop[1], next[1], amount) * window.innerWidth, y: lerp(stop[2], next[2], amount), scale: lerp(stop[3], next[3], amount), autoAlpha: guideAlpha })
-        worldCards.forEach((card, index) => {
-          const alpha = clamp((p - (1.82 + index * .1)) / .34)
-          gsap.set(card, { autoAlpha: alpha, filter: `grayscale(${1 - alpha})`, y: lerp(18, 0, alpha) })
-        })
-      }
-      const syncStageToScroll = () => {
-        const start = root.offsetTop
-        const distance = window.innerHeight * 4.8
-        updateStage(clamp((window.scrollY - start) / distance))
-      }
-      ScrollTrigger.create({
-        trigger: root,
-        start: 'top top',
-        end: () => `+=${window.innerHeight * 4.8}`,
-        pin: stage,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-        onRefresh: syncStageToScroll,
+      const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
+        trigger: root, start: 'top top', end: () => `+=${window.innerHeight * 6.2}`, pin: stage,
+        scrub: .75, anticipatePin: 1, invalidateOnRefresh: true,
+      } })
+      // Keep the Maya camera inside the left subject lane while the dossier owns the right reading lane.
+      timeline.to(camera, { xPercent: -208, yPercent: 12, scale: 1.9, transformOrigin: '50% 17%', duration: 1.3 }, .45)
+        .to(atmosphere, { xPercent: -5, yPercent: 3, scale: 1.08, backgroundColor: '#191718', duration: 1.3 }, .45)
+      revealScene(timeline, scenes[0], scenes[1], .78)
+      // The close garment frame stays entirely to the left of the Personality column.
+      timeline.to(camera, { xPercent: -235, yPercent: -14, scale: 1.98, transformOrigin: '50% 52%', duration: 1.25 }, 1.75)
+        .to(atmosphere, { xPercent: 6, yPercent: -4, scale: 1.14, backgroundColor: '#191718', duration: 1.25 }, 1.75)
+      revealScene(timeline, scenes[1], scenes[2], 1.92)
+      personality.forEach((item, index) => {
+        timeline.to(personality, { opacity: .2, duration: .12 }, 2.15 + index * .22)
+          .to(item, { opacity: 1, x: 12, duration: .18 }, 2.15 + index * .22)
       })
-      window.addEventListener('scroll', syncStageToScroll, { passive: true })
-      window.addEventListener('resize', syncStageToScroll)
-      syncStageToScroll()
-      requestAnimationFrame(() => { ScrollTrigger.refresh(); syncStageToScroll() })
-      return () => {
-        window.removeEventListener('scroll', syncStageToScroll)
-        window.removeEventListener('resize', syncStageToScroll)
-      }
+      timeline.to(camera, { xPercent: 96, yPercent: 4, scale: .78, transformOrigin: '50% 50%', duration: 1.15 }, 3.05)
+        .to(atmosphere, { xPercent: -3, yPercent: 2, scale: 1.02, backgroundColor: '#e7ded9', duration: 1.15 }, 3.05)
+      revealScene(timeline, scenes[2], scenes[3], 3.18)
+      timeline.to(camera, { autoAlpha: 0, xPercent: 140, scale: .64, duration: .85 }, 4.42)
+        .to(atmosphere, { backgroundColor: '#efa7b1', duration: .72 }, 4.42)
+      revealScene(timeline, scenes[3], scenes[4], 4.48)
+      requestAnimationFrame(() => ScrollTrigger.refresh())
     }, root)
     return () => ctx.revert()
   }, [])
   return rootRef
 }
 
-function MayaFallbackPose({ pose, alt }) {
-  return <figure className="maya-fallback-pose" aria-hidden="true"><img src={pose.src} alt={alt} /></figure>
-}
-
-function MayaWorldBoard({ artist, copy }) {
-  const images = [artist.src, mayaGuidePoses[2].src, mayaGuidePoses[1].src, mayaGuidePoses[4].src]
-  return <div className="maya-world-board" aria-label="Maya visual world">
-    {images.map((src, index) => <figure className="maya-world-card" key={src} style={{ '--world-index': index }}><img src={src} alt={`${copy.worldMoments[index][0]} — ${copy.worldMoments[index][1]}`} loading={index ? 'lazy' : 'eager'} /><figcaption><strong>{copy.worldMoments[index][0]}</strong><span>{copy.worldMoments[index][1]}</span></figcaption></figure>)}
-    <div className="maya-world-swipe" aria-hidden="true">{copy.swipe} <b>↔</b></div>
+function MayaWorldPhone({ copy }) {
+  const railRef = useRef(null)
+  const dragRef = useRef({ active: false, x: 0, scroll: 0 })
+  const [page, setPage] = useState(1)
+  const onPointerDown = (event) => {
+    const rail = railRef.current
+    if (!rail) return
+    dragRef.current = { active: true, x: event.clientX, scroll: rail.scrollLeft }
+    rail.setPointerCapture?.(event.pointerId)
+  }
+  const onPointerMove = (event) => {
+    if (!dragRef.current.active || !railRef.current) return
+    railRef.current.scrollLeft = dragRef.current.scroll - (event.clientX - dragRef.current.x)
+  }
+  const onPointerUp = () => { dragRef.current.active = false }
+  const onScroll = () => {
+    const rail = railRef.current
+    if (!rail) return
+    setPage(Math.min(mayaWorldImages.length, Math.max(1, Math.round(rail.scrollLeft / Math.max(1, rail.clientWidth)) + 1)))
+  }
+  return <div className="maya-phone" aria-label="Maya Instagram-style visual diary">
+    <div className="maya-phone-top"><span>10:24</span><b>@mayakim02</b><span>•••</span></div>
+    <div ref={railRef} className="maya-phone-rail" tabIndex="0" onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp} onScroll={onScroll}>
+      {mayaWorldImages.map((image, index) => <figure key={image.src}><img src={image.src} alt={`Maya — ${image.category}: ${image.caption}`} loading={index < 2 ? 'eager' : 'lazy'} /><figcaption><strong>{image.category}</strong><span>{image.caption}</span></figcaption></figure>)}
+    </div>
+    <div className="maya-phone-bottom"><span>{page} / {mayaWorldImages.length}</span><span>{copy.swipe} ↔</span></div>
   </div>
 }
 
@@ -610,16 +608,15 @@ function MayaProfile({ artist, language }) {
   const social = artist.social_snapshot
   const copy = mayaStoryCopy[language]
   const audience = artist.audience_snapshot || { age_18_24: '58%', age_25_34: '31%', female_audience: '71%', cities: 'Seoul 24% / Paris 14% / New York 11%', engagement_rate: '6.4%' }
-  const scenePoses = [mayaGuidePoses[0], mayaGuidePoses[1], mayaGuidePoses[2], mayaGuidePoses[3], mayaGuidePoses[4]]
   return <main id="main" ref={rootRef} className="maya-profile">
     <div className="maya-stage">
-      <div className="maya-stage-progress" aria-hidden="true"><i /><i /><i /><i /><i /></div>
-      <div className="maya-guide" aria-hidden="true">{mayaGuidePoses.map((pose, index) => <img key={pose.id} className="maya-guide-pose" src={pose.src} alt="" decoding="async" fetchPriority={index === 0 ? 'high' : 'auto'} />)}</div>
-      <section className="maya-scene maya-scene--hero"><Container><div className="maya-safe maya-safe--hero"><a className="back-link" href="#/artists">← {copy.back}</a><Eyebrow number="01">Artist / 05</Eyebrow><h1>Maya</h1><p className="maya-role">{copy.role}</p><p className="maya-hello">{copy.hello}</p></div><MayaFallbackPose pose={scenePoses[0]} alt={scenePoses[0].alt} /></Container></section>
-      <section className="maya-scene maya-scene--dossier"><Container><div className="maya-safe maya-safe--dossier"><Eyebrow number="02">{copy.dossier} + {copy.personality}</Eyebrow><div className="maya-dossier-layout"><dl className="maya-dossier"><div><dt>{copy.height}</dt><dd>{dossier.height}</dd></div><div><dt>{copy.weight}</dt><dd>{dossier.weight}</dd></div><div><dt>{copy.measurements}</dt><dd>{dossier.measurements}</dd></div><div><dt>{copy.shoe}</dt><dd>{dossier.shoe_size}</dd></div><div><dt>{copy.base}</dt><dd>{artist.locations.join(' / ')}</dd></div><div><dt>{copy.languages}</dt><dd>{artist.languages.join(' / ')}</dd></div><div className="maya-dossier-wide"><dt>{copy.type}</dt><dd>{artist.creative_talents.join(' / ')}</dd></div></dl><div className="maya-personality-list">{copy.personalityItems.map(([title, text], index) => <article key={title}><b>{String(index + 1).padStart(2, '0')}</b><h2>{title}</h2><p>{text}</p></article>)}</div></div></div><MayaFallbackPose pose={scenePoses[1]} alt={scenePoses[1].alt} /></Container></section>
-      <section className="maya-scene maya-scene--world"><Container><div className="maya-safe maya-safe--world"><Eyebrow number="03">{copy.world}</Eyebrow><h2>{copy.world}</h2><p>{copy.worldLead}</p><MayaWorldBoard artist={artist} copy={copy} /></div><MayaFallbackPose pose={scenePoses[2]} alt={scenePoses[2].alt} /></Container></section>
-      <section className="maya-scene maya-scene--about"><Container><div className="maya-safe maya-safe--about"><Eyebrow number="04">{copy.about}</Eyebrow><h2>{copy.about}</h2><div className="maya-about-lines">{copy.aboutLines.map((line, index) => <p key={line}><b>{String(index + 1).padStart(2, '0')}</b>{line}</p>)}</div></div><MayaFallbackPose pose={scenePoses[3]} alt={scenePoses[3].alt} /></Container></section>
-      <section className="maya-scene maya-scene--social"><Container><div className="maya-safe maya-safe--social"><Eyebrow number="05">{copy.social}</Eyebrow><div className="maya-social-layout"><div><a className="maya-social-handle" href={social.url} target="_blank" rel="noreferrer">{social.platform} · {social.handle} ↗</a><strong className="maya-followers">{dossier.followers_snapshot}<small>{copy.followers}</small></strong><div className="maya-audience"><p>{copy.audience}</p><dl><div><dt>{copy.age1824}</dt><dd>{audience.age_18_24}</dd></div><div><dt>{copy.age2534}</dt><dd>{audience.age_25_34}</dd></div><div><dt>{copy.female}</dt><dd>{audience.female_audience}</dd></div><div><dt>{copy.engagement}</dt><dd>{audience.engagement_rate}</dd></div><div className="maya-audience-cities"><dt>{copy.cities}</dt><dd>{audience.cities}</dd></div></dl></div></div><div className="maya-cta"><h2>{copy.cta}</h2><a className="maya-primary-link" href="#/contact">{copy.work} →</a><a className="maya-secondary-link" href="#/artists/amber">{copy.next} →</a></div></div></div><MayaFallbackPose pose={scenePoses[4]} alt={scenePoses[4].alt} /></Container></section>
+      <div className="maya-atmosphere" aria-hidden="true" />
+      <figure className="maya-camera" aria-hidden="true"><img src={mayaStanding.src} alt="" fetchPriority="high" /></figure>
+      <section className="maya-scene maya-scene--hero"><Container><div className="maya-safe maya-safe--hero"><a className="back-link" href="#/artists">← {copy.back}</a><Eyebrow number="01">Artist / 05</Eyebrow><h1>Maya</h1><p className="maya-role">{copy.role}</p><p className="maya-hello">{copy.hello}</p><div className="maya-about-intro">{copy.aboutLines.slice(0, 2).map((line) => <p key={line}>{line}</p>)}</div></div><img className="maya-mobile-crop maya-mobile-crop--hero" src={mayaStanding.src} alt={mayaStanding.alt} /></Container></section>
+      <section className="maya-scene maya-scene--identity"><Container><div className="maya-safe maya-safe--identity"><Eyebrow number="02">{copy.dossier}</Eyebrow><h2>Identity</h2><dl className="maya-dossier"><div><dt>{copy.height}</dt><dd>{dossier.height}</dd></div><div><dt>{copy.weight}</dt><dd>{dossier.weight}</dd></div><div><dt>{copy.measurements}</dt><dd>{dossier.measurements}</dd></div><div><dt>{copy.shoe}</dt><dd>{dossier.shoe_size}</dd></div><div><dt>{copy.base}</dt><dd>{artist.locations.join(' / ')}</dd></div><div><dt>{copy.languages}</dt><dd>{artist.languages.join(' / ')}</dd></div><div className="maya-dossier-wide"><dt>{copy.type}</dt><dd>{artist.creative_talents.join(' / ')}</dd></div></dl></div><img className="maya-mobile-crop" src={mayaStanding.src} alt={mayaStanding.alt} /></Container></section>
+      <section className="maya-scene maya-scene--detail"><Container><div className="maya-safe maya-safe--detail"><Eyebrow number="03">{copy.personality}</Eyebrow><h2>Details<br />of character.</h2><div className="maya-personality-list">{copy.personalityItems.map(([title, text], index) => <article className="maya-personality-item" key={title}><b>{String(index + 1).padStart(2, '0')}</b><h3>{title}</h3><p>{text}</p></article>)}</div></div><img className="maya-mobile-crop" src={mayaStanding.src} alt={mayaStanding.alt} /></Container></section>
+      <section className="maya-scene maya-scene--world"><Container><div className="maya-safe maya-safe--world"><div className="maya-world-copy"><Eyebrow number="04">{copy.world}</Eyebrow><h2>{copy.world}</h2><p>{copy.worldLead}</p><p>{copy.aboutLines[2]}</p></div><MayaWorldPhone copy={copy} /></div></Container></section>
+      <section className="maya-scene maya-scene--social"><Container><div className="maya-safe maya-safe--social"><Eyebrow number="05">{copy.social}</Eyebrow><div className="maya-social-layout"><div className="maya-social-metric"><a className="maya-social-handle" href={social.url} target="_blank" rel="noreferrer">{social.platform} · {social.handle} ↗</a><strong className="maya-followers">{dossier.followers_snapshot}<small>{copy.followers}</small></strong></div><div className="maya-audience"><p>{copy.audience}</p><dl><div><dt>{copy.age1824}</dt><dd>{audience.age_18_24}</dd></div><div><dt>{copy.age2534}</dt><dd>{audience.age_25_34}</dd></div><div><dt>{copy.female}</dt><dd>{audience.female_audience}</dd></div><div><dt>{copy.engagement}</dt><dd>{audience.engagement_rate}</dd></div><div className="maya-audience-cities"><dt>{copy.cities}</dt><dd>{audience.cities}</dd></div></dl></div><div className="maya-cta"><h2>{copy.cta}</h2><a className="maya-primary-link" href="#/contact">{copy.work} →</a><a className="maya-secondary-link" href="#/artists/amber">{copy.next} →</a></div></div></div></Container></section>
     </div>
   </main>
 }
