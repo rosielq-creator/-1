@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0",
+  "usage": "Portable content source for an external development agent. Treat null fields as unconfirmed; do not invent values.",
+  "artists": [
+    {
+      "id": "maya",
+      "display_name": "Maya",
+      "gender": "female",
+      "role_en": "Luxury Fashion Artist",
+      "role_zh": "奢华时尚艺术家",
+      "locations": ["Paris", "New York", "Seoul"],
+      "languages": ["English", "Korean"],
+      "creative_talents": ["Luxury Fashion", "High Fashion", "Art"],
+      "personal_dossier": {
+        "followers_snapshot": "14.5K",
+        "height": "171 cm",
+        "weight": "48 kg",
+        "measurements": "85 / 63 / 89",
+        "shoe_size": "38"
+      },
+      "social_snapshot": {
+        "platform": "Instagram",
+        "handle": "@mayakim02",
+        "url": "https://www.instagram.com/mayakim02/"
+      },
+      "audience_snapshot": {
+        "label": "Demo audience snapshot · not live data",
+        "age_18_24": "58%",
+        "age_25_34": "31%",
+        "female_audience": "71%",
+        "cities": "Seoul 24% / Paris 14% / New York 11%",
+        "engagement_rate": "6.4%"
+      },
+      "bio_en": null,
+      "bio_zh": null,
+      "profile_status": "profile prototype exists; long-form biography is not confirmed",
+      "image": "images/maya.png",
+      "profile_slug": "maya"
+    },
+    {
+      "id": "amber",
+      "display_name": "Amber",
+      "gender": "female",
+      "role_en": "Music Producer / Fashion Artist",
+      "role_zh": "音乐制作人／时尚艺术家",
+      "locations": ["Los Angeles", "Seoul"],
+      "languages": ["English", "Korean"],
+      "creative_talents": ["Music", "Fashion", "City Culture"],
+      "bio_en": null,
+      "bio_zh": null,
+      "profile_status": "directory profile only; biography is not confirmed",
+      "image": "images/amber.png",
+      "profile_slug": "amber"
+    },
+    {
+      "id": "ooona",
+      "display_name": "Ooona",
+      "gender": "female",
+      "role_en": "Beauty / Wellness Artist",
+      "role_zh": "美妆／身心健康艺术家",
+      "locations": ["Seoul"],
+      "languages": ["Korean", "English"],
+      "creative_talents": ["Beauty", "Wellness", "Lifestyle"],
+      "bio_en": null,
+      "bio_zh": null,
+      "profile_status": "directory profile only; biography is not confirmed",
+      "image": "images/ooona.png",
+      "profile_slug": "ooona"
+    },
+    {
+      "id": "noah",
+      "display_name": "Noah",
+      "gender": "male",
+      "role_en": "Film / Fashion Artist",
+      "role_zh": "影像／时尚艺术家",
+      "locations": ["Hong Kong", "Seoul", "Tokyo"],
+      "languages": ["Cantonese", "Mandarin", "English"],
+      "creative_talents": ["Film", "Fashion", "Photography", "Travel"],
+      "bio_en": null,
+      "bio_zh": null,
+      "profile_status": "directory profile only; biography is not confirmed",
+      "image": "images/noah.png",
+      "profile_slug": "noah"
+    },
+    {
+      "id": "mario",
+      "display_name": "Mario",
+      "gender": "male",
+      "role_en": "Lifestyle Creator / Photographer",
+      "role_zh": "生活方式创作者／摄影师",
+      "locations": ["Guangdong"],
+      "languages": ["Mandarin", "Cantonese", "English"],
+      "creative_talents": ["Lifestyle", "Fashion", "Sport", "Travel", "Photography"],
+      "bio_en": null,
+      "bio_zh": null,
+      "profile_status": "directory profile only; biography is not confirmed",
+      "image": "images/mario.png",
+      "profile_slug": "mario"
+    }
+  ]
+}

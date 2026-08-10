@@ -1,5 +1,10 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Container, Eyebrow, MediaFrame, Section, TextLink } from './design-system'
+import artistProfilesSource from './data/artist-profiles.json'
+
+gsap.registerPlugin(ScrollTrigger)
 
 // Vite supplies `/` locally and `/-1/` on GitHub Pages.
 const assets = `${import.meta.env.BASE_URL}assets/`
@@ -13,6 +18,32 @@ const artists = [
   { number: '05', name: 'Mario', slug: 'mario', src: `${assets}artists/mario.jpg`, position: '45% 24%', role: 'Virtual Creator & Urban Storyteller', tags: ['Streetwear', 'Travel', 'Culture'] },
 ]
 const featuredArtists = artists.slice(0, 5)
+
+// The portable profile package is the source of truth for the Artist directory.
+// Home keeps its existing featured-story copy and composition intentionally.
+const directoryArtists = artistProfilesSource.artists.map((artist, index) => ({
+  ...artist,
+  number: String(index + 1).padStart(2, '0'),
+  src: `${assets}artists/profiles/${artist.image.replace('images/', '')}`,
+  position: '50% 35%',
+}))
+
+const directoryLabels = {
+  en: {
+    eyebrow: 'Artist archive', title: 'Meet all artists', intro: 'New realities, growing now.',
+    growing: 'Growing soon', archive: 'Artist archive', all: 'All', reset: 'Reset filters',
+    gender: 'Gender', language: 'Language', type: 'Type', city: 'City', results: 'artists found',
+    profile: 'View profile', comingSoon: 'Profile is growing', confirmed: 'Confirmed profile fields',
+    location: 'Locations', languages: 'Languages', talents: 'Creative talents', back: 'Back to artists',
+  },
+  zh: {
+    eyebrow: '艺术家档案', title: '遇见所有艺术家', intro: '正在生长的全新现实。',
+    growing: '即将生长', archive: '艺术家档案', all: '全部', reset: '重置筛选',
+    gender: '性别', language: '语言', type: '类型', city: '城市', results: '位艺术家',
+    profile: '查看档案', comingSoon: '档案正在生长', confirmed: '已确认资料',
+    location: '城市', languages: '语言', talents: '创作类型', back: '返回艺术家列表',
+  },
+}
 
 const works = [
   { name: 'The Peninsula', slug: 'the-peninsula', category: 'Brand film', video: `${assets}work/the-peninsula.mp4`, poster: `${assets}work/the-peninsula-cover.jpg`, position: '50% 38%', portrait: true },
@@ -333,17 +364,264 @@ function HomePage({ t, onNavigate }) {
   </>
 }
 
-function PageHeader({ eyebrow, title, back }) {
-  return <div className="page-heading"><a className="back-link" href={back}>← Back</a><Eyebrow>{eyebrow}</Eyebrow><h1>{title}</h1></div>
+function PageHeader({ eyebrow, title, back, backLabel = 'Back' }) {
+  return <div className="page-heading"><a className="back-link" href={back}>← {backLabel}</a><Eyebrow>{eyebrow}</Eyebrow><h1>{title}</h1></div>
 }
 
-function ArtistsOverview() {
-  return <main id="main" className="subpage subpage--dark"><Container><PageHeader eyebrow="Artist index" title={<>New<br />realities.</>} back="#/" /><div className="artist-index">{artists.map((artist) => <a href={`#/artists/${artist.slug}`} className="artist-index-card" key={artist.slug}><img src={artist.src} alt={`Portrait of ${artist.name}`} style={{ objectPosition: artist.position }} /><span>{artist.number}</span><strong>{artist.name}</strong><small>{artist.role}</small></a>)}</div></Container></main>
+function useArtistDirectoryNarrative() {
+  const rootRef = useRef(null)
+  useEffect(() => {
+    const root = rootRef.current
+    if (!root) return undefined
+    let frame = requestAnimationFrame(() => root.classList.add('is-ready'))
+    const archive = root.querySelector('.artist-archive-section')
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => entry.target.classList.toggle('is-inview', entry.isIntersecting))
+    }, { threshold: 0.16, rootMargin: '0px 0px -12% 0px' })
+    if (archive) observer.observe(archive)
+    return () => { cancelAnimationFrame(frame); observer.disconnect() }
+  }, [])
+  return rootRef
 }
 
-function ArtistDetail({ artist }) {
+function DirectoryArtistCard({ artist, language, className = '', style }) {
+  const labels = directoryLabels[language]
+  const role = language === 'zh' ? artist.role_zh : artist.role_en
+  return <a className={`directory-artist-card ${className}`} href={`#/artists/${artist.profile_slug}`} aria-label={`${labels.profile}: ${artist.display_name}`} style={style}>
+    <img src={artist.src} alt={`Portrait of ${artist.display_name}`} style={{ objectPosition: artist.position }} loading="lazy" decoding="async" />
+    <span className="directory-card-scrim" aria-hidden="true" />
+    <span className="directory-card-number">{artist.number} / 05</span>
+    <span className="directory-card-info"><strong>{artist.display_name}</strong><small>{role}</small><em>{artist.creative_talents.slice(0, 3).join(' · ')}</em></span>
+    <span className="directory-card-link">{labels.profile} <b aria-hidden="true">→</b></span>
+  </a>
+}
+
+function ArtistFilters({ filters, setFilters, language }) {
+  const labels = directoryLabels[language]
+  const options = useMemo(() => ({
+    gender: [...new Set(directoryArtists.map((artist) => artist.gender))],
+    language: [...new Set(directoryArtists.flatMap((artist) => artist.languages))],
+    type: [...new Set(directoryArtists.flatMap((artist) => artist.creative_talents))],
+    city: [...new Set(directoryArtists.flatMap((artist) => artist.locations))],
+  }), [])
+  const setFilter = (key, value) => setFilters((current) => ({ ...current, [key]: value }))
+  return <div className="artist-filters" aria-label={labels.archive}>
+    {Object.entries(options).map(([key, values]) => <label key={key}><span>{labels[key]}</span><select value={filters[key]} onChange={(event) => setFilter(key, event.target.value)}><option value="all">{labels.all}</option>{values.map((value) => <option key={value} value={value}>{value}</option>)}</select></label>)}
+    <button type="button" onClick={() => setFilters({ gender: 'all', language: 'all', type: 'all', city: 'all' })}>{labels.reset}</button>
+  </div>
+}
+
+function ArtistArchive({ language }) {
+  const labels = directoryLabels[language]
+  const [filters, setFilters] = useState({ gender: 'all', language: 'all', type: 'all', city: 'all' })
+  const dragRef = useRef({ active: false, moved: false, startX: 0, startScrollLeft: 0 })
+  const filteredArtists = useMemo(() => directoryArtists.filter((artist) => (
+    (filters.gender === 'all' || artist.gender === filters.gender)
+    && (filters.language === 'all' || artist.languages.includes(filters.language))
+    && (filters.type === 'all' || artist.creative_talents.includes(filters.type))
+    && (filters.city === 'all' || artist.locations.includes(filters.city))
+  )), [filters])
+  const startDrag = (event) => {
+    if (event.pointerType === 'touch') return
+    const rail = event.currentTarget
+    dragRef.current = { active: true, moved: false, startX: event.clientX, startScrollLeft: rail.scrollLeft }
+    rail.setPointerCapture?.(event.pointerId)
+  }
+  const drag = (event) => {
+    const state = dragRef.current
+    if (!state.active) return
+    const delta = event.clientX - state.startX
+    if (Math.abs(delta) > 5) state.moved = true
+    event.currentTarget.scrollLeft = state.startScrollLeft - delta
+  }
+  const stopDrag = () => { dragRef.current.active = false }
+  const preventFollowAfterDrag = (event) => {
+    if (!dragRef.current.moved) return
+    event.preventDefault()
+    dragRef.current.moved = false
+  }
+  return <section className="artist-archive-section" aria-labelledby="artist-archive-title">
+    <Container>
+      <div className="artist-archive-heading"><Eyebrow number="02">{labels.archive}</Eyebrow><p id="artist-archive-title">{filteredArtists.length} {labels.results}</p></div>
+      <ArtistFilters filters={filters} setFilters={setFilters} language={language} />
+    </Container>
+    <div className="artist-archive-rail" tabIndex="0" aria-label={labels.archive} onPointerDown={startDrag} onPointerMove={drag} onPointerUp={stopDrag} onPointerCancel={stopDrag} onClickCapture={preventFollowAfterDrag}>
+      <div className="artist-archive-track">
+        {filteredArtists.map((artist, index) => <DirectoryArtistCard key={artist.id} artist={artist} language={language} className="artist-archive-card" style={{ '--archive-offset': `${(2 - index) * 30}vw`, '--archive-delay': `${index * 85}ms` }} />)}
+        {!filteredArtists.length && <p className="artist-empty">No artists match these filters.</p>}
+      </div>
+    </div>
+  </section>
+}
+
+function ArtistsOverview({ language }) {
+  const labels = directoryLabels[language]
+  const rootRef = useArtistDirectoryNarrative()
+  const titleLetters = [...labels.title.toUpperCase()]
+  return <main id="main" ref={rootRef} className="artist-directory subpage--dark">
+    <section className="artist-directory-stage" aria-labelledby="meet-artists-title">
+      <Container className="artist-directory-stage-inner">
+        <Eyebrow number="01">{labels.eyebrow}</Eyebrow>
+        <h1 id="meet-artists-title" className="artist-directory-title" aria-label={labels.title}>{titleLetters.map((letter, index) => <span key={`${letter}-${index}`} aria-hidden="true" style={{ '--title-index': index }}>{letter === ' ' ? '\u00a0' : letter}</span>)}</h1>
+        <span className="artist-directory-intro">{labels.intro}</span>
+      </Container>
+    </section>
+    <ArtistArchive language={language} />
+  </main>
+}
+
+function ArtistDetail({ artist, language }) {
   if (!artist) return <NotFound />
-  return <main id="main" className="subpage subpage--dark"><Container><div className="detail-grid detail-grid--artist"><div><PageHeader eyebrow={`${artist.number} / Artist`} title={artist.name} back="#/artists" /><p className="detail-role">{artist.role}</p><p className="detail-tags">{artist.tags.join(' · ')}</p></div><figure className="detail-media"><img src={artist.src} alt={`Portrait of ${artist.name}`} style={{ objectPosition: artist.position }} /></figure></div></Container></main>
+  if (artist.id === 'maya') return <MayaProfile artist={artist} language={language} />
+  const labels = directoryLabels[language]
+  const role = language === 'zh' ? artist.role_zh : artist.role_en
+  return <main id="main" className="subpage subpage--dark"><Container><div className="detail-grid detail-grid--artist"><div><PageHeader eyebrow={`${artist.number} / Artist`} title={artist.display_name} back="#/artists" backLabel={labels.back} /><p className="detail-role">{role}</p><dl className="artist-confirmed-fields"><div><dt>{labels.location}</dt><dd>{artist.locations.join(' · ')}</dd></div><div><dt>{labels.languages}</dt><dd>{artist.languages.join(' · ')}</dd></div><div><dt>{labels.talents}</dt><dd>{artist.creative_talents.join(' · ')}</dd></div></dl><p className="artist-coming-soon">{labels.comingSoon}</p></div><figure className="detail-media"><img src={artist.src} alt={`Portrait of ${artist.display_name}`} style={{ objectPosition: artist.position }} /></figure></div></Container></main>
+}
+
+const mayaGuidePoses = [
+  { id: 'standing', src: `${assets}artists/maya-guide/standing.png`, alt: 'Maya standing in a pink luxury fashion look' },
+  { id: 'walk', src: `${assets}artists/maya-guide/walk.png`, alt: 'Maya walking in a pink luxury fashion look' },
+  { id: 'gallery', src: `${assets}artists/maya-guide/gallery.png`, alt: 'Maya studying an art wall' },
+  { id: 'lean', src: `${assets}artists/maya-guide/lean.png`, alt: 'Maya in a poised editorial pose' },
+  { id: 'seat', src: `${assets}artists/maya-guide/seat.png`, alt: 'Maya seated in a pink luxury fashion look' },
+]
+
+const mayaStoryCopy = {
+  en: {
+    back: 'Back to artists', role: 'Luxury Fashion / Art', hello: 'Hi, I’m Maya.',
+    dossier: 'Personal dossier', personality: 'Personality', height: 'Height', weight: 'Weight', measurements: 'Measurements', shoe: 'Shoe size', base: 'Based in', languages: 'Languages', type: 'Artist type',
+    world: 'My World', worldLead: 'References that keep my world in motion.', about: 'About Me', social: 'Social + Contact', followers: 'Followers', audience: 'Demo audience snapshot · not live data',
+    cta: 'Want to create something together?', work: 'Work with Maya', next: 'Next artist · Amber',
+    personalityItems: [
+      ['Restrained', 'I believe restraint leaves room for imagination.'],
+      ['Intelligent', 'Every look begins with a considered point of view.'],
+      ['Artistic', 'I am drawn to images with texture, rhythm and emotion.'],
+      ['Independent', 'I move between cities while keeping my own tempo.'],
+    ],
+    aboutLines: ['I collect references before I make a statement.', 'My work lives between soft structure and a clear point of view.', 'Fashion becomes personal when it makes space for feeling.'],
+    worldMoments: [['Fashion', 'Soft structure'], ['Art', 'Looking closely'], ['City life', 'Between places'], ['Beauty', 'Quiet ritual']],
+    age1824: '18–24', age2534: '25–34', female: 'Female audience', cities: 'Top cities', engagement: 'Engagement rate', swipe: 'Swipe to explore',
+  },
+  zh: {
+    back: '返回艺术家列表', role: '奢华时尚 / 艺术', hello: '你好，我是 Maya。',
+    dossier: '个人档案', personality: '人物气质', height: '身高', weight: '体重', measurements: '三围', shoe: '鞋码', base: '常驻地', languages: '语言', type: '人物类型',
+    world: '我的世界', worldLead: '让我的世界持续流动的灵感。', about: '关于我', social: '社交与合作', followers: '粉丝数', audience: '示例受众快照 · 非实时数据',
+    cta: '想一起创作些什么吗？', work: '与 Maya 合作', next: '下一位艺术家 · Amber',
+    personalityItems: [
+      ['克制', '我相信克制会为想象留下空间。'],
+      ['理性', '每一个造型，都从经过思考的观点开始。'],
+      ['艺术感', '我会被有纹理、节奏与情绪的画面吸引。'],
+      ['独立', '我穿行于不同城市，也保持自己的节奏。'],
+    ],
+    aboutLines: ['在表达之前，我会先收集参考与感受。', '我的作品在柔和结构与清晰观点之间生长。', '当时尚为感受留出空间，它就会变得很私人。'],
+    worldMoments: [['时尚', '柔和结构'], ['艺术', '凝视细节'], ['城市生活', '城市之间'], ['美妆', '安静仪式']],
+    age1824: '18–24 岁', age2534: '25–34 岁', female: '女性受众', cities: '热门城市', engagement: '互动率', swipe: '滑动浏览',
+  },
+}
+
+function useMayaProfileMotion() {
+  const rootRef = useRef(null)
+  useLayoutEffect(() => {
+    const root = rootRef.current
+    if (!root) return undefined
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduceMotion || window.innerWidth <= 760) { root.dataset.mayaMotion = 'static'; return undefined }
+    root.dataset.mayaMotion = 'pinned'
+    const ctx = gsap.context(() => {
+      const stage = root.querySelector('.maya-stage')
+      const scenes = gsap.utils.toArray('.maya-scene')
+      const poses = gsap.utils.toArray('.maya-guide-pose')
+      const worldCards = gsap.utils.toArray('.maya-world-card')
+      const guide = root.querySelector('.maya-guide')
+      const starts = [0, .7, 1.56, 2.48, 3.42]
+      const ends = [1.02, 1.88, 2.8, 3.72, 4.8]
+      const guideStops = [
+        [0, 0, 0, 1], [.75, -.18, -18, .88], [1.62, -.55, 6, .75], [2.56, -.29, 12, .7], [3.5, -.56, 12, .72], [4.3, .12, 70, .64],
+      ]
+      const clamp = gsap.utils.clamp(0, 1)
+      const lerp = (from, to, amount) => from + (to - from) * amount
+      const visibility = (progress, start, end) => {
+        const enter = start === 0 ? 1 : clamp((progress - start) / .22)
+        return Math.min(enter, clamp((end - progress) / .22))
+      }
+      const updateStage = (progress) => {
+        const p = progress * 4.8
+        scenes.forEach((scene, index) => {
+          const alpha = visibility(p, starts[index], ends[index])
+          gsap.set(scene, { autoAlpha: alpha, y: lerp(18, 0, alpha) })
+          gsap.set(poses[index], { opacity: alpha })
+        })
+        let stop = guideStops[0]
+        let next = guideStops[guideStops.length - 1]
+        for (let index = 0; index < guideStops.length - 1; index += 1) {
+          if (p >= guideStops[index][0] && p <= guideStops[index + 1][0]) { stop = guideStops[index]; next = guideStops[index + 1]; break }
+        }
+        const amount = clamp((p - stop[0]) / (next[0] - stop[0]))
+        const guideAlpha = p > 4.18 ? 1 - clamp((p - 4.18) / .5) : 1
+        gsap.set(guide, { x: lerp(stop[1], next[1], amount) * window.innerWidth, y: lerp(stop[2], next[2], amount), scale: lerp(stop[3], next[3], amount), autoAlpha: guideAlpha })
+        worldCards.forEach((card, index) => {
+          const alpha = clamp((p - (1.82 + index * .1)) / .34)
+          gsap.set(card, { autoAlpha: alpha, filter: `grayscale(${1 - alpha})`, y: lerp(18, 0, alpha) })
+        })
+      }
+      const syncStageToScroll = () => {
+        const start = root.offsetTop
+        const distance = window.innerHeight * 4.8
+        updateStage(clamp((window.scrollY - start) / distance))
+      }
+      ScrollTrigger.create({
+        trigger: root,
+        start: 'top top',
+        end: () => `+=${window.innerHeight * 4.8}`,
+        pin: stage,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        onRefresh: syncStageToScroll,
+      })
+      window.addEventListener('scroll', syncStageToScroll, { passive: true })
+      window.addEventListener('resize', syncStageToScroll)
+      syncStageToScroll()
+      requestAnimationFrame(() => { ScrollTrigger.refresh(); syncStageToScroll() })
+      return () => {
+        window.removeEventListener('scroll', syncStageToScroll)
+        window.removeEventListener('resize', syncStageToScroll)
+      }
+    }, root)
+    return () => ctx.revert()
+  }, [])
+  return rootRef
+}
+
+function MayaFallbackPose({ pose, alt }) {
+  return <figure className="maya-fallback-pose" aria-hidden="true"><img src={pose.src} alt={alt} /></figure>
+}
+
+function MayaWorldBoard({ artist, copy }) {
+  const images = [artist.src, mayaGuidePoses[2].src, mayaGuidePoses[1].src, mayaGuidePoses[4].src]
+  return <div className="maya-world-board" aria-label="Maya visual world">
+    {images.map((src, index) => <figure className="maya-world-card" key={src} style={{ '--world-index': index }}><img src={src} alt={`${copy.worldMoments[index][0]} — ${copy.worldMoments[index][1]}`} loading={index ? 'lazy' : 'eager'} /><figcaption><strong>{copy.worldMoments[index][0]}</strong><span>{copy.worldMoments[index][1]}</span></figcaption></figure>)}
+    <div className="maya-world-swipe" aria-hidden="true">{copy.swipe} <b>↔</b></div>
+  </div>
+}
+
+function MayaProfile({ artist, language }) {
+  const rootRef = useMayaProfileMotion()
+  const dossier = artist.personal_dossier
+  const social = artist.social_snapshot
+  const copy = mayaStoryCopy[language]
+  const audience = artist.audience_snapshot || { age_18_24: '58%', age_25_34: '31%', female_audience: '71%', cities: 'Seoul 24% / Paris 14% / New York 11%', engagement_rate: '6.4%' }
+  const scenePoses = [mayaGuidePoses[0], mayaGuidePoses[1], mayaGuidePoses[2], mayaGuidePoses[3], mayaGuidePoses[4]]
+  return <main id="main" ref={rootRef} className="maya-profile">
+    <div className="maya-stage">
+      <div className="maya-stage-progress" aria-hidden="true"><i /><i /><i /><i /><i /></div>
+      <div className="maya-guide" aria-hidden="true">{mayaGuidePoses.map((pose, index) => <img key={pose.id} className="maya-guide-pose" src={pose.src} alt="" decoding="async" fetchPriority={index === 0 ? 'high' : 'auto'} />)}</div>
+      <section className="maya-scene maya-scene--hero"><Container><div className="maya-safe maya-safe--hero"><a className="back-link" href="#/artists">← {copy.back}</a><Eyebrow number="01">Artist / 05</Eyebrow><h1>Maya</h1><p className="maya-role">{copy.role}</p><p className="maya-hello">{copy.hello}</p></div><MayaFallbackPose pose={scenePoses[0]} alt={scenePoses[0].alt} /></Container></section>
+      <section className="maya-scene maya-scene--dossier"><Container><div className="maya-safe maya-safe--dossier"><Eyebrow number="02">{copy.dossier} + {copy.personality}</Eyebrow><div className="maya-dossier-layout"><dl className="maya-dossier"><div><dt>{copy.height}</dt><dd>{dossier.height}</dd></div><div><dt>{copy.weight}</dt><dd>{dossier.weight}</dd></div><div><dt>{copy.measurements}</dt><dd>{dossier.measurements}</dd></div><div><dt>{copy.shoe}</dt><dd>{dossier.shoe_size}</dd></div><div><dt>{copy.base}</dt><dd>{artist.locations.join(' / ')}</dd></div><div><dt>{copy.languages}</dt><dd>{artist.languages.join(' / ')}</dd></div><div className="maya-dossier-wide"><dt>{copy.type}</dt><dd>{artist.creative_talents.join(' / ')}</dd></div></dl><div className="maya-personality-list">{copy.personalityItems.map(([title, text], index) => <article key={title}><b>{String(index + 1).padStart(2, '0')}</b><h2>{title}</h2><p>{text}</p></article>)}</div></div></div><MayaFallbackPose pose={scenePoses[1]} alt={scenePoses[1].alt} /></Container></section>
+      <section className="maya-scene maya-scene--world"><Container><div className="maya-safe maya-safe--world"><Eyebrow number="03">{copy.world}</Eyebrow><h2>{copy.world}</h2><p>{copy.worldLead}</p><MayaWorldBoard artist={artist} copy={copy} /></div><MayaFallbackPose pose={scenePoses[2]} alt={scenePoses[2].alt} /></Container></section>
+      <section className="maya-scene maya-scene--about"><Container><div className="maya-safe maya-safe--about"><Eyebrow number="04">{copy.about}</Eyebrow><h2>{copy.about}</h2><div className="maya-about-lines">{copy.aboutLines.map((line, index) => <p key={line}><b>{String(index + 1).padStart(2, '0')}</b>{line}</p>)}</div></div><MayaFallbackPose pose={scenePoses[3]} alt={scenePoses[3].alt} /></Container></section>
+      <section className="maya-scene maya-scene--social"><Container><div className="maya-safe maya-safe--social"><Eyebrow number="05">{copy.social}</Eyebrow><div className="maya-social-layout"><div><a className="maya-social-handle" href={social.url} target="_blank" rel="noreferrer">{social.platform} · {social.handle} ↗</a><strong className="maya-followers">{dossier.followers_snapshot}<small>{copy.followers}</small></strong><div className="maya-audience"><p>{copy.audience}</p><dl><div><dt>{copy.age1824}</dt><dd>{audience.age_18_24}</dd></div><div><dt>{copy.age2534}</dt><dd>{audience.age_25_34}</dd></div><div><dt>{copy.female}</dt><dd>{audience.female_audience}</dd></div><div><dt>{copy.engagement}</dt><dd>{audience.engagement_rate}</dd></div><div className="maya-audience-cities"><dt>{copy.cities}</dt><dd>{audience.cities}</dd></div></dl></div></div><div className="maya-cta"><h2>{copy.cta}</h2><a className="maya-primary-link" href="#/contact">{copy.work} →</a><a className="maya-secondary-link" href="#/artists/amber">{copy.next} →</a></div></div></div><MayaFallbackPose pose={scenePoses[4]} alt={scenePoses[4].alt} /></Container></section>
+    </div>
+  </main>
 }
 
 function WorkOverview() {
@@ -372,8 +650,8 @@ export default function App() {
 
   const navigate = useCallback((hash) => { window.location.hash = hash }, [])
   const content = route.type === 'home' ? <HomePage t={t} onNavigate={navigate} />
-    : route.type === 'artists' ? <ArtistsOverview />
-      : route.type === 'artist-detail' ? <ArtistDetail artist={artists.find((artist) => artist.slug === route.slug)} />
+    : route.type === 'artists' ? <ArtistsOverview language={language} />
+      : route.type === 'artist-detail' ? <ArtistDetail artist={directoryArtists.find((artist) => artist.profile_slug === route.slug)} language={language} />
         : route.type === 'work' ? <WorkOverview />
           : route.type === 'work-detail' ? <WorkDetail work={works.find((work) => work.slug === route.slug)} />
             : <NotFound />
