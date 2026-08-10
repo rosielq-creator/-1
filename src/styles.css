@@ -442,9 +442,9 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
 .maya-phone-rail figcaption strong { font-size:17px; }
 .maya-phone-rail figcaption span { font:600 9px/1.2 var(--mono); letter-spacing:.05em; text-transform:uppercase; }
 .maya-safe--social { inset:10% 0 auto; width:100%; }
-.maya-social-layout { display:grid; grid-template-columns:minmax(260px,.82fr) minmax(360px,1.08fr) minmax(300px,.86fr); gap:clamp(56px,6.2vw,124px); align-items:start; margin-top:clamp(62px,9svh,108px); }
+.maya-social-layout { display:grid; grid-template-columns:minmax(0,.92fr) minmax(0,1fr) minmax(270px,.8fr); gap:clamp(40px,4vw,80px); align-items:start; margin-top:clamp(62px,9svh,108px); }
 .maya-social-handle { display:inline-block; max-width:100%; margin-bottom:28px; border-bottom:1px solid currentColor; padding-bottom:6px; font:600 clamp(18px,1.6vw,28px)/1 var(--mono); letter-spacing:-.04em; }
-.maya-followers { display:grid; gap:12px; font-size:clamp(90px,8.6vw,148px); line-height:.72; letter-spacing:-.09em; }
+.maya-followers { display:grid; min-width:0; max-width:100%; gap:12px; font-size:clamp(64px,5.65vw,108px); line-height:.76; letter-spacing:-.105em; white-space:nowrap; }
 .maya-followers small { font:600 9px/1 var(--mono); letter-spacing:.08em; text-transform:uppercase; }
 .maya-audience { align-self:start; padding-top:14px; border-top:1px solid rgba(17,17,17,.27); }
 .maya-audience > p { margin:0 0 12px; color:rgba(17,17,17,.62); font:600 8px/1.2 var(--mono); letter-spacing:.08em; text-transform:uppercase; }
@@ -453,7 +453,7 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
 .maya-audience dt { color:rgba(17,17,17,.58); }
 .maya-audience dd { color:#111; font-size:clamp(19px,1.58vw,27px); }
 .maya-audience-countries { grid-column:1/-1; }
-.maya-cta { display:grid; justify-items:center; align-self:start; gap:26px; padding-top:clamp(8px,2svh,28px); text-align:center; }
+.maya-cta { display:grid; justify-items:center; align-self:center; gap:26px; padding-top:clamp(36px,7svh,86px); text-align:center; }
 .maya-cta h2 { display:grid; gap:.03em; max-width:420px; margin:0; font-size:clamp(50px,4.95vw,82px); line-height:.84; }
 .maya-cta h2 span { display:block; }
 .maya-primary-link { padding:16px 19px; color:#f4f1ec; background:#111; font:600 11px/1 var(--mono); letter-spacing:.08em; text-transform:uppercase; transition:transform 240ms ease,background 240ms ease; }
@@ -467,7 +467,8 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
   .maya-safe--identity,.maya-safe--detail { width:47%; }
   .maya-personality-item { grid-template-columns:24px 1fr; gap:10px; }
   .maya-personality-copy { grid-template-columns:minmax(150px,.82fr) minmax(160px,1fr); gap:14px; }
-  .maya-social-layout { grid-template-columns:.85fr 1fr .9fr; gap:24px; }
+  .maya-social-layout { grid-template-columns:minmax(0,.85fr) minmax(0,1fr) minmax(220px,.9fr); gap:24px; }
+  .maya-followers { font-size:clamp(60px,6.3vw,88px); }
 }
 
 @media (max-width:820px), (prefers-reduced-motion: reduce) {
