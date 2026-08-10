@@ -479,6 +479,7 @@ function ArtistDetail({ artist, language }) {
 }
 
 const mayaStanding = { src: `${assets}artists/maya-guide/standing.png`, alt: 'Maya standing in a pink luxury fashion look' }
+const mayaWalking = { src: `${assets}artists/maya-guide/walk.png`, alt: 'Maya in a side-profile pink luxury fashion look' }
 
 const mayaWorldImages = [
   ['01.jpg', 'Beauty', 'A quiet close-up'], ['02.jpg', 'Fashion', 'Pink, precisely'],
@@ -537,7 +538,7 @@ function useMayaProfileMotion() {
       const personality = gsap.utils.toArray('.maya-personality-item')
       gsap.set(scenes, { autoAlpha: 0, y: 22, pointerEvents: 'none' })
       gsap.set(scenes[0], { autoAlpha: 1, y: 0, pointerEvents: 'auto' })
-      gsap.set(personality, { opacity: .22, x: 0 })
+      gsap.set(personality, { opacity: 1, x: 0 })
       gsap.set(camera, { xPercent: 0, yPercent: 0, scale: 1, transformOrigin: '50% 50%' })
 
       const revealScene = (timeline, from, to, at) => {
@@ -551,13 +552,14 @@ function useMayaProfileMotion() {
       // Keep the Maya camera inside the left subject lane while the dossier owns the right reading lane.
       timeline.to(camera, { xPercent: -208, yPercent: 12, scale: 1.9, transformOrigin: '50% 17%', duration: 1.3 }, .45)
         .to(atmosphere, { xPercent: -5, yPercent: 3, scale: 1.08, backgroundColor: '#191718', duration: 1.3 }, .45)
+        .to(camera, { autoAlpha: 0, duration: .16 }, .75)
       revealScene(timeline, scenes[0], scenes[1], .78)
       // The close garment frame stays entirely to the left of the Personality column.
-      timeline.to(camera, { xPercent: -198, yPercent: -14, scale: 1.9, transformOrigin: '50% 52%', duration: 1.25 }, 1.75)
+      timeline.to(camera, { autoAlpha: 1, xPercent: -198, yPercent: -14, scale: 1.9, transformOrigin: '50% 52%', duration: 1.25 }, 1.75)
         .to(atmosphere, { xPercent: 6, yPercent: -4, scale: 1.14, backgroundColor: '#191718', duration: 1.25 }, 1.75)
       revealScene(timeline, scenes[1], scenes[2], 1.92)
       personality.forEach((item, index) => {
-        timeline.to(item, { opacity: 1, x: 12, duration: .18 }, 2.15 + index * .22)
+        timeline.to(item, { x: 12, duration: .18 }, 2.15 + index * .22)
       })
       timeline.to(camera, { xPercent: 96, yPercent: 4, scale: .78, transformOrigin: '50% 50%', duration: 1.15 }, 3.05)
         .to(atmosphere, { xPercent: -3, yPercent: 2, scale: 1.02, backgroundColor: '#e7ded9', duration: 1.15 }, 3.05)
@@ -595,7 +597,7 @@ function MayaWorldPhone({ copy }) {
   return <div className="maya-phone" aria-label="Maya Instagram-style visual diary">
     <div className="maya-phone-top"><span>10:24</span><b>@mayakim02</b><span>•••</span></div>
     <div ref={railRef} className="maya-phone-rail" tabIndex="0" onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp} onScroll={onScroll}>
-      {mayaWorldImages.map((image, index) => <figure key={image.src}><img src={image.src} alt={`Maya — ${image.category}: ${image.caption}`} loading={index < 2 ? 'eager' : 'lazy'} /><figcaption><strong>{image.category}</strong><span>{image.caption}</span></figcaption></figure>)}
+      {mayaWorldImages.map((image, index) => <figure key={image.src}><img src={image.src} alt={`Maya — ${image.category}: ${image.caption}`} loading="eager" fetchPriority={index === 0 ? 'high' : 'auto'} /><figcaption><strong>{image.category}</strong><span>{image.caption}</span></figcaption></figure>)}
     </div>
     <div className="maya-phone-bottom"><span>{page} / {mayaWorldImages.length}</span><span>{copy.swipe} ↔</span></div>
   </div>
@@ -607,13 +609,21 @@ function MayaProfile({ artist, language }) {
   const social = artist.social_snapshot
   const copy = mayaStoryCopy[language]
   const audience = artist.audience_snapshot || { age_18_24: '28.4%', age_25_34: '33.4%', male_audience: '81.6%', female_audience: '18.4%', countries: 'Korea 32.9% / India 11.5% / Taiwan 8.0%' }
+  // Keep the guide and diary images ready before their pinned scene becomes visible.
+  // Lazy-loading hidden scenes made Maya appear only after the visitor had already scrolled through them.
+  useEffect(() => {
+    ;[mayaStanding.src, mayaWalking.src, ...mayaWorldImages.map(({ src }) => src)].forEach((src) => {
+      const image = new Image()
+      image.src = src
+    })
+  }, [])
   return <main id="main" ref={rootRef} className="maya-profile">
     <div className="maya-stage">
       <div className="maya-atmosphere" aria-hidden="true" />
       <figure className="maya-camera" aria-hidden="true"><img src={mayaStanding.src} alt="" fetchPriority="high" /></figure>
       <section className="maya-scene maya-scene--hero"><Container><div className="maya-safe maya-safe--hero"><a className="back-link" href="#/artists">← {copy.back}</a><Eyebrow number="01">Artist / 05</Eyebrow><h1>Maya</h1><p className="maya-role">{copy.role}</p><p className="maya-hello">{copy.hello}</p><div className="maya-about-intro">{copy.aboutLines.slice(0, 2).map((line) => <p key={line}>{line}</p>)}</div></div><img className="maya-mobile-crop maya-mobile-crop--hero" src={mayaStanding.src} alt={mayaStanding.alt} /></Container></section>
-      <section className="maya-scene maya-scene--identity"><Container><div className="maya-safe maya-safe--identity"><Eyebrow number="02">{copy.dossier}</Eyebrow><h2>Identity</h2><dl className="maya-dossier"><div><dt>{copy.height}</dt><dd>{dossier.height}</dd></div><div><dt>{copy.weight}</dt><dd>{dossier.weight}</dd></div><div><dt>{copy.measurements}</dt><dd>{dossier.measurements}</dd></div><div><dt>{copy.shoe}</dt><dd>{dossier.shoe_size}</dd></div><div><dt>{copy.base}</dt><dd>{artist.locations.join(' / ')}</dd></div><div><dt>{copy.languages}</dt><dd>{artist.languages.join(' / ')}</dd></div><div className="maya-dossier-wide"><dt>{copy.type}</dt><dd>{artist.creative_talents.join(' / ')}</dd></div></dl></div><img className="maya-mobile-crop" src={mayaStanding.src} alt={mayaStanding.alt} /></Container></section>
-      <section className="maya-scene maya-scene--detail"><Container><div className="maya-safe maya-safe--detail"><Eyebrow number="03">{copy.personality}</Eyebrow><h2>Details&nbsp;of<br />character.</h2><div className="maya-personality-list">{copy.personalityItems.map(([title, text], index) => <article className="maya-personality-item" key={title}><b>{String(index + 1).padStart(2, '0')}</b><h3>{title}</h3><p>{text}</p></article>)}</div></div><img className="maya-mobile-crop" src={mayaStanding.src} alt={mayaStanding.alt} /></Container></section>
+      <section className="maya-scene maya-scene--identity"><Container><figure className="maya-identity-portrait" aria-hidden="true"><img src={mayaWalking.src} alt="" fetchPriority="high" /></figure><div className="maya-safe maya-safe--identity"><Eyebrow number="02">{copy.dossier}</Eyebrow><h2>Identity</h2><dl className="maya-dossier"><div><dt>{copy.height}</dt><dd>{dossier.height}</dd></div><div><dt>{copy.weight}</dt><dd>{dossier.weight}</dd></div><div><dt>{copy.measurements}</dt><dd>{dossier.measurements}</dd></div><div><dt>{copy.shoe}</dt><dd>{dossier.shoe_size}</dd></div><div><dt>{copy.base}</dt><dd>{artist.locations.join(' / ')}</dd></div><div><dt>{copy.languages}</dt><dd>{artist.languages.join(' / ')}</dd></div><div className="maya-dossier-wide"><dt>{copy.type}</dt><dd>{artist.creative_talents.join(' / ')}</dd></div></dl></div><img className="maya-mobile-crop" src={mayaWalking.src} alt={mayaWalking.alt} /></Container></section>
+      <section className="maya-scene maya-scene--detail"><Container><div className="maya-safe maya-safe--detail"><Eyebrow number="03">{copy.personality}</Eyebrow><h2 className="maya-detail-title"><span>Details of</span><span>character.</span></h2><div className="maya-personality-list">{copy.personalityItems.map(([title, text], index) => <article className="maya-personality-item" key={title}><b>{String(index + 1).padStart(2, '0')}</b><div className="maya-personality-copy"><h3>{title}</h3><p>{text}</p></div></article>)}</div></div><img className="maya-mobile-crop" src={mayaStanding.src} alt={mayaStanding.alt} /></Container></section>
       <section className="maya-scene maya-scene--world"><Container><div className="maya-safe maya-safe--world"><div className="maya-world-copy"><Eyebrow number="04">{copy.world}</Eyebrow><h2>{copy.world}</h2><p>{copy.worldLead}</p><p>{copy.aboutLines[2]}</p></div><MayaWorldPhone copy={copy} /></div></Container></section>
       <section className="maya-scene maya-scene--social"><Container><div className="maya-safe maya-safe--social"><Eyebrow number="05">{copy.social}</Eyebrow><div className="maya-social-layout"><div className="maya-social-metric"><a className="maya-social-handle" href={social.url} target="_blank" rel="noreferrer">{social.platform} · {social.handle} ↗</a><strong className="maya-followers">{dossier.followers_snapshot}<small>{copy.followers}</small></strong></div><div className="maya-audience"><p>{copy.audience}</p><dl><div><dt>{copy.age2534}</dt><dd>{audience.age_25_34}</dd></div><div><dt>{copy.age1824}</dt><dd>{audience.age_18_24}</dd></div><div><dt>{copy.male}</dt><dd>{audience.male_audience}</dd></div><div><dt>{copy.female}</dt><dd>{audience.female_audience}</dd></div><div className="maya-audience-countries"><dt>{copy.countries}</dt><dd>{audience.countries}</dd></div></dl></div><div className="maya-cta"><h2>{language === 'zh' ? <><span>想一起</span><span>创作</span><span>些什么</span><span>吗？</span></> : <><span>Want to</span><span>create</span><span>something</span><span>together?</span></>}</h2><a className="maya-primary-link" href="#contact">{copy.work} →</a><a className="maya-secondary-link" href="#/artists/amber">{copy.next} →</a></div></div></div></Container></section>
     </div>
