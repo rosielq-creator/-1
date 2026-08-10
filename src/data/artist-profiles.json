@@ -12,7 +12,7 @@
       "languages": ["English", "Korean"],
       "creative_talents": ["Luxury Fashion", "High Fashion", "Art"],
       "personal_dossier": {
-        "followers_snapshot": "14.5K",
+        "followers_snapshot": "14,356",
         "height": "171 cm",
         "weight": "48 kg",
         "measurements": "85 / 63 / 89",
@@ -24,12 +24,12 @@
         "url": "https://www.instagram.com/mayakim02/"
       },
       "audience_snapshot": {
-        "label": "Demo audience snapshot · not live data",
-        "age_18_24": "58%",
-        "age_25_34": "31%",
-        "female_audience": "71%",
-        "cities": "Seoul 24% / Paris 14% / New York 11%",
-        "engagement_rate": "6.4%"
+        "label": "Audience snapshot · 30 days",
+        "age_18_24": "28.4%",
+        "age_25_34": "33.4%",
+        "male_audience": "81.6%",
+        "female_audience": "18.4%",
+        "countries": "Korea 32.9% / India 11.5% / Taiwan 8.0%"
       },
       "bio_en": null,
       "bio_zh": null,

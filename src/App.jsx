@@ -492,7 +492,7 @@ const mayaStoryCopy = {
   en: {
     back: 'Back to artists', role: 'Luxury Fashion / Art', hello: 'Hi, I’m Maya.',
     dossier: 'Personal dossier', personality: 'Personality', height: 'Height', weight: 'Weight', measurements: 'Measurements', shoe: 'Shoe size', base: 'Based in', languages: 'Languages', type: 'Artist type',
-    world: 'My World', worldLead: 'References that keep my world in motion.', about: 'About Me', social: 'Social + Contact', followers: 'Followers', audience: 'Demo audience snapshot · not live data',
+    world: 'My World', worldLead: 'References that keep my world in motion.', about: 'About Me', social: 'Social + Contact', followers: 'Followers', audience: 'Audience snapshot · 30 days',
     cta: 'Want to create something together?', work: 'Work with Maya', next: 'Next artist · Amber',
     personalityItems: [
       ['Restrained', 'I believe restraint leaves room for imagination.'],
@@ -502,12 +502,12 @@ const mayaStoryCopy = {
     ],
     aboutLines: ['I collect references before I make a statement.', 'My work lives between soft structure and a clear point of view.', 'Fashion becomes personal when it makes space for feeling.'],
     worldMoments: [['Fashion', 'Soft structure'], ['Art', 'Looking closely'], ['City life', 'Between places'], ['Beauty', 'Quiet ritual']],
-    age1824: '18–24', age2534: '25–34', female: 'Female audience', cities: 'Top cities', engagement: 'Engagement rate', swipe: 'Swipe to explore',
+    age1824: '18–24', age2534: '25–34', male: 'Male audience', female: 'Female audience', countries: 'Top countries', swipe: 'Swipe to explore',
   },
   zh: {
     back: '返回艺术家列表', role: '奢华时尚 / 艺术', hello: '你好，我是 Maya。',
     dossier: '个人档案', personality: '人物气质', height: '身高', weight: '体重', measurements: '三围', shoe: '鞋码', base: '常驻地', languages: '语言', type: '人物类型',
-    world: '我的世界', worldLead: '让我的世界持续流动的灵感。', about: '关于我', social: '社交与合作', followers: '粉丝数', audience: '示例受众快照 · 非实时数据',
+    world: '我的世界', worldLead: '让我的世界持续流动的灵感。', about: '关于我', social: '社交与合作', followers: '粉丝数', audience: '受众快照 · 近 30 天',
     cta: '想一起创作些什么吗？', work: '与 Maya 合作', next: '下一位艺术家 · Amber',
     personalityItems: [
       ['克制', '我相信克制会为想象留下空间。'],
@@ -517,7 +517,7 @@ const mayaStoryCopy = {
     ],
     aboutLines: ['在表达之前，我会先收集参考与感受。', '我的作品在柔和结构与清晰观点之间生长。', '当时尚为感受留出空间，它就会变得很私人。'],
     worldMoments: [['时尚', '柔和结构'], ['艺术', '凝视细节'], ['城市生活', '城市之间'], ['美妆', '安静仪式']],
-    age1824: '18–24 岁', age2534: '25–34 岁', female: '女性受众', cities: '热门城市', engagement: '互动率', swipe: '滑动浏览',
+    age1824: '18–24 岁', age2534: '25–34 岁', male: '男性受众', female: '女性受众', countries: '热门国家／地区', swipe: '滑动浏览',
   },
 }
 
@@ -553,12 +553,11 @@ function useMayaProfileMotion() {
         .to(atmosphere, { xPercent: -5, yPercent: 3, scale: 1.08, backgroundColor: '#191718', duration: 1.3 }, .45)
       revealScene(timeline, scenes[0], scenes[1], .78)
       // The close garment frame stays entirely to the left of the Personality column.
-      timeline.to(camera, { xPercent: -235, yPercent: -14, scale: 1.98, transformOrigin: '50% 52%', duration: 1.25 }, 1.75)
+      timeline.to(camera, { xPercent: -198, yPercent: -14, scale: 1.9, transformOrigin: '50% 52%', duration: 1.25 }, 1.75)
         .to(atmosphere, { xPercent: 6, yPercent: -4, scale: 1.14, backgroundColor: '#191718', duration: 1.25 }, 1.75)
       revealScene(timeline, scenes[1], scenes[2], 1.92)
       personality.forEach((item, index) => {
-        timeline.to(personality, { opacity: .2, duration: .12 }, 2.15 + index * .22)
-          .to(item, { opacity: 1, x: 12, duration: .18 }, 2.15 + index * .22)
+        timeline.to(item, { opacity: 1, x: 12, duration: .18 }, 2.15 + index * .22)
       })
       timeline.to(camera, { xPercent: 96, yPercent: 4, scale: .78, transformOrigin: '50% 50%', duration: 1.15 }, 3.05)
         .to(atmosphere, { xPercent: -3, yPercent: 2, scale: 1.02, backgroundColor: '#e7ded9', duration: 1.15 }, 3.05)
@@ -607,16 +606,16 @@ function MayaProfile({ artist, language }) {
   const dossier = artist.personal_dossier
   const social = artist.social_snapshot
   const copy = mayaStoryCopy[language]
-  const audience = artist.audience_snapshot || { age_18_24: '58%', age_25_34: '31%', female_audience: '71%', cities: 'Seoul 24% / Paris 14% / New York 11%', engagement_rate: '6.4%' }
+  const audience = artist.audience_snapshot || { age_18_24: '28.4%', age_25_34: '33.4%', male_audience: '81.6%', female_audience: '18.4%', countries: 'Korea 32.9% / India 11.5% / Taiwan 8.0%' }
   return <main id="main" ref={rootRef} className="maya-profile">
     <div className="maya-stage">
       <div className="maya-atmosphere" aria-hidden="true" />
       <figure className="maya-camera" aria-hidden="true"><img src={mayaStanding.src} alt="" fetchPriority="high" /></figure>
       <section className="maya-scene maya-scene--hero"><Container><div className="maya-safe maya-safe--hero"><a className="back-link" href="#/artists">← {copy.back}</a><Eyebrow number="01">Artist / 05</Eyebrow><h1>Maya</h1><p className="maya-role">{copy.role}</p><p className="maya-hello">{copy.hello}</p><div className="maya-about-intro">{copy.aboutLines.slice(0, 2).map((line) => <p key={line}>{line}</p>)}</div></div><img className="maya-mobile-crop maya-mobile-crop--hero" src={mayaStanding.src} alt={mayaStanding.alt} /></Container></section>
       <section className="maya-scene maya-scene--identity"><Container><div className="maya-safe maya-safe--identity"><Eyebrow number="02">{copy.dossier}</Eyebrow><h2>Identity</h2><dl className="maya-dossier"><div><dt>{copy.height}</dt><dd>{dossier.height}</dd></div><div><dt>{copy.weight}</dt><dd>{dossier.weight}</dd></div><div><dt>{copy.measurements}</dt><dd>{dossier.measurements}</dd></div><div><dt>{copy.shoe}</dt><dd>{dossier.shoe_size}</dd></div><div><dt>{copy.base}</dt><dd>{artist.locations.join(' / ')}</dd></div><div><dt>{copy.languages}</dt><dd>{artist.languages.join(' / ')}</dd></div><div className="maya-dossier-wide"><dt>{copy.type}</dt><dd>{artist.creative_talents.join(' / ')}</dd></div></dl></div><img className="maya-mobile-crop" src={mayaStanding.src} alt={mayaStanding.alt} /></Container></section>
-      <section className="maya-scene maya-scene--detail"><Container><div className="maya-safe maya-safe--detail"><Eyebrow number="03">{copy.personality}</Eyebrow><h2>Details<br />of character.</h2><div className="maya-personality-list">{copy.personalityItems.map(([title, text], index) => <article className="maya-personality-item" key={title}><b>{String(index + 1).padStart(2, '0')}</b><h3>{title}</h3><p>{text}</p></article>)}</div></div><img className="maya-mobile-crop" src={mayaStanding.src} alt={mayaStanding.alt} /></Container></section>
+      <section className="maya-scene maya-scene--detail"><Container><div className="maya-safe maya-safe--detail"><Eyebrow number="03">{copy.personality}</Eyebrow><h2>Details&nbsp;of<br />character.</h2><div className="maya-personality-list">{copy.personalityItems.map(([title, text], index) => <article className="maya-personality-item" key={title}><b>{String(index + 1).padStart(2, '0')}</b><h3>{title}</h3><p>{text}</p></article>)}</div></div><img className="maya-mobile-crop" src={mayaStanding.src} alt={mayaStanding.alt} /></Container></section>
       <section className="maya-scene maya-scene--world"><Container><div className="maya-safe maya-safe--world"><div className="maya-world-copy"><Eyebrow number="04">{copy.world}</Eyebrow><h2>{copy.world}</h2><p>{copy.worldLead}</p><p>{copy.aboutLines[2]}</p></div><MayaWorldPhone copy={copy} /></div></Container></section>
-      <section className="maya-scene maya-scene--social"><Container><div className="maya-safe maya-safe--social"><Eyebrow number="05">{copy.social}</Eyebrow><div className="maya-social-layout"><div className="maya-social-metric"><a className="maya-social-handle" href={social.url} target="_blank" rel="noreferrer">{social.platform} · {social.handle} ↗</a><strong className="maya-followers">{dossier.followers_snapshot}<small>{copy.followers}</small></strong></div><div className="maya-audience"><p>{copy.audience}</p><dl><div><dt>{copy.age1824}</dt><dd>{audience.age_18_24}</dd></div><div><dt>{copy.age2534}</dt><dd>{audience.age_25_34}</dd></div><div><dt>{copy.female}</dt><dd>{audience.female_audience}</dd></div><div><dt>{copy.engagement}</dt><dd>{audience.engagement_rate}</dd></div><div className="maya-audience-cities"><dt>{copy.cities}</dt><dd>{audience.cities}</dd></div></dl></div><div className="maya-cta"><h2>{copy.cta}</h2><a className="maya-primary-link" href="#/contact">{copy.work} →</a><a className="maya-secondary-link" href="#/artists/amber">{copy.next} →</a></div></div></div></Container></section>
+      <section className="maya-scene maya-scene--social"><Container><div className="maya-safe maya-safe--social"><Eyebrow number="05">{copy.social}</Eyebrow><div className="maya-social-layout"><div className="maya-social-metric"><a className="maya-social-handle" href={social.url} target="_blank" rel="noreferrer">{social.platform} · {social.handle} ↗</a><strong className="maya-followers">{dossier.followers_snapshot}<small>{copy.followers}</small></strong></div><div className="maya-audience"><p>{copy.audience}</p><dl><div><dt>{copy.age2534}</dt><dd>{audience.age_25_34}</dd></div><div><dt>{copy.age1824}</dt><dd>{audience.age_18_24}</dd></div><div><dt>{copy.male}</dt><dd>{audience.male_audience}</dd></div><div><dt>{copy.female}</dt><dd>{audience.female_audience}</dd></div><div className="maya-audience-countries"><dt>{copy.countries}</dt><dd>{audience.countries}</dd></div></dl></div><div className="maya-cta"><h2>{language === 'zh' ? <><span>想一起</span><span>创作</span><span>些什么</span><span>吗？</span></> : <><span>Want to</span><span>create</span><span>something</span><span>together?</span></>}</h2><a className="maya-primary-link" href="#contact">{copy.work} →</a><a className="maya-secondary-link" href="#/artists/amber">{copy.next} →</a></div></div></div></Container></section>
     </div>
   </main>
 }
@@ -642,7 +641,10 @@ export default function App() {
 
   useEffect(() => {
     if (route.type !== 'home' || !route.anchor) return
-    requestAnimationFrame(() => document.getElementById(route.anchor)?.scrollIntoView({ block: 'start' }))
+    requestAnimationFrame(() => {
+      document.getElementById(route.anchor)?.scrollIntoView({ block: 'start' })
+      if (route.anchor === 'contact') document.querySelector('.contact-form input')?.focus({ preventScroll: true })
+    })
   }, [route])
 
   const navigate = useCallback((hash) => { window.location.hash = hash }, [])
