@@ -11,11 +11,11 @@ const assets = `${import.meta.env.BASE_URL}assets/`
 const vineScaleY = 1.035
 
 const artists = [
-  { number: '01', name: 'Amber', slug: 'amber', src: `${assets}artists/amber.png`, position: '50% 26%', role: 'Digital Muse & Beauty Creator', tags: ['Beauty', 'Fashion', 'Lifestyle'] },
-  { number: '02', name: 'Ooona', slug: 'ooona', src: `${assets}artists/ooona.png`, position: '50% 34%', role: 'Experimental Digital Artist KOL', tags: ['Beauty', 'Art', 'Sport'] },
-  { number: '03', name: 'Maya', slug: 'maya', src: `${assets}artists/maya.png`, position: '50% 34%', role: 'Digital Artist & Cultural Muse', tags: ['Fashion', 'Art', 'Lifestyle'] },
-  { number: '04', name: 'Noah', slug: 'noah', src: `${assets}artists/noah.png`, position: '54% 20%', role: 'Virtual Artist & Visual Storyteller', tags: ['Film', 'Music', 'Lifestyle'] },
-  { number: '05', name: 'Mario', slug: 'mario', src: `${assets}artists/mario.jpg`, position: '45% 24%', role: 'Virtual Creator & Urban Storyteller', tags: ['Streetwear', 'Travel', 'Culture'] },
+  { number: '01', name: 'Amber', slug: 'amber', src: `${assets}artists/thumbs/amber.jpg`, position: '50% 26%', role: 'Digital Muse & Beauty Creator', tags: ['Beauty', 'Fashion', 'Lifestyle'] },
+  { number: '02', name: 'Ooona', slug: 'ooona', src: `${assets}artists/thumbs/ooona.jpg`, position: '50% 34%', role: 'Experimental Digital Artist KOL', tags: ['Beauty', 'Art', 'Sport'] },
+  { number: '03', name: 'Maya', slug: 'maya', src: `${assets}artists/thumbs/maya.jpg`, position: '50% 34%', role: 'Digital Artist & Cultural Muse', tags: ['Fashion', 'Art', 'Lifestyle'] },
+  { number: '04', name: 'Noah', slug: 'noah', src: `${assets}artists/thumbs/noah.jpg`, position: '54% 20%', role: 'Virtual Artist & Visual Storyteller', tags: ['Film', 'Music', 'Lifestyle'] },
+  { number: '05', name: 'Mario', slug: 'mario', src: `${assets}artists/thumbs/mario.jpg`, position: '45% 24%', role: 'Virtual Creator & Urban Storyteller', tags: ['Streetwear', 'Travel', 'Culture'] },
 ]
 const featuredArtists = artists.slice(0, 5)
 
@@ -24,7 +24,7 @@ const featuredArtists = artists.slice(0, 5)
 const directoryArtists = artistProfilesSource.artists.map((artist, index) => ({
   ...artist,
   number: String(index + 1).padStart(2, '0'),
-  src: `${assets}artists/profiles/${artist.image.replace('images/', '')}`,
+  src: `${assets}artists/thumbs/${artist.id}.jpg`,
   position: '50% 35%',
 }))
 
@@ -112,6 +112,24 @@ function useRoute() {
     return () => window.removeEventListener('hashchange', onHashChange)
   }, [])
   return route
+}
+
+const artistProfileMedia = {
+  amber: {
+    hero: 'night-portrait.jpg', gallery: ['denim-editorial.jpg', 'festival-stage.jpg', 'festival-wheel.jpg'],
+    bio: 'Amber is a Korean-American music producer whose identity brings together genre-defying sound, fashion-forward restraint and the rhythm of city culture.',
+    dossier: [['Height', '175 cm'], ['Weight', '50 kg'], ['Measurements', '85 / 63 / 89'], ['Shoe size', '38'], ['Based in', 'Los Angeles / Seoul'], ['Languages', 'English / Korean'], ['Followers', '13,094']],
+  },
+  mario: {
+    hero: 'mario-hero.jpg', gallery: ['mario-editorial.jpg', 'mario-campaign.jpg', 'mario-portrait.jpg'],
+    bio: 'Mario is a Chinese lifestyle creator and independent photographer. His world moves between city streets, sport, travel and the quiet details of everyday life.',
+    dossier: [['Height', '185 cm'], ['Weight', '80 kg'], ['Measurements', '100 / 80 / 96'], ['Shoe size', '44'], ['Based in', 'Guangdong'], ['Languages', 'Mandarin / Cantonese / English'], ['Followers', '13.5K']],
+  },
+  ooona: {
+    hero: 'hero.jpg', gallery: ['mirror.jpg', 'stairs.jpg', 'sport.jpg'],
+    bio: 'Ooona is a beauty, wellness and lifestyle talent. Her world combines yoga, clean beauty and a gentle Seoul sensibility that feels light and approachable.',
+    dossier: [['Height', '165 cm'], ['Weight', '45 kg'], ['Measurements', '82 / 60 / 86'], ['Shoe size', '38'], ['Based in', 'Seoul'], ['Languages', 'Korean / English'], ['Followers', '15.1K']],
+  },
 }
 
 function useHomeNarrative(active) {
@@ -240,10 +258,10 @@ function BotanicalStory() {
 
   return <div ref={storyRef} className="botanical-story" aria-hidden="true">
     <MediaFrame priority decorative fit="contain" className="story-plant story-seed" src={`${assets}transparent/seed.png`} />
-    <MediaFrame priority decorative fit="contain" ref={sproutRef} className="story-plant story-sprout" src={`${assets}transparent/sprout.png`} />
-    <MediaFrame priority decorative fit="contain" ref={vineRef} className="story-plant story-vine" src={`${assets}transparent/vine-v2.png`} style={{ '--vine-x': `${anchors.vineX}px`, '--vine-y': `${anchors.vineY}px`, '--vine-clip': `${anchors.vineClip}px`, '--vine-scale-y': vineScaleY }} />
-    <MediaFrame priority decorative fit="contain" ref={flowerRef} className="story-plant story-flower" src={`${assets}transparent/flower-v2.png`} />
-    <MediaFrame priority decorative fit="contain" ref={continuationRef} className="story-plant story-continuation" src={`${assets}transparent/continuation-v2.png`} style={{ '--continuation-x': `${anchors.continuationX}px`, '--continuation-y': `${anchors.continuationY}px` }} />
+    <MediaFrame decorative fit="contain" ref={sproutRef} className="story-plant story-sprout" src={`${assets}transparent/sprout.png`} />
+    <MediaFrame decorative fit="contain" ref={vineRef} className="story-plant story-vine" src={`${assets}transparent/vine-v2.png`} style={{ '--vine-x': `${anchors.vineX}px`, '--vine-y': `${anchors.vineY}px`, '--vine-clip': `${anchors.vineClip}px`, '--vine-scale-y': vineScaleY }} />
+    <MediaFrame decorative fit="contain" ref={flowerRef} className="story-plant story-flower" src={`${assets}transparent/flower-v2.png`} />
+    <MediaFrame decorative fit="contain" ref={continuationRef} className="story-plant story-continuation" src={`${assets}transparent/continuation-v2.png`} style={{ '--continuation-x': `${anchors.continuationX}px`, '--continuation-y': `${anchors.continuationY}px` }} />
   </div>
 }
 
@@ -473,21 +491,35 @@ function ArtistsOverview({ language }) {
 function ArtistDetail({ artist, language }) {
   if (!artist) return <NotFound />
   if (artist.id === 'maya') return <MayaProfile artist={artist} language={language} />
+  if (artistProfileMedia[artist.id]) return <ArtistProfile artist={artist} language={language} media={artistProfileMedia[artist.id]} />
   const labels = directoryLabels[language]
   const role = language === 'zh' ? artist.role_zh : artist.role_en
   return <main id="main" className="subpage subpage--dark"><Container><div className="detail-grid detail-grid--artist"><div><PageHeader eyebrow={`${artist.number} / Artist`} title={artist.display_name} back="#/artists" backLabel={labels.back} /><p className="detail-role">{role}</p><dl className="artist-confirmed-fields"><div><dt>{labels.location}</dt><dd>{artist.locations.join(' · ')}</dd></div><div><dt>{labels.languages}</dt><dd>{artist.languages.join(' · ')}</dd></div><div><dt>{labels.talents}</dt><dd>{artist.creative_talents.join(' · ')}</dd></div></dl><p className="artist-coming-soon">{labels.comingSoon}</p></div><figure className="detail-media"><img src={artist.src} alt={`Portrait of ${artist.display_name}`} style={{ objectPosition: artist.position }} /></figure></div></Container></main>
+}
+
+function ArtistProfile({ artist, language, media }) {
+  const labels = directoryLabels[language]
+  const role = language === 'zh' ? artist.role_zh : artist.role_en
+  return <main id="main" className="artist-profile-page subpage--dark">
+    <Container>
+      <a className="back-link" href="#/artists">← {labels.back}</a>
+      <section className="artist-profile-hero">
+        <div><Eyebrow number={artist.number}>Artist profile</Eyebrow><h1>{artist.display_name}</h1><p className="artist-profile-role">{role}</p><p className="artist-profile-bio">{media.bio}</p><a className="artist-contact-link" href="#contact">Work with {artist.display_name} →</a></div>
+        <figure><img src={`${assets}artists/profile-media/${artist.id}/${media.hero}`} alt={`${artist.display_name} portrait`} fetchPriority="high" /></figure>
+      </section>
+      <section className="artist-profile-section"><Eyebrow number="02">Personal dossier</Eyebrow><dl className="artist-profile-dossier">{media.dossier.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl></section>
+      <section className="artist-profile-section artist-profile-gallery"><Eyebrow number="03">Selected frames</Eyebrow><div>{media.gallery.map((file) => <figure key={file}><img src={`${assets}artists/profile-media/${artist.id}/${file}`} alt={`${artist.display_name} visual diary`} loading="lazy" /></figure>)}</div></section>
+    </Container>
+  </main>
 }
 
 const mayaStanding = { src: `${assets}artists/maya-guide/standing.png`, alt: 'Maya standing in a pink luxury fashion look' }
 const mayaWalking = { src: `${assets}artists/maya-guide/walk.png`, alt: 'Maya in a side-profile pink luxury fashion look' }
 
 const mayaWorldImages = [
-  ['01.jpg', 'Beauty', 'A quiet close-up'], ['02.jpg', 'Fashion', 'Pink, precisely'],
-  ['03.jpg', 'Beauty', 'A gesture in focus'], ['04.jpg', 'Beauty', 'Playful colour'],
-  ['05.jpg', 'Sport', 'Stadium light'], ['06.jpg', 'City life', 'After the game'],
-  ['07.jpg', 'Sport', 'Watching closely'], ['08.jpg', 'Art', 'A composed pause'],
-  ['09.jpg', 'Beauty', 'Identity study'], ['10.jpg', 'City life', 'A soft afternoon'],
-].map(([file, category, caption]) => ({ src: `${assets}artists/maya-world/${file}`, category, caption }))
+  ['pink-editorial.jpg', 'Fashion', 'Soft structure'], ['pink-closeup.jpg', 'Beauty', 'A quiet close-up'],
+  ['black-tailoring.jpg', 'Art', 'A tailored pause'], ['street-grey.jpg', 'City life', 'Between places'],
+].map(([file, category, caption]) => ({ src: `${assets}artists/maya-world/mockup/${file}`, category, caption }))
 
 const mayaStoryCopy = {
   en: {
@@ -597,7 +629,7 @@ function MayaWorldPhone({ copy }) {
   return <div className="maya-phone" aria-label="Maya Instagram-style visual diary">
     <div className="maya-phone-top"><span>10:24</span><b>@mayakim02</b><span>•••</span></div>
     <div ref={railRef} className="maya-phone-rail" tabIndex="0" onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp} onScroll={onScroll}>
-      {mayaWorldImages.map((image, index) => <figure key={image.src}><img src={image.src} alt={`Maya — ${image.category}: ${image.caption}`} loading="eager" fetchPriority={index === 0 ? 'high' : 'auto'} /><figcaption><strong>{image.category}</strong><span>{image.caption}</span></figcaption></figure>)}
+      {mayaWorldImages.map((image, index) => <figure key={image.src}><img src={image.src} alt={`Maya — ${image.category}: ${image.caption}`} loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><figcaption><strong>{image.category}</strong><span>{image.caption}</span></figcaption></figure>)}
     </div>
     <div className="maya-phone-bottom"><span>{page} / {mayaWorldImages.length}</span><span>{copy.swipe} ↔</span></div>
   </div>
@@ -612,7 +644,7 @@ function MayaProfile({ artist, language }) {
   // Keep the guide and diary images ready before their pinned scene becomes visible.
   // Lazy-loading hidden scenes made Maya appear only after the visitor had already scrolled through them.
   useEffect(() => {
-    ;[mayaStanding.src, mayaWalking.src, ...mayaWorldImages.map(({ src }) => src)].forEach((src) => {
+    ;[mayaStanding.src, mayaWalking.src, ...mayaWorldImages.slice(0, 2).map(({ src }) => src)].forEach((src) => {
       const image = new Image()
       image.src = src
     })
@@ -648,6 +680,11 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const route = useRoute()
   const t = copy[language]
+
+  useLayoutEffect(() => {
+    if (route.type === 'home') return
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }, [route.type, route.slug])
 
   useEffect(() => {
     if (route.type !== 'home' || !route.anchor) return
