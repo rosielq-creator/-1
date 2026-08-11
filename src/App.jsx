@@ -415,7 +415,7 @@ function DirectoryArtistCard({ artist, language, className = '', style }) {
   const labels = directoryLabels[language]
   const role = language === 'zh' ? artist.role_zh : artist.role_en
   const profileHash = `#/artists/${artist.profile_slug}`
-  const openProfile = () => { window.location.hash = profileHash }
+  const openProfile = (event) => { event.preventDefault(); window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); window.location.hash = profileHash }
   return <a className={`directory-artist-card ${className}`} href={profileHash} onClick={openProfile} aria-label={`${labels.profile}: ${artist.display_name}`} style={style}>
     <img src={artist.src} alt={`Portrait of ${artist.display_name}`} style={{ objectPosition: artist.position }} loading="lazy" decoding="async" />
     <span className="directory-card-scrim" aria-hidden="true" />
@@ -701,6 +701,19 @@ function useMayaProfileMotion() {
   return rootRef
 }
 
+function useProfileStart(profileId) {
+  useLayoutEffect(() => {
+    // Hash navigation must always enter a pinned story at scene 01, never at the
+    // scroll position carried over from the artist directory rail.
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    const frame = requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+      ScrollTrigger.refresh()
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [profileId])
+}
+
 function MayaWorldPhone({ copy }) {
   const railRef = useRef(null)
   const dragRef = useRef({ active: false, x: 0, scroll: 0 })
@@ -732,6 +745,7 @@ function MayaWorldPhone({ copy }) {
 
 function MayaProfile({ artist, language }) {
   const rootRef = useMayaProfileMotion()
+  useProfileStart(artist.id)
   const dossier = artist.personal_dossier
   const social = artist.social_snapshot
   const copy = mayaStoryCopy[language]
@@ -821,6 +835,7 @@ function ArtistWorldPhone({ artist, story, copy }) {
 
 function ArtistStoryProfile({ artist, language, story }) {
   const rootRef = useArtistStoryMotion()
+  useProfileStart(artist.id)
   const media = artistProfileMedia[artist.id]
   const copy = mayaStoryCopy[language]
   const pose = (name) => `${assets}artists/profile-poses/${artist.id}/${story.poses[name]}`
@@ -871,7 +886,7 @@ export default function App() {
     })
   }, [route])
 
-  const navigate = useCallback((hash) => { window.location.hash = hash }, [])
+  const navigate = useCallback((hash) => { window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); window.location.hash = hash }, [])
   const content = route.type === 'home' ? <HomePage t={t} onNavigate={navigate} />
     : route.type === 'artists' ? <ArtistsOverview language={language} />
       : route.type === 'artist-detail' ? <ArtistDetail artist={directoryArtists.find((artist) => artist.profile_slug === route.slug)} language={language} />
