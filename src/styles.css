@@ -455,7 +455,7 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
 .maya-safe--cases h2 { margin:18px 0 clamp(32px,5svh,54px); font-size:clamp(54px,5.4vw,90px); line-height:.84; }
 .maya-collaboration-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(14px,1.5vw,26px); }
 .maya-collaboration-card { display:grid; gap:12px; min-width:0; font:600 clamp(11px,1vw,16px)/1 var(--mono); letter-spacing:.04em; text-transform:uppercase; }
-.maya-collaboration-card img { display:block; width:100%; aspect-ratio:1/1.13; object-fit:cover; background:#d3c4c5; transition:transform 240ms ease; }
+.maya-collaboration-card img { display:block; width:100%; height:auto; max-height:46svh; object-fit:contain; background:transparent; transition:transform 240ms ease; }
 .maya-collaboration-card:hover img { transform:translateY(-5px); }
 .maya-social-layout { display:grid; grid-template-columns:minmax(0,.92fr) minmax(0,1fr) minmax(270px,.8fr); gap:clamp(40px,4vw,80px); align-items:start; margin-top:clamp(130px,16svh,180px); }
 .maya-social-handle { display:inline-block; max-width:100%; margin-bottom:28px; border-bottom:1px solid currentColor; padding-bottom:6px; font:600 clamp(18px,1.6vw,28px)/1 var(--mono); letter-spacing:-.04em; }
