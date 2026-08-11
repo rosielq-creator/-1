@@ -259,6 +259,7 @@ function BotanicalStory() {
   const vineRef = useRef(null)
   const flowerRef = useRef(null)
   const continuationRef = useRef(null)
+  const [anchorsReady, setAnchorsReady] = useState(false)
   const [anchors, setAnchors] = useState({ vineX: 0, vineY: 0, vineClip: 0, continuationX: 0, continuationY: 0 })
 
   const measureContent = useCallback((node) => {
@@ -271,7 +272,10 @@ function BotanicalStory() {
   }, [])
 
   const updateAnchors = useCallback(() => {
-    if (window.innerWidth <= 760) return
+    if (window.innerWidth <= 760) {
+      setAnchorsReady(true)
+      return
+    }
     const sprout = measureContent(sproutRef.current)
     const vine = measureContent(vineRef.current)
     const flower = measureContent(flowerRef.current)
@@ -293,6 +297,7 @@ function BotanicalStory() {
       continuationY: Math.round(flowerAnchor.y - continuationAnchor.y - overlap),
     }
     setAnchors((current) => Object.keys(next).every((key) => current[key] === next[key]) ? current : next)
+    setAnchorsReady(true)
   }, [measureContent])
 
   useLayoutEffect(() => {
@@ -307,12 +312,12 @@ function BotanicalStory() {
     return () => { observer.disconnect(); images.forEach((image) => image.removeEventListener('load', updateAnchors)); window.removeEventListener('resize', updateAnchors) }
   }, [updateAnchors])
 
-  return <div ref={storyRef} className="botanical-story" aria-hidden="true">
+  return <div ref={storyRef} className={`botanical-story ${anchorsReady ? 'is-ready' : ''}`} aria-hidden="true">
     <MediaFrame priority decorative fit="contain" className="story-plant story-seed" src={`${assets}transparent/seed.png`} />
-    <MediaFrame decorative fit="contain" ref={sproutRef} className="story-plant story-sprout" src={`${assets}transparent/sprout.png`} />
-    <MediaFrame decorative fit="contain" ref={vineRef} className="story-plant story-vine" src={`${assets}transparent/vine-v2.png`} style={{ '--vine-x': `${anchors.vineX}px`, '--vine-y': `${anchors.vineY}px`, '--vine-clip': `${anchors.vineClip}px`, '--vine-scale-y': vineScaleY }} />
-    <MediaFrame decorative fit="contain" ref={flowerRef} className="story-plant story-flower" src={`${assets}transparent/flower-v2.png`} />
-    <MediaFrame decorative fit="contain" ref={continuationRef} className="story-plant story-continuation" src={`${assets}transparent/continuation-v2.png`} style={{ '--continuation-x': `${anchors.continuationX}px`, '--continuation-y': `${anchors.continuationY}px` }} />
+    <MediaFrame priority decorative fit="contain" ref={sproutRef} className="story-plant story-sprout" src={`${assets}transparent/sprout.png`} />
+    <MediaFrame priority decorative fit="contain" ref={vineRef} className="story-plant story-vine" src={`${assets}transparent/vine-v2.png`} style={{ '--vine-x': `${anchors.vineX}px`, '--vine-y': `${anchors.vineY}px`, '--vine-clip': `${anchors.vineClip}px`, '--vine-scale-y': vineScaleY }} />
+    <MediaFrame priority decorative fit="contain" ref={flowerRef} className="story-plant story-flower" src={`${assets}transparent/flower-v2.png`} />
+    <MediaFrame priority decorative fit="contain" ref={continuationRef} className="story-plant story-continuation" src={`${assets}transparent/continuation-v2.png`} style={{ '--continuation-x': `${anchors.continuationX}px`, '--continuation-y': `${anchors.continuationY}px` }} />
   </div>
 }
 

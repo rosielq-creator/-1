@@ -6,7 +6,7 @@ const app = readFileSync(new URL('../src/App.jsx', import.meta.url), 'utf8')
 const styles = readFileSync(new URL('../src/styles.css', import.meta.url), 'utf8')
 
 test('profile typography loads and scopes Instrument Serif', () => {
-  assert.match(styles, /family=Instrument\+Serif/)
+  assert.match(styles, /@font-face\s*\{[^}]*font-family:'Instrument Serif'[^}]*instrument-serif-regular\.woff2/s)
   assert.match(styles, /--serif:\s*'Instrument Serif'/)
   assert.match(styles, /\.maya-world-copy[\s\S]*font-family:\s*var\(--serif\)/)
   assert.match(styles, /letter-spacing:\s*\.01em/)
