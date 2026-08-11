@@ -567,7 +567,7 @@ const storyProfiles = {
       ['Open', 'The best images leave room to breathe and become your own.'],
     ],
     worldLead: 'Beauty, motion and everyday rituals in my own rhythm.',
-    world: [['hero.jpg', 'Beauty', 'A bright beginning'], ['mirror.jpg', 'Reflection', 'Looking closer'], ['stairs.jpg', 'City life', 'A gentle ascent'], ['sport.jpg', 'Motion', 'Energy in practice']],
+    world: [['video/lip-gloss.mp4', 'Lip colour', 'A polished detail', 'video'], ['video/beauty-still-life.mp4', 'Beauty object', 'A close look', 'video'], ['video/transformation.mp4', 'Transformation', 'A shift in mood', 'video'], ['sport.jpg', 'Motion', 'Energy in practice']],
     socialLabel: 'Instagram snapshot · historical', socialHandle: 'Instagram', followers: '15.1K',
     factsLabel: 'Audience snapshot · historical', facts: [
       ['Male audience', '72.4%'], ['Female audience', '27.6%'], ['18–24', '37.8%'],
