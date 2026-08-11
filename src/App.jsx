@@ -702,6 +702,9 @@ const mayaWalking = { src: `${assets}artists/maya-guide/walk.png`, alt: 'Maya in
 const mayaWorldImages = [
   ['pink-editorial.jpg', 'Fashion', 'Soft structure'], ['pink-closeup.jpg', 'Beauty', 'A quiet close-up'],
   ['black-tailoring.jpg', 'Art', 'A tailored pause'], ['street-grey.jpg', 'City life', 'Between places'],
+  ['cafe-peace.jpg', 'Pause', 'A small moment between plans'], ['camera-selfie.jpg', 'Self portrait', 'Behind the camera'],
+  ['graffiti-street.jpg', 'City life', 'A street-side pause'], ['chrome-street.jpg', 'Style', 'A sharper silhouette'],
+  ['cafe-window.jpg', 'Afternoon', 'A table by the window'],
 ].map(([file, category, caption]) => ({ src: `${assets}artists/maya-world/mockup/${file}`, category, caption }))
 const mayaCollaborations = [
   ['hifather', 'HI FATHER', 'https://www.instagram.com/p/C14WnnsJ037/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
