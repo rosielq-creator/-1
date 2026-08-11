@@ -578,6 +578,8 @@ const storyProfiles = {
     ],
     collaborations: [
       ['miumiu', 'MIU MIU', 'https://www.instagram.com/p/DXv8OU5FTeN/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
+      ['loewe', 'LOEWE', 'https://www.instagram.com/p/C9hC59UJJHm/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
+      ['lemaire', 'LEMAIRE', 'https://www.instagram.com/p/C7QdMqiNONh/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
     ],
     socialLabel: 'Historical snapshot', socialHandle: 'Instagram', followers: '12,999',
     factsLabel: 'Audience snapshot · historical', facts: [
