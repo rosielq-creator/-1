@@ -92,6 +92,9 @@ const copy = {
     sent: 'Thank you — your message has been sent.',
     sendError: 'Something went wrong. Please try again or email us directly.',
     menu: 'Menu',
+    est: 'Est. Hong Kong', scroll: 'Scroll to grow', aboutEyebrow: 'About us', artistsEyebrow: 'Artists', workEyebrow: 'Work', brandsEyebrow: 'Brands & services', contactEyebrow: 'Contact',
+    allArtists: 'View all artists', allWork: 'View all work', profile: 'View profile', playCase: 'Play case', selectedWork: 'Selected work', madeToMove: <>Made<br />to move.</>,
+    workFormats: 'Work formats', openWork: 'Open work', moreWork: 'More stories are in development.', skip: 'Skip to content', home: 'Green Tomato home', navigation: 'Main navigation', language: 'Language',
   },
   zh: {
     nav: ['关于', '艺术家', '作品', '品牌', '服务', '联系'],
@@ -114,6 +117,9 @@ const copy = {
     sent: '谢谢，你的消息已经发送。',
     sendError: '发送失败，请重试或直接发送邮件给我们。',
     menu: '菜单',
+    est: '创立于香港', scroll: '向下滚动，继续生长', aboutEyebrow: '关于我们', artistsEyebrow: '艺术家', workEyebrow: '作品', brandsEyebrow: '品牌与服务', contactEyebrow: '联系',
+    allArtists: '查看所有艺术家', allWork: '查看全部作品', profile: '查看档案', playCase: '播放案例', selectedWork: '精选作品', madeToMove: <>为流动<br />而作。</>,
+    workFormats: '作品分类', openWork: '打开作品', moreWork: '更多作品正在制作中。', skip: '跳至主要内容', home: 'Green Tomato 首页', navigation: '主导航', language: '语言',
   },
 }
 
@@ -125,7 +131,12 @@ const languageOptions = [
   ['zh', '简', '简体中文'],
 ]
 
-copy['zh-Hant'] = { ...copy.zh, nav: ['關於', '藝術家', '作品', '品牌', '服務', '聯絡'], menu: '選單' }
+copy['zh-Hant'] = { ...copy.zh,
+  nav: ['關於', '藝術家', '作品', '品牌', '服務', '聯絡'], menu: '選單', heroKicker: '新現實的創作之家', heroBody: '我們為塑造文化的品牌，構築身份、影像與世界。',
+  aboutTitle: <>人的感知。<br />機器的可能。</>, aboutBody: '我們代表新一代創作者，將藝術與程式、想像與人的視角融合在一起。', artistsTitle: <>塑造全新現實的<br />創作者。</>, artistsBody: '導演、設計師與技術創作者，將大膽想法化為推動文化的作品。',
+  workTitle: <>精選作品，<br />為觸動而生。</>, workBody: '從短片到品牌世界，我們創作能被感受並留下餘韻的故事。', brandsTitle: <>與品牌同行。<br />為文化而作。</>, worldTitle: <>我們構築<br />完整的世界。</>, worldItems: ['AI 人才選角', '角色創意顧問', '內容製作', '活動共創'], contactTitle: <>告訴我們<br />你的故事</>, form: ['姓名', '電郵', '專案 / 預算', '還有什麼想說'], send: '傳送訊息', sending: '傳送中…', sent: '謝謝，你的訊息已經送出。', sendError: '傳送失敗，請重試或直接寄信給我們。',
+  est: '創立於香港', scroll: '向下捲動，繼續成長', aboutEyebrow: '關於我們', artistsEyebrow: '藝術家', workEyebrow: '作品', brandsEyebrow: '品牌與服務', contactEyebrow: '聯絡', allArtists: '查看所有藝術家', allWork: '查看全部作品', profile: '查看檔案', playCase: '播放案例', selectedWork: '精選作品', madeToMove: <>為流動<br />而作。</>, workFormats: '作品分類', openWork: '打開作品', moreWork: '更多作品正在製作中。', skip: '跳至主要內容', home: 'Green Tomato 首頁', navigation: '主導覽', language: '語言',
+}
 
 function getRoute() {
   const value = window.location.hash.replace(/^#/, '')
@@ -309,12 +320,12 @@ function Header({ language, setLanguage, menuOpen, setMenuOpen }) {
   const t = copy[language]
   return <header className="site-header">
     <Container className="header-inner">
-      <a className="brand-signature" href="#/" aria-label="Green Tomato home"><img src={`${assets}brand/green-tomato-logo-green.png`} alt="GreenTomato" /></a>
-      <nav className={menuOpen ? 'main-nav is-open' : 'main-nav'} aria-label="Main navigation">
+      <a className="brand-signature" href="#/" aria-label={t.home}><img src={`${assets}brand/green-tomato-logo-green.png`} alt="GreenTomato" /></a>
+      <nav className={menuOpen ? 'main-nav is-open' : 'main-nav'} aria-label={t.navigation}>
         {t.nav.map((item, index) => <a key={navTargets[index]} href={navHrefs[index]} onClick={() => setMenuOpen(false)}>{item}</a>)}
       </nav>
       <div className="header-actions">
-        <div className="language-switcher" role="group" aria-label="Language">
+        <div className="language-switcher" role="group" aria-label={t.language}>
           {languageOptions.map(([value, label, accessibleLabel]) => <button key={value} className={language === value ? 'is-active' : ''} type="button" onClick={() => { setLanguage(value); setMenuOpen(false) }} aria-pressed={language === value} aria-label={accessibleLabel}>{label}</button>)}
         </div>
       </div>
@@ -322,17 +333,17 @@ function Header({ language, setLanguage, menuOpen, setMenuOpen }) {
   </header>
 }
 
-function ArtistCard({ artist, onOpen, total }) {
-  return <button className={`artist-tile artist-tile--${artist.slug}`} type="button" onClick={() => onOpen(`#/artists/${artist.slug}`)} aria-label={`View ${artist.name} profile`}>
+function ArtistCard({ artist, onOpen, total, t }) {
+  return <button className={`artist-tile artist-tile--${artist.slug}`} type="button" onClick={() => onOpen(`#/artists/${artist.slug}`)} aria-label={`${t.profile}: ${artist.name}`}>
     <img src={artist.src} alt={`Portrait of ${artist.name}`} style={{ objectPosition: artist.position }} loading="lazy" decoding="async" />
     <span className="artist-scrim" aria-hidden="true" />
     <span className="artist-number" aria-hidden="true">{artist.number} / {String(total).padStart(2, '0')}</span>
     <span className="artist-info"><strong>{artist.name}</strong><span className="artist-role">{artist.role}</span><span className="artist-tags">{artist.tags.join(' · ')}</span></span>
-    <span className="artist-profile">View profile <b aria-hidden="true">→</b></span>
+    <span className="artist-profile">{t.profile} <b aria-hidden="true">→</b></span>
   </button>
 }
 
-function WorkCard({ work, onPlay }) {
+function WorkCard({ work, onPlay, t }) {
   const [muted, setMuted] = useState(true)
 
   const toggleMuted = (event) => {
@@ -342,7 +353,7 @@ function WorkCard({ work, onPlay }) {
 
   return <article className={`work-card work-card--${work.slug}`}>
     <img className="work-video" src={work.poster} alt="" style={{ objectPosition: work.position }} loading="lazy" decoding="async" />
-    <span className="work-name">{work.name}</span><span className="work-category">{work.category}</span><span className="work-case">Play case →</span>
+    <span className="work-name">{work.name}</span><span className="work-category">{work.category}</span><span className="work-case">{t.playCase} →</span>
     <div className="work-controls" aria-label={`${work.name} video controls`}>
       <button className="work-control work-control--play" type="button" onClick={() => onPlay(work, muted)} aria-label={`Play ${work.name}`}>▶</button>
       <span className="work-progress" aria-hidden="true" />
@@ -434,14 +445,14 @@ function HomePage({ t, onNavigate }) {
     <BotanicalStory />
     <Section id="top" tone="dark" className="hero">
       <Container className="hero-grid">
-        <Eyebrow number="01">{t.heroKicker}</Eyebrow><h1><span>Green</span><span className="outline">Tomato</span></h1><p className="hero-copy">{t.heroBody}</p><p className="hero-credit">Est. Hong Kong</p><p className="scroll-note">Scroll to grow</p>
+        <Eyebrow number="01">{t.heroKicker}</Eyebrow><h1><span>Green</span><span className="outline">Tomato</span></h1><p className="hero-copy">{t.heroBody}</p><p className="hero-credit">{t.est}</p><p className="scroll-note">{t.scroll}</p>
       </Container>
     </Section>
-    <Section id="about" tone="light" className="about-section"><Container className="split-layout"><div className="section-copy"><Eyebrow number="02">About us</Eyebrow><h2>{t.aboutTitle}</h2><p>{t.aboutBody}</p></div></Container></Section>
-    <Section id="artists" tone="dark" className="artists-section"><Container className="artists-layout"><div className="section-copy"><Eyebrow number="03">Artists</Eyebrow><h2>{t.artistsTitle}</h2><p>{t.artistsBody}</p><TextLink className="directory-link" href="#/artists">View all artists</TextLink></div><div className="artist-tiles" aria-label="Featured artist portraits">{featuredArtists.map((artist) => <ArtistCard key={artist.slug} artist={artist} onOpen={onNavigate} total={artists.length} />)}</div></Container></Section>
-    <Section id="work" tone="light" className="work-section"><Container className="work-layout"><div className="section-copy"><Eyebrow number="04">Work</Eyebrow><h2>{t.workTitle}</h2><p>{t.workBody}</p><TextLink href="#/work">View all work</TextLink></div><div className="work-grid" aria-label="Selected work">{works.map((work) => <WorkCard key={work.slug} work={work} onPlay={openWork} />)}</div></Container></Section>
-    <Section id="brands" tone="dark" className="brands-section"><Container className="brands-layout"><div className="section-copy"><Eyebrow number="05">Brands & services</Eyebrow><h2>{t.brandsTitle}</h2><ul className="brand-list">{t.brands.map((brand) => <li key={brand}>{brand}</li>)}</ul></div><div id="services" className="world-copy"><h2>{t.worldTitle}</h2><ul>{t.worldItems.map((item) => <li key={item}>{item}</li>)}</ul></div></Container></Section>
-    <Section id="contact" tone="light" className="contact-section"><Container className="contact-layout"><div><Eyebrow number="06">Contact</Eyebrow><h2>{t.contactTitle}</h2><form className="contact-form" onSubmit={onSubmit} noValidate><input name="name" aria-label={t.form[0]} placeholder={t.form[0]} autoComplete="name" required /><input name="email" aria-label={t.form[1]} placeholder={t.form[1]} type="email" autoComplete="email" required /><input name="project_budget" aria-label={t.form[2]} placeholder={t.form[2]} /><textarea name="message" aria-label={t.form[3]} placeholder={t.form[3]} rows="2" required /><button type="submit" disabled={formStatus === 'sending'}>{formStatus === 'sending' ? t.sending : t.send}</button>{formStatus === 'success' && <p className="form-message" role="status">{t.sent}</p>}{formStatus === 'error' && <p className="form-message form-message--error" role="alert">{t.sendError}</p>}</form></div></Container></Section>
+    <Section id="about" tone="light" className="about-section"><Container className="split-layout"><div className="section-copy"><Eyebrow number="02">{t.aboutEyebrow}</Eyebrow><h2>{t.aboutTitle}</h2><p>{t.aboutBody}</p></div></Container></Section>
+    <Section id="artists" tone="dark" className="artists-section"><Container className="artists-layout"><div className="section-copy"><Eyebrow number="03">{t.artistsEyebrow}</Eyebrow><h2>{t.artistsTitle}</h2><p>{t.artistsBody}</p><TextLink className="directory-link" href="#/artists">{t.allArtists}</TextLink></div><div className="artist-tiles" aria-label={t.artistsEyebrow}>{featuredArtists.map((artist) => <ArtistCard key={artist.slug} artist={artist} onOpen={onNavigate} total={artists.length} t={t} />)}</div></Container></Section>
+    <Section id="work" tone="light" className="work-section"><Container className="work-layout"><div className="section-copy"><Eyebrow number="04">{t.workEyebrow}</Eyebrow><h2>{t.workTitle}</h2><p>{t.workBody}</p><TextLink href="#/work">{t.allWork}</TextLink></div><div className="work-grid" aria-label={t.selectedWork}>{works.map((work) => <WorkCard key={work.slug} work={work} onPlay={openWork} t={t} />)}</div></Container></Section>
+    <Section id="brands" tone="dark" className="brands-section"><Container className="brands-layout"><div className="section-copy"><Eyebrow number="05">{t.brandsEyebrow}</Eyebrow><h2>{t.brandsTitle}</h2><ul className="brand-list">{t.brands.map((brand) => <li key={brand}>{brand}</li>)}</ul></div><div id="services" className="world-copy"><h2>{t.worldTitle}</h2><ul>{t.worldItems.map((item) => <li key={item}>{item}</li>)}</ul></div></Container></Section>
+    <Section id="contact" tone="light" className="contact-section"><Container className="contact-layout"><div><Eyebrow number="06">{t.contactEyebrow}</Eyebrow><h2>{t.contactTitle}</h2><form className="contact-form" onSubmit={onSubmit} noValidate><input name="name" aria-label={t.form[0]} placeholder={t.form[0]} autoComplete="name" required /><input name="email" aria-label={t.form[1]} placeholder={t.form[1]} type="email" autoComplete="email" required /><input name="project_budget" aria-label={t.form[2]} placeholder={t.form[2]} /><textarea name="message" aria-label={t.form[3]} placeholder={t.form[3]} rows="2" required /><button type="submit" disabled={formStatus === 'sending'}>{formStatus === 'sending' ? t.sending : t.send}</button>{formStatus === 'success' && <p className="form-message" role="status">{t.sent}</p>}{formStatus === 'error' && <p className="form-message form-message--error" role="alert">{t.sendError}</p>}</form></div></Container></Section>
   </main>
   {activeWork && <WorkPlayerModal work={activeWork} initialMuted={workStartsMuted} onClose={closeWork} />}
   </>
@@ -757,6 +768,12 @@ const mayaStoryCopy = {
 }
 mayaStoryCopy['zh-Hant'] = { ...mayaStoryCopy.zh, back: '返回藝術家列表', role: '奢華時尚 / 藝術', hello: '我是 Maya。', slogan: '一位遊走於奢華、藝術與文化之間的高級時尚藝術家。', dossier: '個人檔案', personality: '人物氣質', measurements: '三圍', shoe: '鞋碼', base: '常駐地', world: '我的世界', worldLead: '讓我的世界持續流動的靈感。', about: '關於我', social: '社交與合作', followers: '粉絲數', audience: '受眾快照 · 近 30 天', cta: '想一起創作些什麼嗎？', work: '與 Maya 合作', next: '下一位藝術家 · Amber', countries: '熱門國家／地區', swipe: '滑動瀏覽' }
 
+const profileUi = {
+  en: { artist: 'Artist / 05', identity: 'Identity', collaborations: 'Selected collaborations', madeWith: <>Made with<br />brands.</>, historical: 'historical', workWith: 'Work with' },
+  zh: { artist: '艺术家 / 05', identity: '身份档案', collaborations: '合作案例', madeWith: <>与品牌<br />共同创作。</>, historical: '历史快照', workWith: '与' },
+  'zh-Hant': { artist: '藝術家 / 05', identity: '身份檔案', collaborations: '合作案例', madeWith: <>與品牌<br />共同創作。</>, historical: '歷史快照', workWith: '與' },
+}
+
 function useMayaProfileMotion() {
   const rootRef = useRef(null)
   useLayoutEffect(() => {
@@ -861,6 +878,7 @@ function MayaProfile({ artist, language }) {
   const dossier = artist.personal_dossier
   const social = artist.social_snapshot
   const copy = mayaStoryCopy[language]
+  const ui = profileUi[language]
   const audience = artist.audience_snapshot || { age_18_24: '28.4%', age_25_34: '33.4%', male_audience: '81.6%', female_audience: '18.4%', countries: 'Korea 32.9% / India 11.5% / Taiwan 8.0%' }
   // Keep the guide and diary images ready before their pinned scene becomes visible.
   // Lazy-loading hidden scenes made Maya appear only after the visitor had already scrolled through them.
@@ -874,7 +892,7 @@ function MayaProfile({ artist, language }) {
     <div className="maya-stage">
       <div className="maya-atmosphere" aria-hidden="true" />
       <figure className="maya-camera" aria-hidden="true"><img src={mayaStanding.src} alt="" fetchPriority="high" /></figure>
-      <section className="maya-scene maya-scene--hero"><Container><div className="maya-safe maya-safe--hero"><a className="back-link" href="#/artists">← {copy.back}</a><Eyebrow number="01">Artist / 05</Eyebrow><h1>Maya</h1><p className="maya-role">{copy.role}</p><p className="maya-hello">{copy.hello}</p><div className="maya-about-intro"><p>{copy.slogan}</p></div></div><a className="next-artist-link" href="#/artists/amber">{copy.next} →</a><img className="maya-mobile-crop maya-mobile-crop--hero" src={mayaStanding.src} alt={mayaStanding.alt} /></Container></section>
+      <section className="maya-scene maya-scene--hero"><Container><div className="maya-safe maya-safe--hero"><a className="back-link" href="#/artists">← {copy.back}</a><Eyebrow number="01">{ui.artist}</Eyebrow><h1>Maya</h1><p className="maya-role">{copy.role}</p><p className="maya-hello">{copy.hello}</p><div className="maya-about-intro"><p>{copy.slogan}</p></div></div><a className="next-artist-link" href="#/artists/amber">{copy.next} →</a><img className="maya-mobile-crop maya-mobile-crop--hero" src={mayaStanding.src} alt={mayaStanding.alt} /></Container></section>
       <section className="maya-scene maya-scene--identity"><Container><figure className="maya-identity-portrait" aria-hidden="true"><img src={mayaWalking.src} alt="" fetchPriority="high" /></figure><div className="maya-safe maya-safe--identity"><Eyebrow number="02">{copy.dossier}</Eyebrow><h2>Identity</h2><dl className="maya-dossier"><div><dt>{copy.height}</dt><dd>{dossier.height}</dd></div><div><dt>{copy.weight}</dt><dd>{dossier.weight}</dd></div><div><dt>{copy.measurements}</dt><dd>{dossier.measurements}</dd></div><div><dt>{copy.shoe}</dt><dd>{dossier.shoe_size}</dd></div><div><dt>{copy.base}</dt><dd>{artist.locations.join(' / ')}</dd></div><div><dt>{copy.languages}</dt><dd>{artist.languages.join(' / ')}</dd></div><div className="maya-dossier-wide"><dt>{copy.type}</dt><dd>{artist.creative_talents.join(' / ')}</dd></div></dl></div><img className="maya-mobile-crop" src={mayaWalking.src} alt={mayaWalking.alt} /></Container></section>
       <section className="maya-scene maya-scene--detail"><Container><div className="maya-safe maya-safe--detail"><Eyebrow number="03">{copy.personality}</Eyebrow><h2 className="maya-detail-title"><span>Details of</span><span>character.</span></h2><div className="maya-personality-list">{copy.personalityItems.map(([title, text], index) => <article className="maya-personality-item" key={title}><b>{String(index + 1).padStart(2, '0')}</b><div className="maya-personality-copy"><h3>{title}</h3><p>{text}</p></div></article>)}</div></div><img className="maya-mobile-crop" src={mayaStanding.src} alt={mayaStanding.alt} /></Container></section>
       <section className="maya-scene maya-scene--world"><Container><div className="maya-safe maya-safe--world"><div className="maya-world-copy"><Eyebrow number="04">{copy.world}</Eyebrow><h2>{copy.world}</h2><p>{copy.worldLead}</p><p>{copy.aboutLines[2]}</p></div><MayaWorldPhone copy={copy} /></div></Container></section>
@@ -1004,11 +1022,11 @@ function ArtistStoryProfile({ artist, language, story }) {
 }
 
 const workFormats = [
-  ['reels', 'Quick Cuts', 'Small moments, in motion.', '灵感快切', '轻快瞬间，持续流动。'],
-  ['commercial', 'Brand Worlds', 'Brands in full focus.', '品牌世界', '让品牌成为主角。'],
-  ['mv', 'Sound in Motion', 'Sound, seen differently.', '声画现场', '让声音被看见。'],
-  ['drama', 'Narrative Frames', 'Stories that stay with you.', '叙事片场', '留在心里的故事。'],
-  ['photo', 'Still Worlds', 'Still, never static.', '静帧世界', '静止，也持续发生。'],
+  ['reels', 'Quick Cuts', 'Small moments, in motion.', '灵感快切', '轻快瞬间，持续流动。', '靈感快切', '輕快瞬間，持續流動。'],
+  ['commercial', 'Brand Worlds', 'Brands in full focus.', '品牌世界', '让品牌成为主角。', '品牌世界', '讓品牌成為主角。'],
+  ['mv', 'Sound in Motion', 'Sound, seen differently.', '声画现场', '让声音被看见。', '聲畫現場', '讓聲音被看見。'],
+  ['drama', 'Narrative Frames', 'Stories that stay with you.', '叙事片场', '留在心里的故事。', '敘事片場', '留在心裡的故事。'],
+  ['photo', 'Still Worlds', 'Still, never static.', '静帧世界', '静止，也持续发生。', '靜幀世界', '靜止，也持續發生。'],
 ]
 const workFormatFor = (work) => (work.photo ? 'photo' : work.slug === 'peninsula-fathers-day' ? 'reels' : ['chillgood-takoyaki', 'chillgood-animation'].includes(work.slug) ? 'mv' : 'commercial')
 
@@ -1017,8 +1035,9 @@ function WorkOverview({ language }) {
   const [activeWork, setActiveWork] = useState(null)
   const current = workFormats.find(([id]) => id === format)
   const items = workProjects.filter((work) => workFormatFor(work) === format)
-  const chinese = language !== 'en'
-  return <><main id="main" className="subpage subpage--light"><Container><PageHeader className="work-page-heading" eyebrow={chinese ? `精选作品 / ${String(workProjects.length).padStart(2, '0')}` : `Selected work / ${String(workProjects.length).padStart(2, '0')}`} title={chinese ? <>为流动<br />而作。</> : <>Made<br />to move.</>} back="#/" /><div className="work-format-tabs" role="tablist" aria-label={chinese ? '作品分类' : 'Work formats'}>{workFormats.map(([id, label, , zhLabel]) => <button key={id} type="button" role="tab" aria-selected={format === id} className={format === id ? 'is-active' : ''} onClick={() => setFormat(id)}>{chinese ? zhLabel : label}</button>)}</div><div className="work-format-heading"><span>{chinese ? current[3] : current[1]}</span><p>{chinese ? current[4] : current[2]}</p></div>{items.length ? <div className="work-index">{items.map((work, index) => <button type="button" className="work-index-card" onClick={() => setActiveWork(work)} key={work.slug} aria-label={`${chinese ? '打开作品' : 'Open work'}: ${work.name}`}><img src={work.poster} alt="" loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><span>{String(index + 1).padStart(2, '0')}</span><div><em>{work.brand}</em><strong>{work.name}</strong><i>▶</i></div><small>{chinese ? '打开作品 →' : 'Open work →'}</small></button>)}</div> : <p className="work-empty">{chinese ? '更多作品正在制作中。' : 'More stories are in development.'}</p>}</Container></main>{activeWork && <WorkPlayerModal work={activeWork} initialMuted onClose={() => setActiveWork(null)} />}</>
+  const t = copy[language]
+  const localized = language === 'zh-Hant'
+  return <><main id="main" className="subpage subpage--light"><Container><PageHeader className="work-page-heading" eyebrow={`${t.selectedWork} / ${String(workProjects.length).padStart(2, '0')}`} title={t.madeToMove} back="#/" /><div className="work-format-tabs" role="tablist" aria-label={t.workFormats}>{workFormats.map(([id, label, , zhLabel, zhHantLabel]) => <button key={id} type="button" role="tab" aria-selected={format === id} className={format === id ? 'is-active' : ''} onClick={() => setFormat(id)}>{language === 'en' ? label : localized ? zhHantLabel : zhLabel}</button>)}</div><div className="work-format-heading"><span>{language === 'en' ? current[1] : localized ? current[5] : current[3]}</span><p>{language === 'en' ? current[2] : localized ? current[6] : current[4]}</p></div>{items.length ? <div className="work-index">{items.map((work, index) => <button type="button" className="work-index-card" onClick={() => setActiveWork(work)} key={work.slug} aria-label={`${t.openWork}: ${work.name}`}><img src={work.poster} alt="" loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><span>{String(index + 1).padStart(2, '0')}</span><div><em>{work.brand}</em><strong>{work.name}</strong><i>▶</i></div><small>{t.openWork} →</small></button>)}</div> : <p className="work-empty">{t.moreWork}</p>}</Container></main>{activeWork && <WorkPlayerModal work={activeWork} initialMuted onClose={() => setActiveWork(null)} />}</>
 }
 
 function WorkDetail({ work }) {
@@ -1028,7 +1047,7 @@ function WorkDetail({ work }) {
 
 function NotFound() { return <main id="main" className="subpage subpage--dark"><Container><PageHeader eyebrow="404" title="Not found." back="#/" /></Container></main> }
 
-function Footer() { return <footer className="site-footer"><Container><a className="wordmark" href="#/">GreenTomato</a><span>© {new Date().getFullYear()} Green Tomato</span></Container></footer> }
+function Footer({ language }) { return <footer className="site-footer"><Container><a className="wordmark" href="#/">GreenTomato</a><span>© {new Date().getFullYear()} Green Tomato</span></Container></footer> }
 
 export default function App() {
   const [language, setLanguage] = useState('en')
@@ -1056,5 +1075,5 @@ export default function App() {
         : route.type === 'work' ? <WorkOverview language={language} />
           : route.type === 'work-detail' ? <WorkDetail work={workProjects.find((work) => work.slug === route.slug)} />
             : <NotFound />
-  return <><a className="skip-link" href="#main">Skip to content</a><Header language={language} setLanguage={setLanguage} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />{content}<Footer /></>
+  return <><a className="skip-link" href="#main">{t.skip}</a><Header language={language} setLanguage={setLanguage} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />{content}<Footer language={language} /></>
 }
