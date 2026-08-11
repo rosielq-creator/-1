@@ -575,6 +575,9 @@ const storyProfiles = {
       ['denim-editorial.jpg', 'Style', 'Structure in motion'],
       ['festival-stage.jpg', 'Sound', 'Where the energy lands'],
       ['festival-wheel.jpg', 'City light', 'A moving horizon'],
+      ['flight.jpg', 'In transit', 'A window seat above the city'],
+      ['dinner-smile.jpg', 'After hours', 'A softer side of the night'],
+      ['dinner-night.jpg', 'Night table', 'One last look before the lights go down'],
     ],
     collaborations: [
       ['miumiu', 'MIU MIU', 'https://www.instagram.com/p/DXv8OU5FTeN/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
