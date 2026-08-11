@@ -394,7 +394,7 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
 .maya-profile { --maya-blush:#efa7b1; --maya-ink:#111; position:relative; min-height:100svh; overflow:clip; color:var(--maya-ink); background:#f3efe9; }
 .maya-stage { position:relative; height:100svh; overflow:hidden; isolation:isolate; }
 .maya-atmosphere { position:absolute; inset:-8%; z-index:0; background:#ebe3de; box-shadow:inset 0 0 160px rgba(130,96,103,.22); pointer-events:none; will-change:transform; }
-.maya-camera { position:absolute; z-index:2; top:7svh; right:5vw; width:clamp(330px,32vw,520px); height:88svh; margin:0; pointer-events:none; will-change:transform,opacity; }
+.maya-camera { position:absolute; z-index:2; top:18svh; right:5vw; width:clamp(280px,26vw,440px); height:76svh; margin:0; pointer-events:none; will-change:transform,opacity; }
 .maya-camera img { width:100%; height:100%; object-fit:contain; object-position:center bottom; filter:drop-shadow(0 24px 22px rgba(20,15,17,.16)); }
 .maya-scene { position:absolute; inset:0; z-index:4; visibility:hidden; opacity:0; pointer-events:none; overflow:hidden; }
 .maya-scene::before { display:none; }
@@ -497,7 +497,7 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
 .artist-story-profile .maya-audience dd { color:#101519; }
 
 @media (max-width:1100px) and (min-width:821px) {
-  .maya-camera { right:5vw; width:38vw; }
+  .maya-camera { right:5vw; width:34vw; }
   .maya-identity-portrait { left:0; width:34vw; }
   .maya-safe--identity,.maya-safe--detail { width:47%; }
   .maya-personality-item { grid-template-columns:24px 1fr; gap:10px; }
