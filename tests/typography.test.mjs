@@ -9,8 +9,10 @@ test('restores the original Green Tomato display stack', () => {
   assert.match(css, /\.home-main\s+\.hero\s+h1\s*\{[^}]*font-family:\s*var\(--brand-display\)/s)
 })
 
-test('uses one tall condensed homepage heading system below the hero', () => {
-  assert.match(css, /\.home-main\s+\.section-copy\s+h2[^{]*\{[^}]*font-family:\s*var\(--display-condensed\)[^}]*font-weight:\s*700[^}]*letter-spacing:\s*-\.025em[^}]*line-height:\s*\.86/s)
+test('uses one DM Sans Medium homepage heading system below the hero', () => {
+  assert.match(css, /\.home-main\s+\.section-copy\s+h2[^{]*\{[^}]*font-family:\s*var\(--sans\)[^}]*font-weight:\s*500[^}]*font-size:\s*clamp\(48px,\s*5vw,\s*92px\)[^}]*letter-spacing:\s*0em[^}]*line-height:\s*\.94/s)
+  assert.match(css, /@media\s*\(min-width:761px\)[\s\S]*\.home-main\s+\.section-copy\s+h2,[\s\S]*\.home-main\s+\.world-copy\s+h2\s*\{[^}]*white-space:\s*nowrap/s)
+  assert.match(css, /\.home-main\s+\.work-section\s+\.work-grid\s*\{[^}]*grid-column:\s*7\s*\/\s*-1/s)
 })
 
 test('keeps the Maya collaboration heading clear of its cards', () => {

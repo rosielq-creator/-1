@@ -825,7 +825,7 @@ h2,
   line-height:1.25;
 }
 
-/* Reference correction: original Green Tomato glyphs and compact homepage display titles. */
+/* Reference correction: original Green Tomato glyphs and unified homepage section titles. */
 .home-main .hero h1 {
   font-family:var(--brand-display);
   font-weight:700;
@@ -835,10 +835,21 @@ h2,
 .home-main .section-copy h2,
 .home-main .world-copy h2,
 .home-main .contact-layout h2 {
-  font-family:var(--display-condensed);
-  font-weight:700;
-  letter-spacing:-.025em;
-  line-height:.86;
+  font-family:var(--sans);
+  font-weight:500;
+  font-size:clamp(48px, 5vw, 92px);
+  letter-spacing:0em;
+  line-height:.94;
+}
+@media (min-width:761px) {
+  .home-main .section-copy h2,
+  .home-main .world-copy h2 {
+    white-space:nowrap;
+  }
+  .home-main .artists-section .section-copy { grid-column:1 / span 5; }
+  .home-main .artists-section .artist-tiles { grid-column:6 / -1; }
+  .home-main .work-section .section-copy { grid-column:1 / span 6; }
+  .home-main .work-section .work-grid { grid-column:7 / -1; }
 }
 
 /* The artist-directory opener follows the tall reference silhouette and never breaks mid-title. */
