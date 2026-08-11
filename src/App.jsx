@@ -507,7 +507,7 @@ const storyProfiles = {
   amber: {
     palette: { base: '#d9e1e5', atmosphere: '#b9c5cd', deep: '#151b20', glow: 'rgba(74, 99, 114, .28)', ink: '#101519' },
     poses: { hero: 'walk.webp', identity: 'lean.webp', detail: 'seat.webp' },
-    role: 'Music Producer / Fashion', hello: 'I’m Amber, a music producer and fashion artist shaped by city culture.',
+    role: 'Music Producer / Fashion', hello: 'I’m Amber.', slogan: 'A music producer and fashion artist shaped by city culture.',
     intro: ['I build sound, image and atmosphere as one language.', 'My world moves at the edge of the city — precise, nocturnal and unapologetic.'],
     personalityTitle: ['Sound with', 'a sharp edge.'],
     personality: [
@@ -530,7 +530,7 @@ const storyProfiles = {
   ooona: {
     palette: { base: '#e6e5d9', atmosphere: '#d2d7ca', deep: '#202824', glow: 'rgba(92, 116, 101, .24)', ink: '#19211d' },
     poses: { hero: 'walk.webp', identity: 'lean.webp', detail: 'seat.webp' },
-    role: 'Beauty / Wellness Artist', hello: 'I’m Ooona, a beauty and wellness artist who brings softness to everyday rituals.',
+    role: 'Beauty / Wellness Artist', hello: 'I’m Ooona.', slogan: 'A beauty and wellness artist who brings softness to everyday rituals.',
     intro: ['I make room for small rituals, clear energy and lightness.', 'Beauty feels most alive when it moves with the body and the day.'],
     personalityTitle: ['Softness with', 'a pulse.'],
     personality: [
@@ -548,7 +548,7 @@ const storyProfiles = {
   mario: {
     palette: { base: '#dfd3c2', atmosphere: '#c8b6a0', deep: '#24201d', glow: 'rgba(116, 84, 55, .25)', ink: '#211b16' },
     poses: { hero: 'walk.webp', identity: 'lean.webp', detail: 'seat.webp' },
-    role: 'Lifestyle Creator / Photographer', hello: 'I’m Mario, a lifestyle creator and photographer focused on street, sport and travel.',
+    role: 'Lifestyle Creator / Photographer', hello: 'I’m Mario.', slogan: 'A lifestyle creator and photographer focused on street, sport and travel.',
     intro: ['I photograph the pace, texture and humour of everyday city life.', 'Streetwear, sport and travel are the ways I keep the frame moving.'],
     personalityTitle: ['The city,', 'up close.'],
     personality: [
@@ -566,7 +566,7 @@ const storyProfiles = {
   noah: {
     palette: { base: '#d7dce0', atmosphere: '#b8c1c8', deep: '#182127', glow: 'rgba(53, 78, 93, .28)', ink: '#11191f' },
     poses: { hero: 'walk.webp', identity: 'lean.webp', detail: 'seat.webp' },
-    role: 'Film / Fashion Artist', hello: 'I’m Noah, a fashion and film artist with a visual storyteller’s eye.',
+    role: 'Film / Fashion Artist', hello: 'I’m Noah.', slogan: 'A fashion and film artist with a visual storyteller’s eye.',
     intro: ['I tell visual stories through movement, distance and a clean silhouette.', 'Fashion, film and travel meet somewhere between restraint and velocity.'],
     personalityTitle: ['Move with', 'intention.'],
     personality: [
@@ -611,7 +611,7 @@ const mayaWorldImages = [
 
 const mayaStoryCopy = {
   en: {
-    back: 'Back to artists', role: 'Luxury Fashion / Art', hello: 'I’m Maya, a high-fashion artist working between luxury, art and culture.',
+    back: 'Back to artists', role: 'Luxury Fashion / Art', hello: 'I’m Maya.', slogan: 'A high-fashion artist working between luxury, art and culture.',
     dossier: 'Personal dossier', personality: 'Personality', height: 'Height', weight: 'Weight', measurements: 'Measurements', shoe: 'Shoe size', base: 'Based in', languages: 'Languages', type: 'Artist type',
     world: 'My World', worldLead: 'References that keep my world in motion.', about: 'About Me', social: 'Social + Contact', followers: 'Followers', audience: 'Audience snapshot · 30 days',
     cta: 'Want to create something together?', work: 'Work with Maya', next: 'Next artist · Amber',
@@ -626,7 +626,7 @@ const mayaStoryCopy = {
     age1824: '18–24', age2534: '25–34', male: 'Male audience', female: 'Female audience', countries: 'Top countries', swipe: 'Swipe to explore',
   },
   zh: {
-    back: '返回艺术家列表', role: '奢华时尚 / 艺术', hello: '我是 Maya，一位游走于奢华、艺术与文化之间的高级时尚艺术家。',
+    back: '返回艺术家列表', role: '奢华时尚 / 艺术', hello: '我是 Maya。', slogan: '一位游走于奢华、艺术与文化之间的高级时尚艺术家。',
     dossier: '个人档案', personality: '人物气质', height: '身高', weight: '体重', measurements: '三围', shoe: '鞋码', base: '常驻地', languages: '语言', type: '人物类型',
     world: '我的世界', worldLead: '让我的世界持续流动的灵感。', about: '关于我', social: '社交与合作', followers: '粉丝数', audience: '受众快照 · 近 30 天',
     cta: '想一起创作些什么吗？', work: '与 Maya 合作', next: '下一位艺术家 · Amber',
@@ -755,7 +755,7 @@ function MayaProfile({ artist, language }) {
     <div className="maya-stage">
       <div className="maya-atmosphere" aria-hidden="true" />
       <figure className="maya-camera" aria-hidden="true"><img src={mayaStanding.src} alt="" fetchPriority="high" /></figure>
-      <section className="maya-scene maya-scene--hero"><Container><div className="maya-safe maya-safe--hero"><a className="back-link" href="#/artists">← {copy.back}</a><Eyebrow number="01">Artist / 05</Eyebrow><h1>Maya</h1><p className="maya-role">{copy.role}</p><p className="maya-hello">{copy.hello}</p><div className="maya-about-intro">{copy.aboutLines.slice(0, 2).map((line) => <p key={line}>{line}</p>)}</div></div><img className="maya-mobile-crop maya-mobile-crop--hero" src={mayaStanding.src} alt={mayaStanding.alt} /></Container></section>
+      <section className="maya-scene maya-scene--hero"><Container><div className="maya-safe maya-safe--hero"><a className="back-link" href="#/artists">← {copy.back}</a><Eyebrow number="01">Artist / 05</Eyebrow><h1>Maya</h1><p className="maya-role">{copy.role}</p><p className="maya-hello">{copy.hello}</p><div className="maya-about-intro"><p>{copy.slogan}</p></div></div><img className="maya-mobile-crop maya-mobile-crop--hero" src={mayaStanding.src} alt={mayaStanding.alt} /></Container></section>
       <section className="maya-scene maya-scene--identity"><Container><figure className="maya-identity-portrait" aria-hidden="true"><img src={mayaWalking.src} alt="" fetchPriority="high" /></figure><div className="maya-safe maya-safe--identity"><Eyebrow number="02">{copy.dossier}</Eyebrow><h2>Identity</h2><dl className="maya-dossier"><div><dt>{copy.height}</dt><dd>{dossier.height}</dd></div><div><dt>{copy.weight}</dt><dd>{dossier.weight}</dd></div><div><dt>{copy.measurements}</dt><dd>{dossier.measurements}</dd></div><div><dt>{copy.shoe}</dt><dd>{dossier.shoe_size}</dd></div><div><dt>{copy.base}</dt><dd>{artist.locations.join(' / ')}</dd></div><div><dt>{copy.languages}</dt><dd>{artist.languages.join(' / ')}</dd></div><div className="maya-dossier-wide"><dt>{copy.type}</dt><dd>{artist.creative_talents.join(' / ')}</dd></div></dl></div><img className="maya-mobile-crop" src={mayaWalking.src} alt={mayaWalking.alt} /></Container></section>
       <section className="maya-scene maya-scene--detail"><Container><div className="maya-safe maya-safe--detail"><Eyebrow number="03">{copy.personality}</Eyebrow><h2 className="maya-detail-title"><span>Details of</span><span>character.</span></h2><div className="maya-personality-list">{copy.personalityItems.map(([title, text], index) => <article className="maya-personality-item" key={title}><b>{String(index + 1).padStart(2, '0')}</b><div className="maya-personality-copy"><h3>{title}</h3><p>{text}</p></div></article>)}</div></div><img className="maya-mobile-crop" src={mayaStanding.src} alt={mayaStanding.alt} /></Container></section>
       <section className="maya-scene maya-scene--world"><Container><div className="maya-safe maya-safe--world"><div className="maya-world-copy"><Eyebrow number="04">{copy.world}</Eyebrow><h2>{copy.world}</h2><p>{copy.worldLead}</p><p>{copy.aboutLines[2]}</p></div><MayaWorldPhone copy={copy} /></div></Container></section>
@@ -842,7 +842,7 @@ function ArtistStoryProfile({ artist, language, story }) {
     <div className="maya-stage">
       <div className="maya-atmosphere" aria-hidden="true" />
       <figure className="maya-camera story-camera" aria-hidden="true"><img className="story-camera-pose" src={pose('hero')} alt="" fetchPriority="high" decoding="async" /><img className="story-camera-pose" src={pose('identity')} alt="" decoding="async" /><img className="story-camera-pose" src={pose('detail')} alt="" fetchPriority="high" decoding="async" /></figure>
-      <section className="maya-scene maya-scene--hero"><Container><div className="maya-safe maya-safe--hero"><a className="back-link" href="#/artists">← {copy.back}</a><Eyebrow number="01">Artist / 05</Eyebrow><h1>{artist.display_name}</h1><p className="maya-role">{story.role}</p><p className="maya-hello">{story.hello}</p><div className="maya-about-intro">{story.intro.map((line) => <p key={line}>{line}</p>)}</div></div><img className="maya-mobile-crop maya-mobile-crop--hero" src={pose('hero')} alt={`${artist.display_name} standing pose`} /></Container></section>
+      <section className="maya-scene maya-scene--hero"><Container><div className="maya-safe maya-safe--hero"><a className="back-link" href="#/artists">← {copy.back}</a><Eyebrow number="01">Artist / 05</Eyebrow><h1>{artist.display_name}</h1><p className="maya-role">{story.role}</p><p className="maya-hello">{story.hello}</p><div className="maya-about-intro"><p>{story.slogan}</p></div></div><img className="maya-mobile-crop maya-mobile-crop--hero" src={pose('hero')} alt={`${artist.display_name} standing pose`} /></Container></section>
       <section className="maya-scene maya-scene--identity"><Container><figure className="maya-identity-portrait" aria-hidden="true"><img src={pose('identity')} alt="" fetchPriority="high" decoding="async" /></figure><div className="maya-safe maya-safe--identity"><Eyebrow number="02">{copy.dossier}</Eyebrow><h2>Identity</h2><dl className="maya-dossier">{media.dossier.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}<div className="maya-dossier-wide"><dt>{copy.type}</dt><dd>{artist.creative_talents.join(' / ')}</dd></div></dl></div><img className="maya-mobile-crop" src={pose('identity')} alt={`${artist.display_name} editorial pose`} /></Container></section>
       <section className="maya-scene maya-scene--detail"><Container><div className="maya-safe maya-safe--detail"><Eyebrow number="03">{copy.personality}</Eyebrow><h2 className="maya-detail-title">{story.personalityTitle.map((line) => <span key={line}>{line}</span>)}</h2><div className="maya-personality-list">{story.personality.map(([title, text], index) => <article className="maya-personality-item" key={title}><b>{String(index + 1).padStart(2, '0')}</b><div className="maya-personality-copy"><h3>{title}</h3><p>{text}</p></div></article>)}</div></div><img className="maya-mobile-crop" src={pose('detail')} alt={`${artist.display_name} seated pose`} /></Container></section>
       <section className="maya-scene maya-scene--world"><Container><div className="maya-safe maya-safe--world"><div className="maya-world-copy"><Eyebrow number="04">{copy.world}</Eyebrow><h2>{copy.world}</h2><p>{story.worldLead}</p><p>{story.intro[1]}</p></div><ArtistWorldPhone artist={artist} story={story} copy={copy} /></div></Container></section>
