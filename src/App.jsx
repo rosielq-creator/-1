@@ -620,7 +620,7 @@ const storyProfiles = {
       ['Focused', 'I keep the line clean and the energy moving forward.'],
     ],
     worldLead: 'Visual notes from fashion, film and life in transit.',
-    world: [['hero.png', 'Portrait', 'A clear point of view'], ['black-portrait.png', 'Fashion', 'Built in contrast'], ['cafe-portrait.png', 'City life', 'Between takes'], ['apple-portrait.jpg', 'Travel', 'A passing frame']],
+    world: [['video/cherry-blossom.mp4', 'Cherry blossom', 'A softer passing frame', 'video'], ['video/today-ca2.mp4', 'Today', 'A note from the day', 'video'], ['video/twin-sunglasses.mp4', 'Twin sunglasses', 'Built in contrast', 'video'], ['hero.png', 'Portrait', 'A clear point of view'], ['black-portrait.png', 'Fashion', 'Built in contrast'], ['cafe-portrait.png', 'City life', 'Between takes'], ['apple-portrait.jpg', 'Travel', 'A passing frame']],
     socialLabel: 'Historical snapshot', socialHandle: 'Instagram', followers: '8,254',
     factsLabel: 'Audience snapshot · historical', facts: [
       ['Male audience', '75.9%'], ['Female audience', '24.1%'], ['18–24', '38.7%'], ['25–34', '27.9%'],
