@@ -488,6 +488,12 @@ function ArtistsOverview({ language }) {
         <Eyebrow number="01">{labels.eyebrow}</Eyebrow>
         <h1 id="meet-artists-title" className="artist-directory-title" aria-label={labels.title}>{titleLetters.map((letter, index) => <span key={`${letter}-${index}`} aria-hidden="true" style={{ '--title-index': index }}>{letter === ' ' ? '\u00a0' : letter}</span>)}</h1>
         <span className="artist-directory-intro">{labels.intro}</span>
+        <div className="artist-orbit" aria-label={labels.title}>
+          {directoryArtists.map((artist, index) => {
+            const angle = index * 72
+            return <DirectoryArtistCard key={artist.id} artist={artist} language={language} className="directory-orbit-card" style={{ '--orbit-angle': `${angle}deg`, '--orbit-counterangle': `${-angle}deg`, '--orbit-delay': `${index * 90}ms` }} />
+          })}
+        </div>
       </Container>
     </section>
     <ArtistArchive language={language} />
@@ -682,7 +688,8 @@ function useMayaProfileMotion() {
       personality.forEach((item, index) => {
         timeline.to(item, { x: 12, duration: .18 }, 2.15 + index * .22)
       })
-      timeline.to(camera, { autoAlpha: 0, xPercent: 96, yPercent: 4, scale: .78, transformOrigin: '50% 50%', duration: .28 }, 3.05)
+      // Scene 04 is image-free: the subject holds its final 03 framing, then fades away before the phone appears.
+      timeline.to(camera, { autoAlpha: 0, duration: .34 }, 2.82)
         .to(atmosphere, { xPercent: -3, yPercent: 2, scale: 1.02, backgroundColor: '#e7ded9', duration: 1.15 }, 3.05)
       revealScene(timeline, scenes[2], scenes[3], 3.18)
       timeline.to(atmosphere, { backgroundColor: '#efa7b1', duration: .72 }, 4.42)
@@ -782,7 +789,8 @@ function useArtistStoryMotion() {
         .to(poses[1], { autoAlpha: 0, duration: .15 }, 1.86).to(poses[2], { autoAlpha: 1, duration: .15 }, 1.88)
       revealScene(timeline, scenes[1], scenes[2], 1.92)
       personality.forEach((item, index) => timeline.to(item, { x: 12, duration: .18 }, 2.15 + index * .22))
-      timeline.to(camera, { autoAlpha: 0, xPercent: 96, yPercent: 4, scale: .78, transformOrigin: '50% 50%', duration: .28 }, 3.05)
+      // Keep every artist in place as scene 03 resolves, then remove the figure before the image-only My World scene.
+      timeline.to(camera, { autoAlpha: 0, duration: .34 }, 2.82)
         .to(atmosphere, { xPercent: -3, yPercent: 2, scale: 1.02, backgroundColor: 'var(--story-base)', duration: 1.15 }, 3.05)
       revealScene(timeline, scenes[2], scenes[3], 3.18)
       timeline.to(atmosphere, { backgroundColor: 'var(--story-base)', duration: .72 }, 4.42)
