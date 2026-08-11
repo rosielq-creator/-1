@@ -650,10 +650,12 @@ const mayaWorldImages = [
   ['black-tailoring.jpg', 'Art', 'A tailored pause'], ['street-grey.jpg', 'City life', 'Between places'],
 ].map(([file, category, caption]) => ({ src: `${assets}artists/maya-world/mockup/${file}`, category, caption }))
 const mayaCollaborations = [
+  ['hifather', 'HI FATHER', 'https://www.instagram.com/p/C14WnnsJ037/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
+  ['ugg', 'UGG × MUSINSA', 'https://www.instagram.com/p/C0GCsQmJtgB/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
   ['eatppeum', 'EAT PPEUM', 'https://www.instagram.com/p/C2guQy3pK0C/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
   ['dontaskmyplan', "DON'T ASK MY PLAN", 'https://www.instagram.com/p/C27hAEMJg3O/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
   ['emis', 'EMIS', 'https://www.instagram.com/p/C6s3I2DrGuK/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
-  ['tamburins', 'TAMBURINS', 'https://www.instagram.com/p/C7jaRSxJXXV/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
+  ['tamburins', 'TAMBURINS', 'https://www.instagram.com/p/Cz8cKQ6BDvG/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
 ]
 
 const mayaStoryCopy = {
@@ -704,9 +706,9 @@ function useMayaProfileMotion() {
       const camera = root.querySelector('.maya-camera')
       const atmosphere = root.querySelector('.maya-atmosphere')
       const personality = gsap.utils.toArray('.maya-personality-item')
-      // The hero subject now sits directly below the Next Artist link. Keep the
-      // later dossier/detail camera landings in their original left reading lane.
-      const heroOffset = (window.innerWidth * .4 / camera.getBoundingClientRect().width) * 100
+      // The hero subject sits under the Next Artist link. Keep the later
+      // dossier/detail camera landings in their original left reading lane.
+      const heroOffset = (window.innerWidth * .09 / camera.getBoundingClientRect().width) * 100
       gsap.set(scenes, { autoAlpha: 0, y: 22, pointerEvents: 'none' })
       gsap.set(scenes[0], { autoAlpha: 1, y: 0, pointerEvents: 'auto' })
       gsap.set(personality, { opacity: 1, x: 0 })
