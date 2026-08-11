@@ -466,10 +466,11 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
 .maya-collaboration-grid--5 { grid-template-columns:repeat(5,minmax(0,1fr)); }
 .maya-collaboration-grid--6 { grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px clamp(18px,2vw,34px); }
 .maya-collaboration-grid--7 { grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px clamp(16px,1.7vw,28px); }
-.maya-safe--cases--6 h2 { margin:12px 0 20px; font-size:clamp(44px,4.2vw,68px); }
+.maya-safe--cases--6 { top:3%; }
+.maya-safe--cases--6 h2 { margin:8px 0 12px; font-size:clamp(36px,3.6vw,58px); }
 .maya-safe--cases--7 h2 { margin:10px 0 16px; font-size:clamp(40px,3.8vw,62px); }
 .maya-collaboration-grid--6 .maya-collaboration-card { gap:7px; }
-.maya-collaboration-grid--6 .maya-collaboration-card img { height:26svh; max-height:none; object-fit:contain; }
+.maya-collaboration-grid--6 .maya-collaboration-card img { height:39svh; max-height:none; object-fit:contain; }
 .maya-collaboration-grid--7 .maya-collaboration-card img,.maya-collaboration-grid--7 .maya-collaboration-card video { height:20svh; max-height:none; object-fit:contain; }
 .maya-collaboration-card { display:grid; gap:12px; min-width:0; font:600 clamp(11px,1vw,16px)/1 var(--mono); letter-spacing:.04em; text-transform:uppercase; }
 .maya-collaboration-card img { display:block; width:100%; height:auto; max-height:46svh; object-fit:contain; background:transparent; transition:transform 240ms ease; }

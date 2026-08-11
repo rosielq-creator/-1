@@ -48,7 +48,7 @@ directoryLabels['zh-Hant'] = { ...directoryLabels.zh, eyebrow: '藝術家檔案'
 
 const works = [
   { name: 'The Peninsula', slug: 'the-peninsula', category: 'Brand film', video: `${assets}work/the-peninsula.mp4`, poster: `${assets}work/the-peninsula-cover.jpg`, position: '50% 38%', portrait: true },
-  { name: 'Childgood', slug: 'childgood', category: 'Campaign film', video: `${assets}work/chillgood-takoyaki.mp4`, poster: `${assets}work/chillgood-cover.jpg`, position: '50% 50%' },
+  { name: 'ChillGOOD_TV', slug: 'childgood', category: 'Campaign film', video: `${assets}work/chillgood-takoyaki.mp4`, poster: `${assets}work/chillgood-cover.jpg`, position: '50% 50%' },
   { name: 'Octopus', slug: 'octopus', category: 'Culture film', video: `${assets}work/octopus.mp4`, poster: `${assets}work/octopus-cover.jpg`, position: '50% 50%' },
   { name: 'MGM', slug: 'mgm', category: 'Brand world', video: `${assets}work/mgm-macau.mp4`, poster: `${assets}work/mgm-cover.jpg`, position: '50% 50%' },
 ]
@@ -61,8 +61,8 @@ const workProjects = [
   { brand: 'The Peninsula', name: 'The Peninsula Hong Kong', slug: 'peninsula-fathers-day', category: 'Hospitality', video: `${assets}work/projects/peninsula-fathers-day.mp4`, poster: `${assets}work/projects/peninsula-fathers-day.jpg`, portrait: true },
   { brand: 'PARKnSHOP', name: 'Weekly Offer', slug: 'parknshop-weekly-offer', category: 'Retail', video: `${assets}work/projects/parknshop-weekly-offer.mp4`, poster: `${assets}work/projects/parknshop-weekly-offer.jpg` },
   { brand: 'Octopus', name: 'Octopus Film', slug: 'octopus-film', category: 'Retail / Urban Lifestyle', video: `${assets}work/projects/octopus-film.mp4`, poster: `${assets}work/projects/octopus-film.jpg` },
-  { brand: 'ChillGOOD TV', name: '章魚燒 Takoyaki', slug: 'chillgood-takoyaki', category: 'Music Video', video: `${assets}work/projects/chillgood-takoyaki.mp4`, poster: `${assets}work/projects/chillgood-takoyaki.jpg` },
-  { brand: 'ChillGOOD TV', name: '波斯', slug: 'chillgood-animation', category: 'Music Video', video: `${assets}work/projects/chillgood-animation.mp4`, poster: `${assets}work/projects/chillgood-animation.jpg` },
+  { brand: 'ChillGOOD_TV', name: '章魚燒 Takoyaki', slug: 'chillgood-takoyaki', category: 'Music Video', video: `${assets}work/projects/chillgood-takoyaki.mp4`, poster: `${assets}work/projects/chillgood-takoyaki.jpg` },
+  { brand: 'ChillGOOD_TV', name: '波斯', slug: 'chillgood-animation', category: 'Music Video', video: `${assets}work/projects/chillgood-animation.mp4`, poster: `${assets}work/projects/chillgood-animation.jpg` },
   { brand: 'The Peninsula', name: 'The Peninsula Hong Kong', slug: 'peninsula-whisky-still', category: 'Photography', poster: `${assets}work/projects/peninsula-whisky-still.jpg`, photo: true },
   { brand: 'GRAMS', name: 'Color', slug: 'grams-color', category: 'Fashion & Lifestyle', video: `${assets}work/projects/grams-color.mp4`, poster: `${assets}work/projects/grams-color.jpg` },
   { brand: 'GRAMS', name: 'Black & White', slug: 'grams-bw', category: 'Fashion & Lifestyle', video: `${assets}work/projects/grams-bw.mp4`, poster: `${assets}work/projects/grams-bw.jpg` },
@@ -82,7 +82,7 @@ const copy = {
     workTitle: <>Selected work,<br />made to move.</>,
     workBody: 'From short films to brand worlds, we create stories that resonate and endure.',
     brandsTitle: <>Built with brands.<br />Made for culture.</>,
-    brands: ['Macau MGM', 'The Peninsula Hong Kong', 'PARKnSHOP', 'Octopus', 'ChillGOOD × TVB Takoyaki', 'GRAMS', 'KOISEA'],
+    brands: ['Macau MGM', 'The Peninsula Hong Kong', 'PARKnSHOP', 'Octopus', 'ChillGOOD_TV', 'GRAMS', 'KOISEA'],
     worldTitle: <>We build the<br />whole world.</>,
     worldItems: ['AI talent casting', 'Character consulting', 'Content production', 'Campaign collaboration'],
     contactTitle: <>Tell us<br />your story</>,
@@ -104,7 +104,7 @@ const copy = {
     workTitle: <>精选作品，<br />为触动而生。</>,
     workBody: '从短片到品牌世界，我们创作能被感受并留下余韵的故事。',
     brandsTitle: <>与品牌同行。<br />为文化而作。</>,
-    brands: ['Macau MGM', 'The Peninsula Hong Kong', 'PARKnSHOP', 'Octopus', 'ChillGOOD × TVB Takoyaki', 'GRAMS', 'KOISEA'],
+    brands: ['Macau MGM', 'The Peninsula Hong Kong', 'PARKnSHOP', 'Octopus', 'ChillGOOD_TV', 'GRAMS', 'KOISEA'],
     worldTitle: <>我们构筑<br />完整的世界。</>,
     worldItems: ['AI 人才选角', '角色创意顾问', '内容制作', '活动共创'],
     contactTitle: <>告诉我们<br />你的故事</>,
@@ -716,7 +716,7 @@ const mayaCollaborations = [
   ['dontaskmyplan', "DON'T ASK MY PLAN", 'https://www.instagram.com/p/C27hAEMJg3O/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
   ['emis', 'EMIS', 'https://www.instagram.com/p/C6s3I2DrGuK/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
   ['tamburins', 'TAMBURINS', 'https://www.instagram.com/p/Cz8cKQ6BDvG/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
-  ['chillgood-tv', 'CHILLGOOD TV', '#/work/chillgood-takoyaki', 'video'],
+  ['chillgood-tv', 'CHILLGOOD_TV', '#/work/chillgood-takoyaki', 'video'],
 ]
 
 const mayaStoryCopy = {
