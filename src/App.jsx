@@ -454,7 +454,6 @@ function ArtistArchive({ language }) {
     if (event.pointerType === 'touch') return
     const rail = event.currentTarget
     dragRef.current = { active: true, moved: false, startX: event.clientX, startScrollLeft: rail.scrollLeft }
-    rail.setPointerCapture?.(event.pointerId)
   }
   const drag = (event) => {
     const state = dragRef.current
