@@ -11,11 +11,11 @@ const assets = `${import.meta.env.BASE_URL}assets/`
 const vineScaleY = 1.035
 
 const artists = [
-  { number: '01', name: 'Amber', slug: 'amber', src: `${assets}artists/thumbs/amber.jpg`, position: '50% 26%', role: 'Digital Muse & Beauty Creator', tags: ['Beauty', 'Fashion', 'Lifestyle'] },
-  { number: '02', name: 'Ooona', slug: 'ooona', src: `${assets}artists/thumbs/ooona.jpg`, position: '50% 34%', role: 'Experimental Digital Artist KOL', tags: ['Beauty', 'Art', 'Sport'] },
-  { number: '03', name: 'Maya', slug: 'maya', src: `${assets}artists/thumbs/maya.jpg`, position: '50% 34%', role: 'Digital Artist & Cultural Muse', tags: ['Fashion', 'Art', 'Lifestyle'] },
-  { number: '04', name: 'Noah', slug: 'noah', src: `${assets}artists/thumbs/noah.jpg`, position: '54% 20%', role: 'Virtual Artist & Visual Storyteller', tags: ['Film', 'Music', 'Lifestyle'] },
-  { number: '05', name: 'Mario', slug: 'mario', src: `${assets}artists/thumbs/mario.jpg`, position: '45% 24%', role: 'Virtual Creator & Urban Storyteller', tags: ['Streetwear', 'Travel', 'Culture'] },
+  { number: '01', name: 'Amber', slug: 'amber', src: `${assets}artists/thumbs/amber.jpg`, position: '50% 26%', role: 'Digital Muse & Beauty Creator', roleZh: '音乐制作人／时尚艺术家', tags: ['Beauty', 'Fashion', 'Lifestyle'], tagsZh: ['音乐', '时尚', '生活方式'] },
+  { number: '02', name: 'Ooona', slug: 'ooona', src: `${assets}artists/thumbs/ooona.jpg`, position: '50% 34%', role: 'Experimental Digital Artist KOL', roleZh: '美妆／身心健康艺术家', tags: ['Beauty', 'Art', 'Sport'], tagsZh: ['美妆', '健康', '运动'] },
+  { number: '03', name: 'Maya', slug: 'maya', src: `${assets}artists/thumbs/maya.jpg`, position: '50% 34%', role: 'Digital Artist & Cultural Muse', roleZh: '奢华时尚艺术家', tags: ['Fashion', 'Art', 'Lifestyle'], tagsZh: ['时尚', '艺术', '生活方式'] },
+  { number: '04', name: 'Noah', slug: 'noah', src: `${assets}artists/thumbs/noah.jpg`, position: '54% 20%', role: 'Virtual Artist & Visual Storyteller', roleZh: '影像／时尚艺术家', tags: ['Film', 'Music', 'Lifestyle'], tagsZh: ['影像', '时尚', '旅行'] },
+  { number: '05', name: 'Mario', slug: 'mario', src: `${assets}artists/thumbs/mario.jpg`, position: '45% 24%', role: 'Virtual Creator & Urban Storyteller', roleZh: '生活方式创作者／摄影师', tags: ['Streetwear', 'Travel', 'Culture'], tagsZh: ['街头文化', '旅行', '摄影'] },
 ]
 const featuredArtists = artists.slice(0, 5)
 
@@ -37,20 +37,20 @@ const directoryLabels = {
     location: 'Locations', languages: 'Languages', talents: 'Creative talents', back: 'Back to artists',
   },
   zh: {
-    eyebrow: '艺术家档案', title: '遇见所有艺术家', intro: '正在生长的全新现实。',
-    growing: '即将生长', archive: '艺术家档案', all: '全部', reset: '重置筛选',
+    eyebrow: '数字艺人档案', title: '认识全部数字艺人', intro: '面向品牌、内容与文化领域的数字人才阵容。',
+    growing: '即将上线', archive: '数字艺人档案', all: '全部', reset: '重置筛选',
     gender: '性别', language: '语言', type: '类型', city: '城市', results: '位艺术家',
-    profile: '查看档案', comingSoon: '档案正在生长', confirmed: '已确认资料',
-    location: '城市', languages: '语言', talents: '创作类型', back: '返回艺术家列表',
+    profile: '查看人物档案', comingSoon: '人物档案即将上线', confirmed: '已确认资料',
+    location: '常驻地区', languages: '使用语言', talents: '创作能力', back: '返回数字艺人列表',
   },
 }
 directoryLabels['zh-Hant'] = { ...directoryLabels.zh, eyebrow: '藝術家檔案', title: '遇見所有藝術家', intro: '正在成長的全新現實。', archive: '藝術家檔案', reset: '重設篩選', gender: '性別', language: '語言', city: '城市', profile: '查看檔案', comingSoon: '檔案正在成長', confirmed: '已確認資料', location: '城市', languages: '語言', talents: '創作類型', back: '返回藝術家列表' }
 
 const works = [
-  { name: 'The Peninsula', slug: 'the-peninsula', category: 'Brand film', video: `${assets}work/the-peninsula.mp4`, poster: `${assets}work/the-peninsula-cover.jpg`, position: '50% 38%', portrait: true },
-  { name: 'ChillGOOD_TV', slug: 'childgood', category: 'Campaign film', video: `${assets}work/chillgood-takoyaki.mp4`, poster: `${assets}work/chillgood-cover.jpg`, position: '50% 50%' },
-  { name: 'Octopus', slug: 'octopus', category: 'Culture film', video: `${assets}work/octopus.mp4`, poster: `${assets}work/octopus-cover.jpg`, position: '50% 50%' },
-  { name: 'MGM', slug: 'mgm', category: 'Brand world', video: `${assets}work/mgm-macau.mp4`, poster: `${assets}work/mgm-cover.jpg`, position: '50% 50%' },
+  { name: 'The Peninsula', slug: 'the-peninsula', category: 'Brand film', categoryZh: '品牌影片', video: `${assets}work/the-peninsula.mp4`, poster: `${assets}work/the-peninsula-cover.jpg`, position: '50% 38%', portrait: true },
+  { name: 'ChillGOOD_TV', slug: 'childgood', category: 'Campaign film', categoryZh: 'Campaign 影片', video: `${assets}work/chillgood-takoyaki.mp4`, poster: `${assets}work/chillgood-cover.jpg`, position: '50% 50%' },
+  { name: 'Octopus', slug: 'octopus', category: 'Culture film', categoryZh: '文化内容影片', video: `${assets}work/octopus.mp4`, poster: `${assets}work/octopus-cover.jpg`, position: '50% 50%' },
+  { name: 'MGM', slug: 'mgm', category: 'Brand world', categoryZh: '品牌视觉世界', video: `${assets}work/mgm-macau.mp4`, poster: `${assets}work/mgm-cover.jpg`, position: '50% 50%' },
 ]
 
 // Work pages use the approved current-project delivery package. Homepage media stays separate.
@@ -97,29 +97,29 @@ const copy = {
     workFormats: 'Work formats', openWork: 'Open work', moreWork: 'More stories are in development.', skip: 'Skip to content', home: 'Green Tomato home', navigation: 'Main navigation', language: 'Language',
   },
   zh: {
-    nav: ['关于', '艺术家', '作品', '品牌', '服务', '联系'],
-    heroKicker: '新现实的创作之家',
-    heroBody: '我们为塑造文化的品牌，构筑身份、影像与世界。',
-    aboutTitle: <>人的感知。<br />机器的可能。</>,
-    aboutBody: '我们代表新一代创作者，将艺术与代码、想象与人的视角融合在一起。',
-    artistsTitle: <>塑造全新现实的<br />创作者。</>,
-    artistsBody: '导演、设计师与技术创作者，将大胆想法化为推动文化的作品。',
-    workTitle: <>精选作品，<br />为触动而生。</>,
-    workBody: '从短片到品牌世界，我们创作能被感受并留下余韵的故事。',
-    brandsTitle: <>与品牌同行。<br />为文化而作。</>,
+    nav: ['关于我们', '数字艺人', '案例作品', '合作品牌', '服务能力', '联系我们'],
+    heroKicker: '数字艺人与 AI 品牌内容创意工作室',
+    heroBody: '我们为品牌打造数字艺人、内容作品与 AI 创意企划，建立面向新一代受众的品牌表达。',
+    aboutTitle: <>人的创意，<br />AI 驱动的制作能力。</>,
+    aboutBody: '我们整合创意策划、数字艺人与 AI 制作能力，为品牌打造具有辨识度的内容、企划与视觉世界。',
+    artistsTitle: <>面向新一代的<br />数字艺人。</>,
+    artistsBody: '我们持续打造具备鲜明人设与内容能力的数字艺人，支持品牌内容、创意企划与长期合作。',
+    workTitle: <>精选案例，<br />以结果为导向。</>,
+    workBody: '从品牌影片、Campaign 视觉到数字人内容，我们以品牌目标为核心，打造能够吸引注意并推动传播的作品。',
+    brandsTitle: <>与品牌共创，<br />让内容产生影响。</>,
     brands: ['Macau MGM', 'The Peninsula Hong Kong', 'PARKnSHOP', 'Octopus', 'ChillGOOD_TV', 'GRAMS', 'KOISEA'],
-    worldTitle: <>我们构筑<br />完整的世界。</>,
-    worldItems: ['AI 人才选角', '角色创意顾问', '内容制作', '活动共创'],
-    contactTitle: <>告诉我们<br />你的故事</>,
-    form: ['姓名', '邮箱', '项目 / 预算', '还有什么想说'],
-    send: '发送消息',
-    sending: '发送中…',
-    sent: '谢谢，你的消息已经发送。',
-    sendError: '发送失败，请重试或直接发送邮件给我们。',
+    worldTitle: <>从创意策略，<br />到完整交付。</>,
+    worldItems: ['AI 影片制作', '数字人物打造', '品牌企划与社交内容', '定制 AI 体验'],
+    contactTitle: <>一起打造<br />下一个品牌项目。</>,
+    form: ['姓名', '电子邮箱', '项目类型 / 预算', '项目需求'],
+    send: '提交合作需求',
+    sending: '正在提交…',
+    sent: '感谢联系，我们将尽快回复。',
+    sendError: '提交失败，请重试或直接通过电子邮件联系我们。',
     menu: '菜单',
-    est: '创立于香港', scroll: '向下滚动，继续生长', aboutEyebrow: '关于我们', artistsEyebrow: '艺术家', workEyebrow: '作品', brandsEyebrow: '品牌与服务', contactEyebrow: '联系',
-    allArtists: '查看所有艺术家', allWork: '查看全部作品', profile: '查看档案', playCase: '播放案例', selectedWork: '精选作品', madeToMove: <>为流动<br />而作。</>,
-    workFormats: '作品分类', openWork: '打开作品', moreWork: '更多作品正在制作中。', skip: '跳至主要内容', home: 'Green Tomato 首页', navigation: '主导航', language: '语言',
+    est: '创立于香港', scroll: '向下探索', aboutEyebrow: '关于我们', artistsEyebrow: '数字艺人', workEyebrow: '案例作品', brandsEyebrow: '合作品牌与服务能力', contactEyebrow: '联系我们',
+    allArtists: '认识全部数字艺人', allWork: '查看全部案例', profile: '查看人物档案', playCase: '播放影片', selectedWork: '精选案例', madeToMove: <>以结果<br />为导向。</>,
+    workFormats: '案例分类', openWork: '查看项目', moreWork: '更多项目正在制作中。', skip: '跳至主要内容', home: 'Green Tomato 首页', navigation: '主导航', language: '语言',
   },
 }
 
@@ -339,17 +339,19 @@ function Header({ language, setLanguage, menuOpen, setMenuOpen }) {
 }
 
 function ArtistCard({ artist, onOpen, total, t }) {
+  const isChinese = t.language !== 'Language'
   return <button className={`artist-tile artist-tile--${artist.slug}`} type="button" onClick={() => onOpen(`#/artists/${artist.slug}`)} aria-label={`${t.profile}: ${artist.name}`}>
     <img src={artist.src} alt={`Portrait of ${artist.name}`} style={{ objectPosition: artist.position }} loading="lazy" decoding="async" />
     <span className="artist-scrim" aria-hidden="true" />
     <span className="artist-number" aria-hidden="true">{artist.number} / {String(total).padStart(2, '0')}</span>
-    <span className="artist-info"><strong>{artist.name}</strong><span className="artist-role">{artist.role}</span><span className="artist-tags">{artist.tags.join(' · ')}</span></span>
+    <span className="artist-info"><strong>{artist.name}</strong><span className="artist-role">{isChinese ? artist.roleZh : artist.role}</span><span className="artist-tags">{(isChinese ? artist.tagsZh : artist.tags).join(' · ')}</span></span>
     <span className="artist-profile">{t.profile} <b aria-hidden="true">→</b></span>
   </button>
 }
 
 function WorkCard({ work, onPlay, t }) {
   const [muted, setMuted] = useState(true)
+  const isChinese = t.language !== 'Language'
 
   const toggleMuted = (event) => {
     event.stopPropagation()
@@ -358,7 +360,7 @@ function WorkCard({ work, onPlay, t }) {
 
   return <article className={`work-card work-card--${work.slug}`}>
     <img className="work-video" src={work.poster} alt="" style={{ objectPosition: work.position }} loading="lazy" decoding="async" />
-    <span className="work-name">{work.name}</span><span className="work-category">{work.category}</span><span className="work-case">{t.playCase} →</span>
+    <span className="work-name">{work.name}</span><span className="work-category">{isChinese ? work.categoryZh : work.category}</span><span className="work-case">{t.playCase} →</span>
     <div className="work-controls" aria-label={`${work.name} video controls`}>
       <button className="work-control work-control--play" type="button" onClick={() => onPlay(work, muted)} aria-label={`Play ${work.name}`}>▶</button>
       <span className="work-progress" aria-hidden="true" />
@@ -568,7 +570,11 @@ function ArtistsOverview({ language }) {
 function ArtistDetail({ artist, language }) {
   if (!artist) return <NotFound />
   if (artist.id === 'maya') return <MayaProfile artist={artist} language={language} />
-  if (storyProfiles[artist.id]) return <ArtistStoryProfile artist={artist} language={language} story={storyProfiles[artist.id]} />
+  if (storyProfiles[artist.id]) {
+    const story = storyProfiles[artist.id]
+    const localizedStory = language === 'en' ? story : localizeStoryProfile(artist.id, story, language)
+    return <ArtistStoryProfile artist={artist} language={language} story={localizedStory} />
+  }
   if (artistProfileMedia[artist.id]) return <ArtistProfile artist={artist} language={language} media={artistProfileMedia[artist.id]} />
   const labels = directoryLabels[language]
   const role = language === 'zh' ? artist.role_zh : artist.role_en
@@ -697,6 +703,63 @@ const storyProfiles = {
   },
 }
 
+const storyProfilesZh = {
+  amber: {
+    role: '音乐制作人／时尚艺术家', hello: '我是 Amber。', slogan: '融合音乐、时尚与都市文化的数字艺人。',
+    intro: ['以音乐、造型与视觉共同建立鲜明表达。', '适合音乐、时尚及年轻文化品牌合作。'],
+    personalityTitle: ['鲜明表达，', '跨界创造。'],
+    personality: [
+      ['自信鲜明', '在音乐、时尚及年轻文化企划中展现清晰、有力量的存在感。'],
+      ['表达力强', '善于通过音乐、造型与动态视觉传递观点和情绪。'],
+      ['先锋开放', '能够自然连接新兴音乐、潮流风格与文化趋势。'],
+      ['跨界多元', '能够灵活驾驭音乐、美妆、时尚与生活方式内容。'],
+    ],
+    worldLead: '音乐、造型与城市文化持续交汇。', cta: '寻找合适的数字艺人合作？', next: '下一位数字艺人 · Ooona',
+  },
+  ooona: {
+    role: '美妆／身心健康艺术家', hello: '我是 Ooona。', slogan: '以清新、自然的表达连接美妆、健康与生活方式。',
+    intro: ['以轻松可信的内容呈现美妆、运动与日常健康。', '适合当代消费与生活方式品牌合作。'],
+    personalityTitle: ['清新自然，', '轻松连接。'],
+    personality: [
+      ['自然亲和', '以自然、可信的表达拉近品牌与生活方式受众的距离。'],
+      ['平衡从容', '将美妆、健康与运动融入统一、稳定的人物形象。'],
+      ['清新现代', '具备清新现代的首尔美学，适合当代消费与生活方式品牌。'],
+      ['积极健康', '以轻松方式传递自我关怀与健康理念，避免生硬说教。'],
+    ],
+    worldLead: '以轻盈节奏连接美妆、运动与日常健康生活。', cta: '寻找合适的数字艺人合作？', next: '下一位数字艺人 · Mario',
+  },
+  mario: {
+    role: '生活方式创作者／摄影师', hello: '我是 Mario。', slogan: '记录街头文化、运动、旅行与真实日常。',
+    intro: ['以摄影与生活观察建立可信、有亲和力的内容表达。', '适合运动、旅行及城市生活方式品牌合作。'],
+    personalityTitle: ['真实视角，', '城市活力。'],
+    personality: [
+      ['真实自然', '内容真实、松弛且具有亲和力，容易与生活方式受众建立连接。'],
+      ['好奇开放', '以开放视角探索不同地点、社群与日常故事。'],
+      ['积极有活力', '为运动、旅行与城市内容带来自然活力与行动感。'],
+      ['善于记录', '善于将日常细节转化为清晰、有吸引力的视觉故事。'],
+    ],
+    worldLead: '记录街头文化、旅行体验与值得保留的日常瞬间。', cta: '寻找合适的数字艺人合作？', next: '下一位数字艺人 · Noah',
+  },
+  noah: {
+    role: '影像／时尚艺术家', hello: '我是 Noah。', slogan: '以精准造型与都市视角连接时尚、影像与旅行。',
+    intro: ['通过动作、构图与场景建立清晰的视觉叙事。', '适合高端生活方式及文化型 Campaign。'],
+    personalityTitle: ['清晰判断，', '精准表达。'],
+    personality: [
+      ['沉稳克制', '在时尚与影像内容中保持沉稳、精准且有控制力的表现。'],
+      ['观察敏锐', '善于捕捉城市、旅行与日常流动中的独特视觉细节。'],
+      ['当代感强', '将高品质造型与当代都市文化视角自然结合。'],
+      ['目标清晰', '确保每个视觉选择都围绕 Campaign 的核心概念展开。'],
+    ],
+    worldLead: '以清晰视角记录时尚、影像与流动中的城市生活。', cta: '寻找合适的数字艺人合作？', next: '下一位数字艺人 · Maya',
+  },
+}
+
+function localizeStoryProfile(id, story, language) {
+  const localized = storyProfilesZh[id]
+  if (!localized) return story
+  return { ...story, ...localized }
+}
+
 function SocialAccountLinks({ links }) {
   return <div className="maya-social-links">{links.map(([platform, handle, url]) => <a key={url} href={url} target="_blank" rel="noreferrer"><span>{platform}</span><b>{handle}</b><i aria-hidden="true">↗</i></a>)}</div>
 }
@@ -761,10 +824,10 @@ const mayaStoryCopy = {
     world: '我的世界', worldLead: '让我的世界持续流动的灵感。', about: '关于我', social: '社交与合作', followers: '粉丝数', audience: '受众快照 · 近 30 天',
     cta: '想一起创作些什么吗？', work: '与 Maya 合作', next: '下一位艺术家 · Amber',
     personalityItems: [
-      ['克制', '我相信克制会为想象留下空间。'],
-      ['理性', '每一个造型，都从经过思考的观点开始。'],
-      ['艺术感', '我会被有纹理、节奏与情绪的画面吸引。'],
-      ['独立', '我穿行于不同城市，也保持自己的节奏。'],
+      ['精致克制', '注重比例、质感与细节，视觉表达高级且克制。'],
+      ['审美敏锐', '对造型与创意有明确判断，每个选择都服务于整体表达。'],
+      ['艺术导向', '关注具有质感、结构与文化关联的时尚影像。'],
+      ['独立鲜明', '面对不同品牌、城市与内容形式，始终保持鲜明且一致的个人风格。'],
     ],
     aboutLines: ['在表达之前，我会先收集参考与感受。', '我的作品在柔和结构与清晰观点之间生长。', '当时尚为感受留出空间，它就会变得很私人。'],
     worldMoments: [['时尚', '柔和结构'], ['艺术', '凝视细节'], ['城市生活', '城市之间'], ['美妆', '安静仪式']],

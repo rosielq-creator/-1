@@ -19,3 +19,13 @@ test('all collaboration assets use a shared non-cropping 3:4 frame', () => {
   assert.match(styles, /\.maya-collaboration-media\s*>\s*img[\s\S]*object-fit:\s*contain/)
   assert.match(styles, /\.maya-collaboration-media\s*>\s*video[\s\S]*object-fit:\s*contain/)
 })
+
+test('all five artist personality sections provide business-ready Chinese copy', () => {
+  for (const artist of ['amber', 'ooona', 'mario', 'noah']) {
+    assert.match(app, new RegExp(`${artist}: \\{[\\s\\S]*?personality: \\[[\\s\\S]*?[\\u4e00-\\u9fff]`, 'i'))
+  }
+  for (const trait of ['精致克制', '审美敏锐', '艺术导向', '独立鲜明']) {
+    assert.match(app, new RegExp(trait))
+  }
+  assert.match(app, /const localizedStory = language === 'en' \? story : localizeStoryProfile\(artist\.id, story, language\)/)
+})
