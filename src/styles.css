@@ -368,6 +368,7 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
 .detail-media img { width:100%; height:100%; object-fit:cover; }
 .detail-work-media { position:relative; display:grid; min-height:clamp(280px,36vw,600px); overflow:hidden; background:var(--card); color:var(--paper); }
 .detail-work-media video { width:100%; height:100%; min-height:inherit; background:#111; object-fit:contain; }
+.detail-work-media img { width:100%; height:100%; min-height:inherit; object-fit:contain; }
 .detail-work-media--portrait video { object-fit:contain; }
 
 @media (max-width:760px) {

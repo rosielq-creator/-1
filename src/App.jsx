@@ -63,6 +63,7 @@ const workProjects = [
   { brand: 'Octopus', name: 'Octopus Film', slug: 'octopus-film', category: 'Retail / Urban Lifestyle', video: `${assets}work/projects/octopus-film.mp4`, poster: `${assets}work/projects/octopus-film.jpg` },
   { brand: 'ChillGOOD TV', name: '章魚燒 Takoyaki', slug: 'chillgood-takoyaki', category: 'Music Video', video: `${assets}work/projects/chillgood-takoyaki.mp4`, poster: `${assets}work/projects/chillgood-takoyaki.jpg` },
   { brand: 'ChillGOOD TV', name: '波斯動漫', slug: 'chillgood-animation', category: 'Music Video', video: `${assets}work/projects/chillgood-animation.mp4`, poster: `${assets}work/projects/chillgood-animation.jpg` },
+  { brand: 'The Peninsula', name: 'Highland Single Malt', slug: 'peninsula-whisky-still', category: 'Photography', poster: `${assets}work/projects/peninsula-whisky-still.jpg`, photo: true },
   { brand: 'GRAMS', name: 'Color', slug: 'grams-color', category: 'Fashion & Lifestyle', video: `${assets}work/projects/grams-color.mp4`, poster: `${assets}work/projects/grams-color.jpg` },
   { brand: 'GRAMS', name: 'Black & White', slug: 'grams-bw', category: 'Fashion & Lifestyle', video: `${assets}work/projects/grams-bw.mp4`, poster: `${assets}work/projects/grams-bw.jpg` },
   { brand: 'KOISEA', name: 'Landscape Cut', slug: 'koisea-landscape', category: 'Fashion & Lifestyle', video: `${assets}work/projects/koisea-landscape.mp4`, poster: `${assets}work/projects/koisea-landscape.png` },
@@ -1004,7 +1005,7 @@ const workFormats = [
   ['drama', 'Narrative Frames', 'Stories that stay with you.', '叙事片场', '留在心里的故事。'],
   ['photo', 'Still Worlds', 'Still, never static.', '静帧世界', '静止，也持续发生。'],
 ]
-const workFormatFor = (work) => (work.slug === 'peninsula-fathers-day' ? 'reels' : ['chillgood-takoyaki', 'chillgood-animation'].includes(work.slug) ? 'mv' : 'commercial')
+const workFormatFor = (work) => (work.photo ? 'photo' : work.slug === 'peninsula-fathers-day' ? 'reels' : ['chillgood-takoyaki', 'chillgood-animation'].includes(work.slug) ? 'mv' : 'commercial')
 
 function WorkOverview({ language }) {
   const [format, setFormat] = useState('reels')
@@ -1016,7 +1017,7 @@ function WorkOverview({ language }) {
 
 function WorkDetail({ work }) {
   if (!work) return <NotFound />
-  return <main id="main" className="subpage subpage--light"><Container><div className="detail-grid detail-grid--work"><div><PageHeader eyebrow={work.brand} title={work.name} back="#/work" /><p className="detail-role">{work.category}</p><p className="detail-tags">Selected work · Film</p></div><div className={`detail-work-media ${work.portrait ? 'detail-work-media--portrait' : ''}`}><video controls playsInline preload="metadata" poster={work.poster} aria-label={`${work.brand} — ${work.name}`}><source src={work.video} type="video/mp4" /></video></div></div></Container></main>
+  return <main id="main" className="subpage subpage--light"><Container><div className="detail-grid detail-grid--work"><div><PageHeader eyebrow={work.brand} title={work.name} back="#/work" /><p className="detail-role">{work.category}</p><p className="detail-tags">Selected work · {work.photo ? 'Photography' : 'Film'}</p></div><div className={`detail-work-media ${work.portrait || work.photo ? 'detail-work-media--portrait' : ''}`}>{work.photo ? <img src={work.poster} alt={`${work.brand} — ${work.name}`} /> : <video controls playsInline preload="metadata" poster={work.poster} aria-label={`${work.brand} — ${work.name}`}><source src={work.video} type="video/mp4" /></video>}</div></div></Container></main>
 }
 
 function NotFound() { return <main id="main" className="subpage subpage--dark"><Container><PageHeader eyebrow="404" title="Not found." back="#/" /></Container></main> }
