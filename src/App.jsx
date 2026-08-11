@@ -568,6 +568,13 @@ const storyProfiles = {
     ],
     worldLead: 'Beauty, motion and everyday rituals in my own rhythm.',
     world: [['video/lip-gloss.mp4', 'Lip colour', 'A polished detail', 'video'], ['video/beauty-still-life.mp4', 'Beauty object', 'A close look', 'video'], ['video/transformation.mp4', 'Transformation', 'A shift in mood', 'video'], ['hero.jpg', 'Beauty', 'A bright beginning'], ['mirror.jpg', 'Reflection', 'Looking closer'], ['stairs.jpg', 'City life', 'A gentle ascent'], ['sport.jpg', 'Motion', 'Energy in practice']],
+    collaborations: [
+      ['adidas-originals', 'ADIDAS ORIGINALS', 'https://www.instagram.com/p/DZuA1oTGIlC/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
+      ['nike-seoul', 'NIKE SEOUL', 'https://www.instagram.com/p/DZfdxEXtqFF/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
+      ['romand', 'ROM&ND', 'https://www.instagram.com/reel/DXbbQXYjW9z/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
+      ['dear-dahlia', 'DEAR DAHLIA', 'https://www.instagram.com/reel/DWTRdVPjbL-/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
+      ['lululemon-adidas', 'LULULEMON × ADIDAS', 'https://www.instagram.com/reel/DYZu4TStLlV/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
+    ],
     socialLabel: 'Instagram snapshot · historical', socialHandle: 'Instagram', followers: '15.1K',
     factsLabel: 'Audience snapshot · historical', facts: [
       ['Male audience', '72.4%'], ['Female audience', '27.6%'], ['18–24', '37.8%'],
@@ -834,6 +841,7 @@ function useArtistStoryMotion() {
       const poses = gsap.utils.toArray('.story-camera-pose')
       const atmosphere = root.querySelector('.maya-atmosphere')
       const personality = gsap.utils.toArray('.maya-personality-item')
+      const hasCases = Boolean(root.querySelector('.maya-scene--cases'))
       gsap.set(scenes, { autoAlpha: 0, y: 22, pointerEvents: 'none' })
       gsap.set(scenes[0], { autoAlpha: 1, y: 0, pointerEvents: 'auto' })
       gsap.set(poses, { autoAlpha: 0 })
@@ -841,7 +849,7 @@ function useArtistStoryMotion() {
       gsap.set(personality, { opacity: 1, x: 0 })
       gsap.set(camera, { xPercent: 0, yPercent: 0, scale: 1, transformOrigin: '50% 50%' })
       const revealScene = (timeline, from, to, at) => timeline.to(from, { autoAlpha: 0, y: -20, pointerEvents: 'none', duration: .32 }, at).fromTo(to, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, pointerEvents: 'auto', duration: .42 }, at + .18)
-      const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: root, start: 'top top', end: () => `+=${window.innerHeight * 6.2}`, pin: stage, scrub: .75, anticipatePin: 1, invalidateOnRefresh: true } })
+      const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: root, start: 'top top', end: () => `+=${window.innerHeight * (hasCases ? 7.4 : 6.2)}`, pin: stage, scrub: .75, anticipatePin: 1, invalidateOnRefresh: true } })
       timeline.to(camera, { xPercent: -188, yPercent: 12, scale: 1.78, transformOrigin: '50% 16%', duration: 1.3 }, .45)
         .to(atmosphere, { xPercent: -5, yPercent: 3, scale: 1.08, backgroundColor: 'var(--story-deep)', duration: 1.3 }, .45)
         .to(camera, { autoAlpha: 0, duration: .16 }, .75)
@@ -858,6 +866,7 @@ function useArtistStoryMotion() {
       revealScene(timeline, scenes[2], scenes[3], 3.18)
       timeline.to(atmosphere, { backgroundColor: 'var(--story-base)', duration: .72 }, 4.42)
       revealScene(timeline, scenes[3], scenes[4], 4.48)
+      if (hasCases) revealScene(timeline, scenes[4], scenes[5], 5.54)
       requestAnimationFrame(() => ScrollTrigger.refresh())
     }, root)
     return () => ctx.revert()
@@ -905,6 +914,10 @@ function WorldPhoneVideo({ src, label, priority }) {
   return <><video ref={videoRef} className="maya-phone-video" src={src} aria-label={label} autoPlay muted loop playsInline preload={priority ? 'auto' : 'metadata'} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} /><div className="maya-phone-video-controls" aria-label="Video controls"><button type="button" onPointerDown={stopRailDrag} onClick={togglePlayback} aria-label={playing ? 'Pause video' : 'Play video'}>{playing ? 'Ⅱ' : '▶'}</button><button type="button" onPointerDown={stopRailDrag} onClick={toggleMuted} aria-label={muted ? 'Turn sound on' : 'Mute video'}>{muted ? '🔇' : '🔊'}</button></div></>
 }
 
+function ArtistCollaborationScene({ artist, collaborations }) {
+  return <section className="maya-scene maya-scene--cases"><Container><div className="maya-safe maya-safe--cases"><Eyebrow number="05">Selected collaborations</Eyebrow><h2>Made with<br />brands.</h2><div className="maya-collaboration-grid">{collaborations.map(([file, brand, url], index) => <a className="maya-collaboration-card" href={url} key={file} target="_blank" rel="noreferrer"><img src={`${assets}artists/collaborations/${artist.id}/${file}.jpg`} alt={`${artist.display_name} collaboration with ${brand}`} loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><span>{brand} ↗</span></a>)}</div></div></Container></section>
+}
+
 function ArtistStoryProfile({ artist, language, story }) {
   const rootRef = useArtistStoryMotion()
   useProfileStart(artist.id)
@@ -925,7 +938,8 @@ function ArtistStoryProfile({ artist, language, story }) {
       <section className="maya-scene maya-scene--identity"><Container><figure className="maya-identity-portrait" aria-hidden="true"><img src={pose('identity')} alt="" fetchPriority="high" decoding="async" /></figure><div className="maya-safe maya-safe--identity"><Eyebrow number="02">{copy.dossier}</Eyebrow><h2>Identity</h2><dl className="maya-dossier">{media.dossier.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}<div className="maya-dossier-wide"><dt>{copy.type}</dt><dd>{artist.creative_talents.join(' / ')}</dd></div></dl></div><img className="maya-mobile-crop" src={pose('identity')} alt={`${artist.display_name} editorial pose`} /></Container></section>
       <section className="maya-scene maya-scene--detail"><Container><div className="maya-safe maya-safe--detail"><Eyebrow number="03">{copy.personality}</Eyebrow><h2 className="maya-detail-title">{story.personalityTitle.map((line) => <span key={line}>{line}</span>)}</h2><div className="maya-personality-list">{story.personality.map(([title, text], index) => <article className="maya-personality-item" key={title}><b>{String(index + 1).padStart(2, '0')}</b><div className="maya-personality-copy"><h3>{title}</h3><p>{text}</p></div></article>)}</div></div><img className="maya-mobile-crop" src={pose('detail')} alt={`${artist.display_name} seated pose`} /></Container></section>
       <section className="maya-scene maya-scene--world"><Container><div className="maya-safe maya-safe--world"><div className="maya-world-copy"><Eyebrow number="04">{copy.world}</Eyebrow><h2>{copy.world}</h2><p>{story.worldLead}</p><p>{story.intro[1]}</p></div><ArtistWorldPhone artist={artist} story={story} copy={copy} /></div></Container></section>
-      <section className="maya-scene maya-scene--social"><Container><div className="maya-safe maya-safe--social"><Eyebrow number="05">{copy.social}</Eyebrow><div className="maya-social-layout"><div className={`maya-social-metric${story.socialMetrics ? ' maya-social-metric--multiple' : ''}`}>{story.socialMetrics ? story.socialMetrics.map(([platform, label, followers]) => <div className="maya-social-metric-item" key={platform}><span className="maya-social-handle">{platform} · {label}</span><strong className="maya-followers">{followers}<small>{copy.followers}</small></strong></div>) : <><span className="maya-social-handle">{story.socialHandle} · {story.socialLabel}</span><strong className="maya-followers">{story.followers}<small>{copy.followers}</small></strong></>}</div><div className="maya-audience"><p>{story.factsLabel}</p><dl>{story.facts.map(([label, value]) => <div key={label} className={label === 'Focus' ? 'maya-audience-countries' : ''}><dt>{label}</dt><dd>{value}</dd></div>)}</dl></div><div className="maya-cta"><h2>{story.cta.split(' ').map((word, index) => <span key={`${word}-${index}`}>{word}</span>)}</h2><a className="maya-primary-link" href="#contact">Work with {artist.display_name} →</a></div></div></div></Container></section>
+      {story.collaborations && <ArtistCollaborationScene artist={artist} collaborations={story.collaborations} />}
+      <section className="maya-scene maya-scene--social"><Container><div className="maya-safe maya-safe--social"><Eyebrow number={story.collaborations ? '06' : '05'}>{copy.social}</Eyebrow><div className="maya-social-layout"><div className={`maya-social-metric${story.socialMetrics ? ' maya-social-metric--multiple' : ''}`}>{story.socialMetrics ? story.socialMetrics.map(([platform, label, followers]) => <div className="maya-social-metric-item" key={platform}><span className="maya-social-handle">{platform} · {label}</span><strong className="maya-followers">{followers}<small>{copy.followers}</small></strong></div>) : <><span className="maya-social-handle">{story.socialHandle} · {story.socialLabel}</span><strong className="maya-followers">{story.followers}<small>{copy.followers}</small></strong></>}</div><div className="maya-audience"><p>{story.factsLabel}</p><dl>{story.facts.map(([label, value]) => <div key={label} className={label === 'Focus' ? 'maya-audience-countries' : ''}><dt>{label}</dt><dd>{value}</dd></div>)}</dl></div><div className="maya-cta"><h2>{story.cta.split(' ').map((word, index) => <span key={`${word}-${index}`}>{word}</span>)}</h2><a className="maya-primary-link" href="#contact">Work with {artist.display_name} →</a></div></div></div></Container></section>
     </div>
   </main>
 }
