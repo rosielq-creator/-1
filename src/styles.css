@@ -355,7 +355,7 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
 .work-index-card span { position:absolute; top:18px; left:20px; font:12px/1 var(--mono); }
 .work-index-card > div { align-self:end; display:grid; gap:9px; }
 .work-index-card em { font:600 10px/1 var(--mono); font-style:normal; letter-spacing:.08em; text-transform:uppercase; }
-.work-index-card strong { font-size:clamp(21px,3.2vw,51px); letter-spacing:-.07em; }
+.work-index-card strong { font-size:clamp(11px,1.6vw,26px); letter-spacing:-.055em; }
 .work-index-card i { font-style:normal; font-size:20px; }
 .work-index-card small { position:absolute; bottom:18px; right:20px; font:600 11px/1 var(--mono); letter-spacing:.07em; text-transform:uppercase; opacity:0; transition:opacity 240ms ease; }
 .work-index-card:hover,.work-index-card:focus-visible { background:#616161; translate:0 -8px; }
