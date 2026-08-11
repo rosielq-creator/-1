@@ -567,7 +567,7 @@ const storyProfiles = {
       ['Open', 'The best images leave room to breathe and become your own.'],
     ],
     worldLead: 'Beauty, motion and everyday rituals in my own rhythm.',
-    world: [['video/lip-gloss.mp4', 'Lip colour', 'A polished detail', 'video'], ['video/beauty-still-life.mp4', 'Beauty object', 'A close look', 'video'], ['video/transformation.mp4', 'Transformation', 'A shift in mood', 'video'], ['sport.jpg', 'Motion', 'Energy in practice']],
+    world: [['video/lip-gloss.mp4', 'Lip colour', 'A polished detail', 'video'], ['video/beauty-still-life.mp4', 'Beauty object', 'A close look', 'video'], ['video/transformation.mp4', 'Transformation', 'A shift in mood', 'video'], ['hero.jpg', 'Beauty', 'A bright beginning'], ['mirror.jpg', 'Reflection', 'Looking closer'], ['stairs.jpg', 'City life', 'A gentle ascent'], ['sport.jpg', 'Motion', 'Energy in practice']],
     socialLabel: 'Instagram snapshot · historical', socialHandle: 'Instagram', followers: '15.1K',
     factsLabel: 'Audience snapshot · historical', facts: [
       ['Male audience', '72.4%'], ['Female audience', '27.6%'], ['18–24', '37.8%'],
@@ -588,7 +588,7 @@ const storyProfiles = {
       ['Playful', 'The work stays serious only as long as it needs to be.'],
     ],
     worldLead: 'Streets, journeys and small scenes worth keeping.',
-    world: [['video/shanghai-day-3.mp4', 'Shanghai · Day 3', 'A moving city note', 'video'], ['video/ocean-time.mp4', 'Ocean time', 'A quieter horizon', 'video'], ['mario-editorial.jpg', 'Style', 'A sharper line'], ['mario-campaign.jpg', 'Campaign', 'Built for motion']],
+    world: [['video/shanghai-day-3.mp4', 'Shanghai · Day 3', 'A moving city note', 'video'], ['video/ocean-time.mp4', 'Ocean time', 'A quieter horizon', 'video'], ['mario-hero.jpg', 'City life', 'The everyday frame'], ['mario-editorial.jpg', 'Style', 'A sharper line'], ['mario-campaign.jpg', 'Campaign', 'Built for motion'], ['yotree-cover.jpg', 'Travel', 'A different pace']],
     socialLabel: 'Social snapshots · historical', socialHandle: 'Instagram', followers: '13.5K',
     socialMetrics: [
       ['Instagram', 'Historical snapshot', '13.5K'],
