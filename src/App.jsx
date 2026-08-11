@@ -462,17 +462,12 @@ function ArtistArchive({ language }) {
     event.currentTarget.scrollLeft = state.startScrollLeft - delta
   }
   const stopDrag = () => { dragRef.current.active = false }
-  const preventFollowAfterDrag = (event) => {
-    if (!dragRef.current.moved) return
-    event.preventDefault()
-    dragRef.current.moved = false
-  }
   return <section className="artist-archive-section" aria-labelledby="artist-archive-title">
     <Container>
       <div className="artist-archive-heading"><Eyebrow number="02">{labels.archive}</Eyebrow><p id="artist-archive-title">{filteredArtists.length} {labels.results}</p></div>
       <ArtistFilters filters={filters} setFilters={setFilters} language={language} />
     </Container>
-    <div className="artist-archive-rail" tabIndex="0" aria-label={labels.archive} onPointerDown={startDrag} onPointerMove={drag} onPointerUp={stopDrag} onPointerCancel={stopDrag} onClickCapture={preventFollowAfterDrag}>
+    <div className="artist-archive-rail" tabIndex="0" aria-label={labels.archive} onPointerDown={startDrag} onPointerMove={drag} onPointerUp={stopDrag} onPointerCancel={stopDrag}>
       <div className="artist-archive-track">
         {filteredArtists.map((artist, index) => <DirectoryArtistCard key={artist.id} artist={artist} language={language} className="artist-archive-card" style={{ '--archive-offset': `${(2 - index) * 30}vw`, '--archive-delay': `${index * 85}ms` }} />)}
         {!filteredArtists.length && <p className="artist-empty">No artists match these filters.</p>}
