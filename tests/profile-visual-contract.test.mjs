@@ -29,3 +29,16 @@ test('all five artist personality sections provide business-ready Chinese copy',
   }
   assert.match(app, /const localizedStory = language === 'en' \? story : localizeStoryProfile\(artist\.id, story, language\)/)
 })
+
+test('traditional Chinese profiles use independent traditional copy', () => {
+  assert.match(app, /const storyProfilesZhHant\s*=\s*\{/)
+  for (const trait of ['精緻克制', '審美敏銳', '藝術導向', '獨立鮮明', '自然親和', '積極健康', '真實自然', '觀察敏銳']) {
+    assert.match(app, new RegExp(trait))
+  }
+  assert.match(app, /language === 'zh-Hant'\s*\?\s*storyProfilesZhHant\[id\]/)
+})
+
+test('work format tabs use the matching simplified and traditional labels', () => {
+  assert.match(app, /language === 'en' \? label : localized \? zhHantLabel : zhLabel/)
+  assert.match(app, /\(\[id, label, , zhLabel, , zhHantLabel\]\)/)
+})
