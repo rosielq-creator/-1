@@ -547,10 +547,10 @@ const storyProfiles = {
       ['festival-stage.jpg', 'Sound', 'Where the energy lands'],
       ['festival-wheel.jpg', 'City light', 'A moving horizon'],
     ],
-    socialLabel: 'Instagram snapshot · historical', socialHandle: 'Instagram', followers: '12,999',
+    socialLabel: 'Historical snapshot', socialHandle: 'Instagram', followers: '12,999',
     factsLabel: 'Audience snapshot · historical', facts: [
       ['Male audience', '83.7%'], ['Female audience', '16.3%'], ['25–34', '35.0%'], ['18–24', '24.2%'],
-      ['India', '28.2%'], ['Korea', '10.4%'], ['Brazil', '7.9%'], ['Taiwan / USA', '6.4% / 6.4%'],
+      ['India', '28.2%'], ['Korea', '10.4%'], ['Brazil', '7.9%'], ['Taiwan', '6.4%'], ['United States', '6.4%'],
     ],
     cta: 'Want to create something together?', next: 'Next artist · Ooona', nextSlug: 'ooona',
   },
@@ -575,10 +575,10 @@ const storyProfiles = {
       ['dear-dahlia', 'DEAR DAHLIA', 'https://www.instagram.com/reel/DWTRdVPjbL-/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
       ['lululemon-adidas', 'LULULEMON × ADIDAS', 'https://www.instagram.com/reel/DYZu4TStLlV/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
     ],
-    socialLabel: 'Instagram snapshot · historical', socialHandle: 'Instagram', followers: '15.1K',
+    socialLabel: 'Historical snapshot', socialHandle: 'Instagram', followers: '15.1K',
     factsLabel: 'Audience snapshot · historical', facts: [
-      ['Male audience', '72.4%'], ['Female audience', '27.6%'], ['18–24', '37.8%'],
-      ['Top cities', 'Hong Kong 3.2% / Delhi 1.7% / New Taipei City 1.5%'],
+      ['Male audience', '72.4%'], ['Female audience', '27.6%'], ['Core age · 18–24', '37.8%'],
+      ['Hong Kong', '3.2%'], ['Delhi', '1.7%'], ['New Taipei City', '1.5%'],
     ],
     cta: 'Want to create something together?', next: 'Next artist · Mario', nextSlug: 'mario',
   },
@@ -621,11 +621,11 @@ const storyProfiles = {
     ],
     worldLead: 'Visual notes from fashion, film and life in transit.',
     world: [['hero.png', 'Portrait', 'A clear point of view'], ['black-portrait.png', 'Fashion', 'Built in contrast'], ['cafe-portrait.png', 'City life', 'Between takes'], ['apple-portrait.jpg', 'Travel', 'A passing frame']],
-    socialLabel: 'Instagram snapshot · historical', socialHandle: 'Instagram', followers: '8,254',
+    socialLabel: 'Historical snapshot', socialHandle: 'Instagram', followers: '8,254',
     factsLabel: 'Audience snapshot · historical', facts: [
       ['Male audience', '75.9%'], ['Female audience', '24.1%'], ['18–24', '38.7%'], ['25–34', '27.9%'],
-      ['13–17 / 35–44', '17.1% / 9.4%'], ['45–54 / 55–64', '3.7% / 2.0%'], ['65+', '1.2%'], ['Active peak · GMT+8', '21:00'],
-      ['Top cities', 'Delhi 1.8% / Shanghai 1.2% / Hong Kong 1.1%'], ['Ahmedabad / Antananarivo', '0.6% / 0.6%'],
+      ['13–17', '17.1%'], ['35–44', '9.4%'], ['45–54', '3.7%'], ['55–64', '2.0%'], ['65+', '1.2%'], ['Active peak · GMT+8', '21:00'],
+      ['Delhi', '1.8%'], ['Shanghai', '1.2%'], ['Hong Kong', '1.1%'], ['Ahmedabad', '0.6%'], ['Antananarivo', '0.6%'],
     ],
     cta: 'Want to create something together?', next: 'Next artist · Maya', nextSlug: 'maya',
   },
@@ -939,7 +939,7 @@ function ArtistStoryProfile({ artist, language, story }) {
       <section className="maya-scene maya-scene--detail"><Container><div className="maya-safe maya-safe--detail"><Eyebrow number="03">{copy.personality}</Eyebrow><h2 className="maya-detail-title">{story.personalityTitle.map((line) => <span key={line}>{line}</span>)}</h2><div className="maya-personality-list">{story.personality.map(([title, text], index) => <article className="maya-personality-item" key={title}><b>{String(index + 1).padStart(2, '0')}</b><div className="maya-personality-copy"><h3>{title}</h3><p>{text}</p></div></article>)}</div></div><img className="maya-mobile-crop" src={pose('detail')} alt={`${artist.display_name} seated pose`} /></Container></section>
       <section className="maya-scene maya-scene--world"><Container><div className="maya-safe maya-safe--world"><div className="maya-world-copy"><Eyebrow number="04">{copy.world}</Eyebrow><h2>{copy.world}</h2><p>{story.worldLead}</p><p>{story.intro[1]}</p></div><ArtistWorldPhone artist={artist} story={story} copy={copy} /></div></Container></section>
       {story.collaborations && <ArtistCollaborationScene artist={artist} collaborations={story.collaborations} />}
-      <section className="maya-scene maya-scene--social"><Container><div className="maya-safe maya-safe--social"><Eyebrow number={story.collaborations ? '06' : '05'}>{copy.social}</Eyebrow><div className="maya-social-layout"><div className={`maya-social-metric${story.socialMetrics ? ' maya-social-metric--multiple' : ''}`}>{story.socialMetrics ? story.socialMetrics.map(([platform, label, followers]) => <div className="maya-social-metric-item" key={platform}><span className="maya-social-handle">{platform} · {label}</span><strong className="maya-followers">{followers}<small>{copy.followers}</small></strong></div>) : <><span className="maya-social-handle">{story.socialHandle} · {story.socialLabel}</span><strong className="maya-followers">{story.followers}<small>{copy.followers}</small></strong></>}</div><div className="maya-audience"><p>{story.factsLabel}</p><dl>{story.facts.map(([label, value]) => <div key={label} className={label === 'Focus' ? 'maya-audience-countries' : ''}><dt>{label}</dt><dd>{value}</dd></div>)}</dl></div><div className="maya-cta"><h2>{story.cta.split(' ').map((word, index) => <span key={`${word}-${index}`}>{word}</span>)}</h2><a className="maya-primary-link" href="#contact">Work with {artist.display_name} →</a></div></div></div></Container></section>
+      <section className="maya-scene maya-scene--social"><Container><div className="maya-safe maya-safe--social"><Eyebrow number={story.collaborations ? '06' : '05'}>{copy.social}</Eyebrow><div className="maya-social-layout"><div className={`maya-social-metric${story.socialMetrics ? ' maya-social-metric--multiple' : ''}`}>{story.socialMetrics ? story.socialMetrics.map(([platform, label, followers]) => <div className="maya-social-metric-item" key={platform}><span className="maya-social-handle">{platform} · {label}</span><strong className="maya-followers">{followers}<small>{copy.followers}</small></strong></div>) : <><span className="maya-social-handle">{story.socialHandle} · {story.socialLabel}</span><strong className="maya-followers">{story.followers}<small>{copy.followers} · historical</small></strong></>}</div><div className="maya-audience"><p>{story.factsLabel}</p><dl>{story.facts.map(([label, value]) => <div key={label} className={label === 'Focus' || value.length > 22 ? 'maya-audience-countries' : ''}><dt>{label}</dt><dd>{value}</dd></div>)}</dl></div><div className="maya-cta"><h2>{story.cta.split(' ').map((word, index) => <span key={`${word}-${index}`}>{word}</span>)}</h2><a className="maya-primary-link" href="#contact">Work with {artist.display_name} →</a></div></div></div></Container></section>
     </div>
   </main>
 }

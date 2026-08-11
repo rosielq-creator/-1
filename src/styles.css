@@ -460,19 +460,19 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
 .maya-collaboration-card img { display:block; width:100%; height:auto; max-height:46svh; object-fit:contain; background:transparent; transition:transform 240ms ease; }
 .maya-collaboration-card:hover img { transform:translateY(-5px); }
 .maya-social-layout { display:grid; grid-template-columns:minmax(0,.92fr) minmax(0,1fr) minmax(270px,.8fr); gap:clamp(40px,4vw,80px); align-items:start; margin-top:clamp(130px,16svh,180px); }
-.maya-social-handle { display:inline-block; max-width:100%; margin-bottom:28px; border-bottom:1px solid currentColor; padding-bottom:6px; font:600 clamp(18px,1.6vw,28px)/1 var(--mono); letter-spacing:-.04em; }
-.maya-followers { display:grid; min-width:0; max-width:100%; gap:12px; font-size:clamp(64px,5.65vw,108px); line-height:.76; letter-spacing:-.105em; white-space:nowrap; }
-.maya-followers small { font:600 9px/1 var(--mono); letter-spacing:.08em; text-transform:uppercase; }
+.maya-social-handle { display:inline-block; max-width:100%; margin-bottom:16px; border-bottom:1px solid currentColor; padding-bottom:6px; font:600 clamp(14px,1.15vw,19px)/1.12 var(--mono); letter-spacing:.02em; text-transform:uppercase; }
+.maya-followers { display:grid; min-width:0; max-width:100%; gap:10px; font-size:clamp(54px,4.7vw,88px); line-height:.82; letter-spacing:-.085em; white-space:nowrap; }
+.maya-followers small { font:600 9px/1.25 var(--mono); letter-spacing:.08em; text-transform:uppercase; }
 .maya-social-metric--multiple { display:grid; gap:28px; }
 .maya-social-metric--multiple .maya-social-metric-item { display:grid; gap:4px; }
 .maya-social-metric--multiple .maya-social-handle { margin-bottom:4px; font-size:clamp(13px,1.1vw,18px); }
 .maya-social-metric--multiple .maya-followers { font-size:clamp(52px,4.2vw,78px); }
 .maya-audience { align-self:start; padding-top:14px; border-top:1px solid rgba(17,17,17,.27); }
-.maya-audience > p { margin:0 0 12px; color:rgba(17,17,17,.62); font:600 8px/1.2 var(--mono); letter-spacing:.08em; text-transform:uppercase; }
-.maya-audience dl { display:grid; grid-template-columns:1fr 1fr; margin:0; }
-.maya-audience dl > div { min-height:76px; padding:16px 0; border-top:1px solid rgba(17,17,17,.18); }
+.maya-audience > p { margin:0 0 10px; color:rgba(17,17,17,.62); font:600 9px/1.2 var(--mono); letter-spacing:.08em; text-transform:uppercase; }
+.maya-audience dl { display:grid; grid-template-columns:1fr 1fr; column-gap:22px; margin:0; }
+.maya-audience dl > div { min-height:0; padding:12px 0; border-top:1px solid rgba(17,17,17,.18); }
 .maya-audience dt { color:rgba(17,17,17,.58); }
-.maya-audience dd { color:#111; font-size:clamp(19px,1.58vw,27px); }
+.maya-audience dd { color:#111; font-size:clamp(16px,1.25vw,22px); line-height:1.14; letter-spacing:-.035em; }
 .maya-audience-countries { grid-column:1/-1; }
 .maya-cta { display:grid; justify-items:center; align-self:center; gap:26px; padding-top:clamp(36px,7svh,86px); text-align:center; }
 .maya-cta h2 { display:grid; gap:.03em; max-width:420px; margin:0; font-size:clamp(50px,4.95vw,82px); line-height:.84; }
@@ -533,8 +533,8 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
   .maya-safe--cases h2 { margin-bottom:28px; }
   .maya-world-copy { padding:0; }
   .maya-phone { justify-self:center; width:min(82vw,350px); }
-  .maya-social-layout { grid-template-columns:1fr; gap:42px; margin-top:40px; }
-  .maya-followers { font-size:clamp(74px,20vw,118px); }
+  .maya-social-layout { grid-template-columns:1fr; gap:28px; margin-top:40px; }
+  .maya-followers { font-size:clamp(62px,16vw,86px); }
   .maya-audience { width:100%; max-width:560px; }
   .maya-cta h2 { max-width:520px; }
 }
