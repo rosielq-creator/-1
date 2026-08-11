@@ -789,11 +789,11 @@ h2,
   place-items:center;
   overflow:hidden;
   padding:clamp(8px,1.1vw,16px);
-  border:1px solid color-mix(in srgb,var(--story-deep,#2b2025) 18%,transparent);
+  border:1px solid rgba(255,255,255,.12);
   background:
-    radial-gradient(circle at 22% 18%,rgba(255,255,255,.52),transparent 36%),
-    linear-gradient(145deg,var(--story-base,#eadde2) 0%,var(--story-atmosphere,#d1b7c1) 58%,color-mix(in srgb,var(--story-atmosphere,#d1b7c1) 72%,var(--story-deep,#2b2025)) 100%);
-  box-shadow:inset 0 0 42px rgba(255,255,255,.16),inset 0 -24px 38px rgba(16,20,22,.08);
+    radial-gradient(circle at 50% 34%,rgba(255,255,255,.075),transparent 48%),
+    linear-gradient(145deg,#242628 0%,#151719 64%,#0d0e0f 100%);
+  box-shadow:inset 0 0 42px rgba(255,255,255,.035),inset 0 -24px 38px rgba(0,0,0,.2);
   isolation:isolate;
 }
 .maya-collaboration-media::after {
@@ -817,6 +817,13 @@ h2,
   transition:transform 240ms ease;
 }
 .maya-collaboration-card:hover .maya-collaboration-media > img { transform:scale(1.012); }
+.maya-collaboration-card > span,
+.maya-collaboration-card > a {
+  display:flex;
+  min-height:2.5em;
+  align-items:flex-start;
+  line-height:1.25;
+}
 
 @media (min-width:761px) {
   .maya-collaboration-grid--6,
@@ -833,6 +840,6 @@ h2,
   .maya-collaboration-grid,
   .maya-collaboration-grid--5,
   .maya-collaboration-grid--6,
-  .maya-collaboration-grid--7 { grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px 12px; }
+  .maya-collaboration-grid--7 { grid-template-columns:minmax(0,1fr); gap:28px; }
   .maya-collaboration-media { padding:10px; }
 }
