@@ -704,6 +704,9 @@ function useMayaProfileMotion() {
       const camera = root.querySelector('.maya-camera')
       const atmosphere = root.querySelector('.maya-atmosphere')
       const personality = gsap.utils.toArray('.maya-personality-item')
+      // The hero subject now sits directly below the Next Artist link. Keep the
+      // later dossier/detail camera landings in their original left reading lane.
+      const heroOffset = (window.innerWidth * .4 / camera.getBoundingClientRect().width) * 100
       gsap.set(scenes, { autoAlpha: 0, y: 22, pointerEvents: 'none' })
       gsap.set(scenes[0], { autoAlpha: 1, y: 0, pointerEvents: 'auto' })
       gsap.set(personality, { opacity: 1, x: 0 })
@@ -718,12 +721,12 @@ function useMayaProfileMotion() {
         scrub: .75, anticipatePin: 1, invalidateOnRefresh: true,
       } })
       // Keep the Maya camera inside the left subject lane while the dossier owns the right reading lane.
-      timeline.to(camera, { xPercent: -208, yPercent: 12, scale: 1.9, transformOrigin: '50% 17%', duration: 1.3 }, .45)
+      timeline.to(camera, { xPercent: -208 + heroOffset, yPercent: 12, scale: 1.9, transformOrigin: '50% 17%', duration: 1.3 }, .45)
         .to(atmosphere, { xPercent: -5, yPercent: 3, scale: 1.08, backgroundColor: '#191718', duration: 1.3 }, .45)
         .to(camera, { autoAlpha: 0, duration: .16 }, .75)
       revealScene(timeline, scenes[0], scenes[1], .78)
       // The close garment frame stays entirely to the left of the Personality column.
-      timeline.to(camera, { autoAlpha: 1, xPercent: -223, yPercent: -14, scale: 1.9, transformOrigin: '50% 52%', duration: 1.25 }, 1.75)
+      timeline.to(camera, { autoAlpha: 1, xPercent: -223 + heroOffset, yPercent: -14, scale: 1.9, transformOrigin: '50% 52%', duration: 1.25 }, 1.75)
         .to(atmosphere, { xPercent: 6, yPercent: -4, scale: 1.14, backgroundColor: '#191718', duration: 1.25 }, 1.75)
       revealScene(timeline, scenes[1], scenes[2], 1.92)
       personality.forEach((item, index) => {
