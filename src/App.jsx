@@ -996,8 +996,21 @@ function ArtistStoryProfile({ artist, language, story }) {
   </main>
 }
 
-function WorkOverview() {
-  return <main id="main" className="subpage subpage--light"><Container><PageHeader eyebrow={`Selected work / ${String(workProjects.length).padStart(2, '0')}`} title={<>Made<br />to move.</>} back="#/" /><div className="work-index">{workProjects.map((work, index) => <a className="work-index-card" href={`#/work/${work.slug}`} key={work.slug}><img src={work.poster} alt="" loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><span>{String(index + 1).padStart(2, '0')}</span><div><em>{work.brand}</em><strong>{work.name}</strong><i>▶</i></div><small>View film →</small></a>)}</div></Container></main>
+const workFormats = [
+  ['reels', 'Reels', 'Small moments, in motion.', '短视频', '轻快瞬间，持续流动。'],
+  ['commercial', 'Commercials', 'Brands in full focus.', '商业广告', '让品牌成为主角。'],
+  ['mv', 'Music videos', 'Sound, seen differently.', '音乐视频', '让声音被看见。'],
+  ['drama', 'Drama', 'Stories that stay with you.', '剧情短片', '留在心里的故事。'],
+  ['photo', 'Photography', 'Still, never static.', '平面影像', '静止，也持续发生。'],
+]
+const workFormatFor = (work) => (['mgm-film-01', 'mgm-film-02', 'mgm-film-03', 'peninsula-fathers-day'].includes(work.slug) ? 'reels' : work.slug === 'chillgood-takoyaki' ? 'mv' : 'commercial')
+
+function WorkOverview({ language }) {
+  const [format, setFormat] = useState('reels')
+  const current = workFormats.find(([id]) => id === format)
+  const items = workProjects.filter((work) => workFormatFor(work) === format)
+  const chinese = language !== 'en'
+  return <main id="main" className="subpage subpage--light"><Container><PageHeader eyebrow={chinese ? `精选作品 / ${String(workProjects.length).padStart(2, '0')}` : `Selected work / ${String(workProjects.length).padStart(2, '0')}`} title={chinese ? <>为流动<br />而作。</> : <>Made<br />to move.</>} back="#/" /><div className="work-format-tabs" role="tablist" aria-label={chinese ? '作品分类' : 'Work formats'}>{workFormats.map(([id, label, , zhLabel]) => <button key={id} type="button" role="tab" aria-selected={format === id} className={format === id ? 'is-active' : ''} onClick={() => setFormat(id)}>{chinese ? zhLabel : label}</button>)}</div><div className="work-format-heading"><span>{chinese ? current[3] : current[1]}</span><p>{chinese ? current[4] : current[2]}</p></div>{items.length ? <div className="work-index">{items.map((work, index) => <a className="work-index-card" href={`#/work/${work.slug}`} key={work.slug}><img src={work.poster} alt="" loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><span>{String(index + 1).padStart(2, '0')}</span><div><em>{work.brand}</em><strong>{work.name}</strong><i>▶</i></div><small>{chinese ? '查看作品 →' : 'View film →'}</small></a>)}</div> : <p className="work-empty">{chinese ? '更多作品正在制作中。' : 'More stories are in development.'}</p>}</Container></main>
 }
 
 function WorkDetail({ work }) {
@@ -1032,7 +1045,7 @@ export default function App() {
   const content = route.type === 'home' ? <HomePage t={t} onNavigate={navigate} />
     : route.type === 'artists' ? <ArtistsOverview language={language} />
       : route.type === 'artist-detail' ? <ArtistDetail artist={directoryArtists.find((artist) => artist.profile_slug === route.slug)} language={language} />
-        : route.type === 'work' ? <WorkOverview />
+        : route.type === 'work' ? <WorkOverview language={language} />
           : route.type === 'work-detail' ? <WorkDetail work={workProjects.find((work) => work.slug === route.slug)} />
             : <NotFound />
   return <><a className="skip-link" href="#main">Skip to content</a><Header language={language} setLanguage={setLanguage} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />{content}<Footer /></>
