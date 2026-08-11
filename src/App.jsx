@@ -44,6 +44,7 @@ const directoryLabels = {
     location: '城市', languages: '语言', talents: '创作类型', back: '返回艺术家列表',
   },
 }
+directoryLabels['zh-Hant'] = { ...directoryLabels.zh, eyebrow: '藝術家檔案', title: '遇見所有藝術家', intro: '正在成長的全新現實。', archive: '藝術家檔案', reset: '重設篩選', gender: '性別', language: '語言', city: '城市', profile: '查看檔案', comingSoon: '檔案正在成長', confirmed: '已確認資料', location: '城市', languages: '語言', talents: '創作類型', back: '返回藝術家列表' }
 
 const works = [
   { name: 'The Peninsula', slug: 'the-peninsula', category: 'Brand film', video: `${assets}work/the-peninsula.mp4`, poster: `${assets}work/the-peninsula-cover.jpg`, position: '50% 38%', portrait: true },
@@ -110,6 +111,13 @@ const copy = {
 
 const navTargets = ['about', 'artists', 'work', 'brands', 'services', 'contact']
 const navHrefs = ['#about', '#/artists', '#/work', '#brands', '#services', '#contact']
+const languageOptions = [
+  ['en', 'EN', 'English'],
+  ['zh-Hant', '繁', '繁體中文'],
+  ['zh', '简', '简体中文'],
+]
+
+copy['zh-Hant'] = { ...copy.zh, nav: ['關於', '藝術家', '作品', '品牌', '服務', '聯絡'], menu: '選單' }
 
 function getRoute() {
   const value = window.location.hash.replace(/^#/, '')
@@ -298,8 +306,9 @@ function Header({ language, setLanguage, menuOpen, setMenuOpen }) {
         {t.nav.map((item, index) => <a key={navTargets[index]} href={navHrefs[index]} onClick={() => setMenuOpen(false)}>{item}</a>)}
       </nav>
       <div className="header-actions">
-        <button className="language-toggle" type="button" onClick={() => setLanguage(language === 'en' ? 'zh' : 'en')} aria-label="Switch language">{language === 'en' ? '中文' : 'EN'}</button>
-        <button className="menu-toggle" type="button" aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)} aria-label={t.menu}><span /><span /></button>
+        <div className="language-switcher" role="group" aria-label="Language">
+          {languageOptions.map(([value, label, accessibleLabel]) => <button key={value} className={language === value ? 'is-active' : ''} type="button" onClick={() => { setLanguage(value); setMenuOpen(false) }} aria-pressed={language === value} aria-label={accessibleLabel}>{label}</button>)}
+        </div>
       </div>
     </Container>
   </header>
@@ -673,6 +682,7 @@ const mayaStoryCopy = {
     age1824: '18–24 岁', age2534: '25–34 岁', male: '男性受众', female: '女性受众', countries: '热门国家／地区', swipe: '滑动浏览',
   },
 }
+mayaStoryCopy['zh-Hant'] = { ...mayaStoryCopy.zh, back: '返回藝術家列表', role: '奢華時尚 / 藝術', hello: '我是 Maya。', slogan: '一位遊走於奢華、藝術與文化之間的高級時尚藝術家。', dossier: '個人檔案', personality: '人物氣質', measurements: '三圍', shoe: '鞋碼', base: '常駐地', world: '我的世界', worldLead: '讓我的世界持續流動的靈感。', about: '關於我', social: '社交與合作', followers: '粉絲數', audience: '受眾快照 · 近 30 天', cta: '想一起創作些什麼嗎？', work: '與 Maya 合作', next: '下一位藝術家 · Amber', countries: '熱門國家／地區', swipe: '滑動瀏覽' }
 
 function useMayaProfileMotion() {
   const rootRef = useRef(null)
