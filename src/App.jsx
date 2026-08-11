@@ -796,11 +796,11 @@ function useArtistStoryMotion() {
       const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: root, start: 'top top', end: () => `+=${window.innerHeight * 6.2}`, pin: stage, scrub: .75, anticipatePin: 1, invalidateOnRefresh: true } })
       timeline.to(camera, { xPercent: -188, yPercent: 12, scale: 1.78, transformOrigin: '50% 16%', duration: 1.3 }, .45)
         .to(atmosphere, { xPercent: -5, yPercent: 3, scale: 1.08, backgroundColor: 'var(--story-deep)', duration: 1.3 }, .45)
-        .to(poses[0], { autoAlpha: 0, duration: .15 }, .72).to(poses[1], { autoAlpha: 1, duration: .15 }, .74)
+        .to(poses[0], { autoAlpha: 0, duration: .34 }, .66).to(poses[1], { autoAlpha: 1, duration: .34 }, .66)
       revealScene(timeline, scenes[0], scenes[1], .78)
       timeline.to(camera, { xPercent: -150, yPercent: 12, scale: 1.34, transformOrigin: '50% 32%', duration: 1.25 }, 1.75)
         .to(atmosphere, { xPercent: 6, yPercent: -4, scale: 1.14, backgroundColor: 'var(--story-deep)', duration: 1.25 }, 1.75)
-        .to(poses[1], { autoAlpha: 0, duration: .15 }, 1.86).to(poses[2], { autoAlpha: 1, duration: .15 }, 1.88)
+        .to(poses[1], { autoAlpha: 0, duration: .34 }, 1.8).to(poses[2], { autoAlpha: 1, duration: .34 }, 1.8)
       revealScene(timeline, scenes[1], scenes[2], 1.92)
       personality.forEach((item, index) => timeline.to(item, { x: 12, duration: .18 }, 2.15 + index * .22))
       // Keep every artist in place as scene 03 resolves, then remove the figure before the image-only My World scene.
@@ -840,11 +840,15 @@ function ArtistStoryProfile({ artist, language, story }) {
   const copy = mayaStoryCopy[language]
   const pose = (name) => `${assets}artists/profile-poses/${artist.id}/${story.poses[name]}`
   const cssVars = { '--story-base': story.palette.base, '--story-atmosphere': story.palette.atmosphere, '--story-deep': story.palette.deep, '--story-glow': story.palette.glow, '--story-ink': story.palette.ink }
-  useEffect(() => { [pose('hero'), pose('identity'), pose('detail'), ...story.world.slice(0, 2).map(([file]) => `${assets}artists/profile-media/${artist.id}/${file}`)].forEach((src) => { const image = new Image(); image.src = src }) }, [])
+  useLayoutEffect(() => {
+    // Decode the three pose frames together. The camera is ready before the visitor reaches either cross-fade.
+    const sources = [pose('hero'), pose('identity'), pose('detail'), ...story.world.slice(0, 2).map(([file]) => `${assets}artists/profile-media/${artist.id}/${file}`)]
+    sources.forEach((src) => { const image = new Image(); image.src = src; image.decode?.().catch(() => {}) })
+  }, [artist.id])
   return <main id="main" ref={rootRef} className="maya-profile artist-story-profile" style={cssVars}>
     <div className="maya-stage">
       <div className="maya-atmosphere" aria-hidden="true" />
-      <figure className="maya-camera story-camera" aria-hidden="true"><img className="story-camera-pose" src={pose('hero')} alt="" fetchPriority="high" /><img className="story-camera-pose" src={pose('identity')} alt="" /><img className="story-camera-pose" src={pose('detail')} alt="" /></figure>
+      <figure className="maya-camera story-camera" aria-hidden="true"><img className="story-camera-pose" src={pose('hero')} alt="" fetchPriority="high" decoding="async" /><img className="story-camera-pose" src={pose('identity')} alt="" fetchPriority="high" decoding="async" /><img className="story-camera-pose" src={pose('detail')} alt="" fetchPriority="high" decoding="async" /></figure>
       <section className="maya-scene maya-scene--hero"><Container><div className="maya-safe maya-safe--hero"><a className="back-link" href="#/artists">← {copy.back}</a><Eyebrow number="01">Artist / 05</Eyebrow><h1>{artist.display_name}</h1><p className="maya-role">{story.role}</p><p className="maya-hello">{story.hello}</p><div className="maya-about-intro">{story.intro.map((line) => <p key={line}>{line}</p>)}</div></div><img className="maya-mobile-crop maya-mobile-crop--hero" src={pose('hero')} alt={`${artist.display_name} standing pose`} /></Container></section>
       <section className="maya-scene maya-scene--identity"><Container><div className="maya-safe maya-safe--identity"><Eyebrow number="02">{copy.dossier}</Eyebrow><h2>Identity</h2><dl className="maya-dossier">{media.dossier.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}<div className="maya-dossier-wide"><dt>{copy.type}</dt><dd>{artist.creative_talents.join(' / ')}</dd></div></dl></div><img className="maya-mobile-crop" src={pose('identity')} alt={`${artist.display_name} editorial pose`} /></Container></section>
       <section className="maya-scene maya-scene--detail"><Container><div className="maya-safe maya-safe--detail"><Eyebrow number="03">{copy.personality}</Eyebrow><h2 className="maya-detail-title">{story.personalityTitle.map((line) => <span key={line}>{line}</span>)}</h2><div className="maya-personality-list">{story.personality.map(([title, text], index) => <article className="maya-personality-item" key={title}><b>{String(index + 1).padStart(2, '0')}</b><div className="maya-personality-copy"><h3>{title}</h3><p>{text}</p></div></article>)}</div></div><img className="maya-mobile-crop" src={pose('detail')} alt={`${artist.display_name} seated pose`} /></Container></section>
