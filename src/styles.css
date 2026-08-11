@@ -836,7 +836,7 @@ h2,
 .home-main .world-copy h2 {
   font-family:var(--sans);
   font-weight:500;
-  font-size:clamp(46px, calc(5vw - 2px), 90px);
+  font-size:clamp(43.7px, calc(4.75vw - 1.9px), 85.5px);
   letter-spacing:-7.66px;
   line-height:.94;
 }
@@ -872,9 +872,9 @@ h2,
 .artist-directory-title {
   width:max-content;
   max-width:calc(100vw - 32px);
-  font-family:var(--display-condensed);
-  font-weight:700;
-  letter-spacing:-.025em;
+  font-family:var(--sans);
+  font-weight:500;
+  letter-spacing:0;
   line-height:.78;
   white-space:nowrap;
 }

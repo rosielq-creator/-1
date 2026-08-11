@@ -10,7 +10,7 @@ test('restores the original Green Tomato display stack', () => {
 })
 
 test('uses one DM Sans Medium homepage heading system below the hero', () => {
-  assert.match(css, /\.home-main\s+\.section-copy\s+h2[^{]*\{[^}]*font-family:\s*var\(--sans\)[^}]*font-weight:\s*500[^}]*font-size:\s*clamp\(46px,\s*calc\(5vw\s*-\s*2px\),\s*90px\)[^}]*letter-spacing:\s*-7\.66px[^}]*line-height:\s*\.94/s)
+  assert.match(css, /\.home-main\s+\.section-copy\s+h2[^{]*\{[^}]*font-family:\s*var\(--sans\)[^}]*font-weight:\s*500[^}]*font-size:\s*clamp\(43\.7px,\s*calc\(4\.75vw\s*-\s*1\.9px\),\s*85\.5px\)[^}]*letter-spacing:\s*-7\.66px[^}]*line-height:\s*\.94/s)
   assert.match(css, /@media\s*\(min-width:761px\)[\s\S]*\.home-main\s+\.section-copy\s+h2,[\s\S]*\.home-main\s+\.world-copy\s+h2\s*\{[^}]*white-space:\s*nowrap/s)
   assert.match(css, /\.home-main\s+\.work-section\s+\.work-grid\s*\{[^}]*grid-column:\s*7\s*\/\s*-1/s)
 })
@@ -21,9 +21,8 @@ test('keeps the Maya collaboration heading clear of its cards', () => {
   assert.match(css, /\.maya-safe--cases--6,[\s\S]*\.maya-safe--cases--7\s*\{\s*top:clamp\(56px,7svh,76px\)/)
 })
 
-test('keeps the artist directory title condensed, bold, and on one line', () => {
-  assert.match(css, /--display-condensed:\s*'Barlow Condensed'/)
-  assert.match(css, /\.artist-directory-title\s*\{[^}]*font-family:\s*var\(--display-condensed\)[^}]*font-weight:\s*700[^}]*white-space:\s*nowrap/s)
+test('keeps the artist directory title medium, open, and on one line', () => {
+  assert.match(css, /\.artist-directory-title\s*\{[^}]*font-family:\s*var\(--sans\)[^}]*font-weight:\s*500[^}]*letter-spacing:\s*0[^}]*white-space:\s*nowrap/s)
 })
 
 test('tightens all five profile name wordmarks', () => {
