@@ -488,12 +488,6 @@ function ArtistsOverview({ language }) {
         <Eyebrow number="01">{labels.eyebrow}</Eyebrow>
         <h1 id="meet-artists-title" className="artist-directory-title" aria-label={labels.title}>{titleLetters.map((letter, index) => <span key={`${letter}-${index}`} aria-hidden="true" style={{ '--title-index': index }}>{letter === ' ' ? '\u00a0' : letter}</span>)}</h1>
         <span className="artist-directory-intro">{labels.intro}</span>
-        <div className="artist-orbit" aria-label={labels.title}>
-          {directoryArtists.map((artist, index) => {
-            const angle = index * 72
-            return <DirectoryArtistCard key={artist.id} artist={artist} language={language} className="directory-orbit-card" style={{ '--orbit-angle': `${angle}deg`, '--orbit-counterangle': `${-angle}deg`, '--orbit-delay': `${index * 90}ms` }} />
-          })}
-        </div>
       </Container>
     </section>
     <ArtistArchive language={language} />

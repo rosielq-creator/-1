@@ -641,13 +641,13 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
 .artist-directory-stage-inner { min-height:calc(100svh - 80px); }
 .artist-directory-stage { border-bottom:1px solid rgba(244,242,238,.18); }
 .artist-directory-stage::before { background:radial-gradient(circle at 50% 53%,rgba(244,242,238,.05),transparent 26%); }
-.artist-directory-title { top:22%; }
+.artist-directory-title { top:48%; }
 .artist-directory-title span { opacity:0; transform:translateY(24px) scale(.8); }
 .artist-directory.is-ready .artist-directory-title { animation:none; }
 .artist-directory.is-ready .artist-directory-title span { animation:directory-title-letter 560ms cubic-bezier(.16,.82,.25,1.2) both; animation-delay:calc(var(--title-index) * 42ms); }
-.artist-directory-intro { top:calc(22% + clamp(76px,7vw,112px)); }
+.artist-directory-intro { top:calc(48% + clamp(76px,7vw,112px)); }
 .artist-directory.is-ready .artist-directory-intro { animation:directory-intro-arrive 420ms ease 500ms both; }
-.artist-orbit { --orbit-radius:clamp(115px,11vw,165px); display:block; top:64%; }
+.artist-orbit { display:none; }
 
 .artist-archive-section { min-height:calc(100svh - 80px); display:grid; align-content:center; }
 .artist-archive-card { flex:0 0 clamp(206px,20vw,300px); aspect-ratio:3 / 4; opacity:0; filter:blur(8px); transform:translateX(var(--archive-offset, 0)) scale(.82); will-change:transform,opacity,filter; }
@@ -656,9 +656,8 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
 
 @media (max-width:760px) {
   .artist-directory-stage,.artist-directory-stage-inner { min-height:calc(100svh - 64px); }
-  .artist-directory-title { top:19%; }
-  .artist-directory-intro { top:calc(19% + 72px); }
-  .artist-orbit { top:64%; }
+  .artist-directory-title { top:45%; }
+  .artist-directory-intro { top:calc(45% + 72px); }
   .artist-archive-section { min-height:auto; display:block; }
   .artist-archive-card { flex-basis:min(72vw,282px); aspect-ratio:3 / 4; opacity:1; filter:none; transform:none; }
   .artist-archive-section.is-inview .artist-archive-card { animation:none; }
