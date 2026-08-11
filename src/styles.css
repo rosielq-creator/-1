@@ -833,13 +833,29 @@ h2,
   line-height:.72;
 }
 .home-main .section-copy h2,
-.home-main .world-copy h2,
-.home-main .contact-layout h2 {
+.home-main .world-copy h2 {
   font-family:var(--sans);
   font-weight:500;
   font-size:clamp(48px, 5vw, 92px);
-  letter-spacing:0em;
+  letter-spacing:-7.66px;
   line-height:.94;
+}
+.home-main .artists-section .section-copy > p:not(.eyebrow) {
+  font-family:var(--sans);
+  font-weight:400;
+  font-size:14.4px;
+  line-height:21.6px;
+  letter-spacing:normal;
+}
+.home-main .directory-link {
+  font-family:var(--sans);
+  font-weight:500;
+}
+.home-main .eyebrow > span {
+  font-family:var(--sans);
+  font-weight:700;
+  font-size:10.88px;
+  letter-spacing:1.09px;
 }
 @media (min-width:761px) {
   .home-main .section-copy h2,
@@ -867,7 +883,7 @@ h2,
 .maya-safe--hero h1 {
   font-family:var(--sans);
   font-weight:800;
-  letter-spacing:-.06em;
+  letter-spacing:-.055em;
 }
 
 /* Maya's editorial title stays serif, but owns a safe block above the first card row. */
@@ -897,6 +913,8 @@ h2,
 }
 
 @media (max-width:760px) {
+  .home-main .section-copy h2,
+  .home-main .world-copy h2 { letter-spacing:-.055em; }
   .maya-collaboration-grid,
   .maya-collaboration-grid--5,
   .maya-collaboration-grid--6,
