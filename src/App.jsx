@@ -293,7 +293,7 @@ function Header({ language, setLanguage, menuOpen, setMenuOpen }) {
   const t = copy[language]
   return <header className="site-header">
     <Container className="header-inner">
-      <a className="brand-signature" href="#/" aria-label="Green Tomato home"><span aria-hidden="true" />GreenTomato</a>
+      <a className="brand-signature" href="#/" aria-label="Green Tomato home"><img src={`${assets}brand/green-tomato-logo.png`} alt="GreenTomato" /></a>
       <nav className={menuOpen ? 'main-nav is-open' : 'main-nav'} aria-label="Main navigation">
         {t.nav.map((item, index) => <a key={navTargets[index]} href={navHrefs[index]} onClick={() => setMenuOpen(false)}>{item}</a>)}
       </nav>
