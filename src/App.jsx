@@ -62,6 +62,7 @@ const workProjects = [
   { brand: 'PARKnSHOP', name: 'Weekly Offer', slug: 'parknshop-weekly-offer', category: 'Retail', video: `${assets}work/projects/parknshop-weekly-offer.mp4`, poster: `${assets}work/projects/parknshop-weekly-offer.jpg` },
   { brand: 'Octopus', name: 'Octopus Film', slug: 'octopus-film', category: 'Retail / Urban Lifestyle', video: `${assets}work/projects/octopus-film.mp4`, poster: `${assets}work/projects/octopus-film.jpg` },
   { brand: 'ChillGOOD TV', name: '章魚燒 Takoyaki', slug: 'chillgood-takoyaki', category: 'Music Video', video: `${assets}work/projects/chillgood-takoyaki.mp4`, poster: `${assets}work/projects/chillgood-takoyaki.jpg` },
+  { brand: 'ChillGOOD TV', name: '波斯動漫', slug: 'chillgood-animation', category: 'Music Video', video: `${assets}work/projects/chillgood-animation.mp4`, poster: `${assets}work/projects/chillgood-animation.jpg` },
   { brand: 'GRAMS', name: 'Color', slug: 'grams-color', category: 'Fashion & Lifestyle', video: `${assets}work/projects/grams-color.mp4`, poster: `${assets}work/projects/grams-color.jpg` },
   { brand: 'GRAMS', name: 'Black & White', slug: 'grams-bw', category: 'Fashion & Lifestyle', video: `${assets}work/projects/grams-bw.mp4`, poster: `${assets}work/projects/grams-bw.jpg` },
   { brand: 'KOISEA', name: 'Landscape Cut', slug: 'koisea-landscape', category: 'Fashion & Lifestyle', video: `${assets}work/projects/koisea-landscape.mp4`, poster: `${assets}work/projects/koisea-landscape.png` },
@@ -1003,7 +1004,7 @@ const workFormats = [
   ['drama', 'Narrative Frames', 'Stories that stay with you.', '叙事片场', '留在心里的故事。'],
   ['photo', 'Still Worlds', 'Still, never static.', '静帧世界', '静止，也持续发生。'],
 ]
-const workFormatFor = (work) => (work.slug === 'peninsula-fathers-day' ? 'reels' : work.slug === 'chillgood-takoyaki' ? 'mv' : 'commercial')
+const workFormatFor = (work) => (work.slug === 'peninsula-fathers-day' ? 'reels' : ['chillgood-takoyaki', 'chillgood-animation'].includes(work.slug) ? 'mv' : 'commercial')
 
 function WorkOverview({ language }) {
   const [format, setFormat] = useState('reels')
