@@ -353,6 +353,7 @@ function WorkCard({ work, onPlay }) {
 
 function WorkPlayerModal({ work, initialMuted, onClose }) {
   const videoRef = useRef(null)
+  const isPhoto = Boolean(work.photo)
   const [playing, setPlaying] = useState(false)
   const [muted, setMuted] = useState(initialMuted)
   const [progress, setProgress] = useState(0)
@@ -361,9 +362,9 @@ function WorkPlayerModal({ work, initialMuted, onClose }) {
     const video = videoRef.current
     const onKeyDown = (event) => { if (event.key === 'Escape') onClose() }
     window.addEventListener('keydown', onKeyDown)
-    video?.play().catch(() => setPlaying(false))
+    if (!isPhoto) video?.play().catch(() => setPlaying(false))
     return () => { window.removeEventListener('keydown', onKeyDown); video?.pause() }
-  }, [onClose])
+  }, [isPhoto, onClose])
 
   const togglePlayback = () => {
     const video = videoRef.current
@@ -383,15 +384,15 @@ function WorkPlayerModal({ work, initialMuted, onClose }) {
   }
   const closeFromBackdrop = (event) => { if (event.target === event.currentTarget) onClose() }
 
-  return <div className={`work-player-modal ${work.portrait ? 'work-player-modal--portrait' : ''}`} role="dialog" aria-modal="true" aria-label={`${work.name} video player`} onMouseDown={closeFromBackdrop}>
+  return <div className={`work-player-modal ${work.portrait || isPhoto ? 'work-player-modal--portrait' : ''}`} role="dialog" aria-modal="true" aria-label={`${work.name} ${isPhoto ? 'image' : 'video'} player`} onMouseDown={closeFromBackdrop}>
     <div className="work-player-dialog" onMouseDown={(event) => event.stopPropagation()}>
-      <video ref={videoRef} className="work-player-video" src={work.video} poster={work.poster} playsInline muted={muted} style={{ objectPosition: work.position }} onPlaying={() => setPlaying(true)} onPause={() => setPlaying(false)} onEnded={() => { setPlaying(false); setProgress(0) }} onTimeUpdate={(event) => setProgress(event.currentTarget.duration ? event.currentTarget.currentTime / event.currentTarget.duration : 0)} />
+      {isPhoto ? <img className="work-player-video" src={work.poster} alt={`${work.brand} — ${work.name}`} /> : <video ref={videoRef} className="work-player-video" src={work.video} poster={work.poster} playsInline muted={muted} style={{ objectPosition: work.position }} onPlaying={() => setPlaying(true)} onPause={() => setPlaying(false)} onEnded={() => { setPlaying(false); setProgress(0) }} onTimeUpdate={(event) => setProgress(event.currentTarget.duration ? event.currentTarget.currentTime / event.currentTarget.duration : 0)} />}
       <div className="work-player-meta"><strong>{work.name}</strong><span>{work.category}</span></div>
-      <div className="work-player-controls">
+      {!isPhoto && <div className="work-player-controls">
         <button className="work-control work-control--play" type="button" onClick={togglePlayback} aria-label={playing ? 'Pause video' : 'Play video'}>{playing ? 'Ⅱ' : '▶'}</button>
         <input className="work-progress" type="range" min="0" max="1" step="0.001" value={progress} onChange={seek} aria-label="Video progress" />
         <button className="work-control" type="button" onClick={toggleMuted} aria-label={muted ? 'Unmute video' : 'Mute video'}>{muted ? '🔇' : '🔊'}</button>
-      </div>
+      </div>}
       <button className="work-player-close" type="button" onClick={onClose} aria-label="Close video">×</button>
     </div>
   </div>
@@ -1009,10 +1010,11 @@ const workFormatFor = (work) => (work.photo ? 'photo' : work.slug === 'peninsula
 
 function WorkOverview({ language }) {
   const [format, setFormat] = useState('reels')
+  const [activeWork, setActiveWork] = useState(null)
   const current = workFormats.find(([id]) => id === format)
   const items = workProjects.filter((work) => workFormatFor(work) === format)
   const chinese = language !== 'en'
-  return <main id="main" className="subpage subpage--light"><Container><PageHeader className="work-page-heading" eyebrow={chinese ? `精选作品 / ${String(workProjects.length).padStart(2, '0')}` : `Selected work / ${String(workProjects.length).padStart(2, '0')}`} title={chinese ? <>为流动<br />而作。</> : <>Made<br />to move.</>} back="#/" /><div className="work-format-tabs" role="tablist" aria-label={chinese ? '作品分类' : 'Work formats'}>{workFormats.map(([id, label, , zhLabel]) => <button key={id} type="button" role="tab" aria-selected={format === id} className={format === id ? 'is-active' : ''} onClick={() => setFormat(id)}>{chinese ? zhLabel : label}</button>)}</div><div className="work-format-heading"><span>{chinese ? current[3] : current[1]}</span><p>{chinese ? current[4] : current[2]}</p></div>{items.length ? <div className="work-index">{items.map((work, index) => <a className="work-index-card" href={`#/work/${work.slug}`} key={work.slug}><img src={work.poster} alt="" loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><span>{String(index + 1).padStart(2, '0')}</span><div><em>{work.brand}</em><strong>{work.name}</strong><i>▶</i></div><small>{chinese ? '查看作品 →' : 'View film →'}</small></a>)}</div> : <p className="work-empty">{chinese ? '更多作品正在制作中。' : 'More stories are in development.'}</p>}</Container></main>
+  return <><main id="main" className="subpage subpage--light"><Container><PageHeader className="work-page-heading" eyebrow={chinese ? `精选作品 / ${String(workProjects.length).padStart(2, '0')}` : `Selected work / ${String(workProjects.length).padStart(2, '0')}`} title={chinese ? <>为流动<br />而作。</> : <>Made<br />to move.</>} back="#/" /><div className="work-format-tabs" role="tablist" aria-label={chinese ? '作品分类' : 'Work formats'}>{workFormats.map(([id, label, , zhLabel]) => <button key={id} type="button" role="tab" aria-selected={format === id} className={format === id ? 'is-active' : ''} onClick={() => setFormat(id)}>{chinese ? zhLabel : label}</button>)}</div><div className="work-format-heading"><span>{chinese ? current[3] : current[1]}</span><p>{chinese ? current[4] : current[2]}</p></div>{items.length ? <div className="work-index">{items.map((work, index) => <button type="button" className="work-index-card" onClick={() => setActiveWork(work)} key={work.slug} aria-label={`${chinese ? '打开作品' : 'Open work'}: ${work.name}`}><img src={work.poster} alt="" loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><span>{String(index + 1).padStart(2, '0')}</span><div><em>{work.brand}</em><strong>{work.name}</strong><i>▶</i></div><small>{chinese ? '打开作品 →' : 'Open work →'}</small></button>)}</div> : <p className="work-empty">{chinese ? '更多作品正在制作中。' : 'More stories are in development.'}</p>}</Container></main>{activeWork && <WorkPlayerModal work={activeWork} initialMuted onClose={() => setActiveWork(null)} />}</>
 }
 
 function WorkDetail({ work }) {
