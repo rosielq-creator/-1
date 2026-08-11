@@ -10,7 +10,7 @@ test('restores the original Green Tomato display stack', () => {
 })
 
 test('uses one DM Sans Medium homepage heading system below the hero', () => {
-  assert.match(css, /\.home-main\s+\.section-copy\s+h2[^{]*\{[^}]*font-family:\s*var\(--sans\)[^}]*font-weight:\s*500[^}]*font-size:\s*clamp\(43\.7px,\s*calc\(4\.75vw\s*-\s*1\.9px\),\s*85\.5px\)[^}]*letter-spacing:\s*-7\.66px[^}]*line-height:\s*\.94/s)
+  assert.match(css, /\.home-main\s+\.section-copy\s+h2[^{]*\{[^}]*font-family:\s*var\(--sans\)[^}]*font-weight:\s*500[^}]*font-size:\s*clamp\(41\.515px,\s*calc\(4\.5125vw\s*-\s*1\.805px\),\s*81\.225px\)[^}]*letter-spacing:\s*-7\.66px[^}]*line-height:\s*\.94/s)
   assert.match(css, /@media\s*\(min-width:761px\)[\s\S]*\.home-main\s+\.section-copy\s+h2,[\s\S]*\.home-main\s+\.world-copy\s+h2\s*\{[^}]*white-space:\s*nowrap/s)
   assert.match(css, /\.home-main\s+\.work-section\s+\.work-grid\s*\{[^}]*grid-column:\s*7\s*\/\s*-1/s)
 })
@@ -33,7 +33,7 @@ test('tightens all five profile name wordmarks', () => {
 
 test('matches the homepage support typography contract', () => {
   assert.match(css, /\.home-main\s+\.artists-section\s+\.section-copy\s*>\s*p:not\(\.eyebrow\)\s*\{[^}]*font-family:\s*var\(--sans\)[^}]*font-weight:\s*400[^}]*font-size:\s*14\.4px[^}]*line-height:\s*21\.6px[^}]*letter-spacing:\s*normal/s)
-  assert.match(css, /\.home-main\s+\.directory-link\s*\{[^}]*font-family:\s*var\(--sans\)[^}]*font-weight:\s*500/s)
+  assert.match(css, /\.home-main\s+\.directory-link\s*\{[^}]*font-family:\s*var\(--sans\)[^}]*font-weight:\s*500[^}]*font-size:\s*18px[^}]*letter-spacing:\s*1px/s)
   assert.match(css, /\.home-main\s+\.eyebrow\s*>\s*span\s*\{[^}]*font-family:\s*var\(--sans\)[^}]*font-weight:\s*700[^}]*font-size:\s*10\.88px[^}]*letter-spacing:\s*1\.09px/s)
 })
 

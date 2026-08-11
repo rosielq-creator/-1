@@ -836,7 +836,7 @@ h2,
 .home-main .world-copy h2 {
   font-family:var(--sans);
   font-weight:500;
-  font-size:clamp(43.7px, calc(4.75vw - 1.9px), 85.5px);
+  font-size:clamp(41.515px, calc(4.5125vw - 1.805px), 81.225px);
   letter-spacing:-7.66px;
   line-height:.94;
 }
@@ -850,6 +850,8 @@ h2,
 .home-main .directory-link {
   font-family:var(--sans);
   font-weight:500;
+  font-size:18px;
+  letter-spacing:1px;
 }
 .home-main .eyebrow > span {
   font-family:var(--sans);
