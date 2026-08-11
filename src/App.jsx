@@ -86,6 +86,9 @@ const copy = {
     contactTitle: <>Tell us<br />your story</>,
     form: ['Name', 'Email', 'Project / budget', 'Tell us more'],
     send: 'Send message',
+    sending: 'Sending…',
+    sent: 'Thank you — your message has been sent.',
+    sendError: 'Something went wrong. Please try again or email us directly.',
     menu: 'Menu',
   },
   zh: {
@@ -105,6 +108,9 @@ const copy = {
     contactTitle: <>告诉我们<br />你的故事</>,
     form: ['姓名', '邮箱', '项目 / 预算', '还有什么想说'],
     send: '发送消息',
+    sending: '发送中…',
+    sent: '谢谢，你的消息已经发送。',
+    sendError: '发送失败，请重试或直接发送邮件给我们。',
     menu: '菜单',
   },
 }
@@ -391,10 +397,33 @@ function WorkPlayerModal({ work, initialMuted, onClose }) {
 
 function HomePage({ t, onNavigate }) {
   const homeRef = useHomeNarrative(true)
-  const [submitted, setSubmitted] = useState(false)
+  const [formStatus, setFormStatus] = useState('idle')
   const [activeWork, setActiveWork] = useState(null)
   const [workStartsMuted, setWorkStartsMuted] = useState(true)
-  const onSubmit = (event) => { event.preventDefault(); if (event.currentTarget.checkValidity()) setSubmitted(true) }
+  const onSubmit = async (event) => {
+    event.preventDefault()
+    const form = event.currentTarget
+    if (!form.checkValidity()) {
+      form.reportValidity()
+      return
+    }
+    setFormStatus('sending')
+    const formData = new FormData(form)
+    formData.append('_subject', 'New GreenTomato contact enquiry')
+    formData.append('_template', 'table')
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/babysharkdoludodo@gmail.com', {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: formData,
+      })
+      if (!response.ok) throw new Error('Form delivery failed')
+      form.reset()
+      setFormStatus('success')
+    } catch {
+      setFormStatus('error')
+    }
+  }
   const openWork = (work, muted) => { setWorkStartsMuted(muted); setActiveWork(work) }
   const closeWork = useCallback(() => setActiveWork(null), [])
   return <>
@@ -409,7 +438,7 @@ function HomePage({ t, onNavigate }) {
     <Section id="artists" tone="dark" className="artists-section"><Container className="artists-layout"><div className="section-copy"><Eyebrow number="03">Artists</Eyebrow><h2>{t.artistsTitle}</h2><p>{t.artistsBody}</p><TextLink className="directory-link" href="#/artists">View all artists</TextLink></div><div className="artist-tiles" aria-label="Featured artist portraits">{featuredArtists.map((artist) => <ArtistCard key={artist.slug} artist={artist} onOpen={onNavigate} total={artists.length} />)}</div></Container></Section>
     <Section id="work" tone="light" className="work-section"><Container className="work-layout"><div className="section-copy"><Eyebrow number="04">Work</Eyebrow><h2>{t.workTitle}</h2><p>{t.workBody}</p><TextLink href="#/work">View all work</TextLink></div><div className="work-grid" aria-label="Selected work">{works.map((work) => <WorkCard key={work.slug} work={work} onPlay={openWork} />)}</div></Container></Section>
     <Section id="brands" tone="dark" className="brands-section"><Container className="brands-layout"><div className="section-copy"><Eyebrow number="05">Brands & services</Eyebrow><h2>{t.brandsTitle}</h2><ul className="brand-list">{t.brands.map((brand) => <li key={brand}>{brand}</li>)}</ul></div><div id="services" className="world-copy"><h2>{t.worldTitle}</h2><ul>{t.worldItems.map((item) => <li key={item}>{item}</li>)}</ul></div></Container></Section>
-    <Section id="contact" tone="light" className="contact-section"><Container className="contact-layout"><div><Eyebrow number="06">Contact</Eyebrow><h2>{t.contactTitle}</h2><form className="contact-form" onSubmit={onSubmit} noValidate><input aria-label={t.form[0]} placeholder={t.form[0]} required /><input aria-label={t.form[1]} placeholder={t.form[1]} type="email" required /><input aria-label={t.form[2]} placeholder={t.form[2]} /><textarea aria-label={t.form[3]} placeholder={t.form[3]} rows="2" required /><button type="submit">{t.send}</button>{submitted && <p className="form-message" role="status">Thank you — we will be in touch.</p>}</form></div></Container></Section>
+    <Section id="contact" tone="light" className="contact-section"><Container className="contact-layout"><div><Eyebrow number="06">Contact</Eyebrow><h2>{t.contactTitle}</h2><form className="contact-form" onSubmit={onSubmit} noValidate><input name="name" aria-label={t.form[0]} placeholder={t.form[0]} autoComplete="name" required /><input name="email" aria-label={t.form[1]} placeholder={t.form[1]} type="email" autoComplete="email" required /><input name="project_budget" aria-label={t.form[2]} placeholder={t.form[2]} /><textarea name="message" aria-label={t.form[3]} placeholder={t.form[3]} rows="2" required /><button type="submit" disabled={formStatus === 'sending'}>{formStatus === 'sending' ? t.sending : t.send}</button>{formStatus === 'success' && <p className="form-message" role="status">{t.sent}</p>}{formStatus === 'error' && <p className="form-message form-message--error" role="alert">{t.sendError}</p>}</form></div></Container></Section>
   </main>
   {activeWork && <WorkPlayerModal work={activeWork} initialMuted={workStartsMuted} onClose={closeWork} />}
   </>
@@ -547,6 +576,9 @@ const storyProfiles = {
       ['festival-stage.jpg', 'Sound', 'Where the energy lands'],
       ['festival-wheel.jpg', 'City light', 'A moving horizon'],
     ],
+    collaborations: [
+      ['miumiu', 'MIU MIU', 'https://www.instagram.com/p/DXv8OU5FTeN/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
+    ],
     socialLabel: 'Historical snapshot', socialHandle: 'Instagram', followers: '12,999',
     factsLabel: 'Audience snapshot · historical', facts: [
       ['Male audience', '83.7%'], ['Female audience', '16.3%'], ['25–34', '35.0%'], ['18–24', '24.2%'],
@@ -596,6 +628,12 @@ const storyProfiles = {
     ],
     worldLead: 'Streets, journeys and small scenes worth keeping.',
     world: [['video/shanghai-day-3.mp4', 'Shanghai · Day 3', 'A moving city note', 'video'], ['video/ocean-time.mp4', 'Ocean time', 'A quieter horizon', 'video'], ['mario-hero.jpg', 'City life', 'The everyday frame'], ['mario-editorial.jpg', 'Style', 'A sharper line'], ['mario-campaign.jpg', 'Campaign', 'Built for motion'], ['yotree-cover.jpg', 'Travel', 'A different pace']],
+    collaborations: [
+      ['loro-piana', 'LORO PIANA', 'https://www.instagram.com/p/DazrY8KjK0S/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
+      ['yotree-coffee', 'YOTREE COFFEE', 'https://www.instagram.com/p/DZ_toKXCRvz/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
+      ['polo-ralph-lauren', 'POLO RALPH LAUREN', 'https://www.instagram.com/p/DZ4op42CUif/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
+      ['acqua-di-parma', 'ACQUA DI PARMA', 'https://www.instagram.com/p/DZouiMjCVa_/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
+    ],
     socialLabel: 'Social snapshots · historical', socialHandle: 'Instagram', followers: '13.5K',
     socialMetrics: [
       ['Instagram', 'Historical snapshot', '13.5K'],
@@ -621,6 +659,10 @@ const storyProfiles = {
     ],
     worldLead: 'Visual notes from fashion, film and life in transit.',
     world: [['video/cherry-blossom.mp4', 'Cherry blossom', 'A softer passing frame', 'video'], ['video/today-ca2.mp4', 'Today', 'A note from the day', 'video'], ['video/twin-sunglasses.mp4', 'Twin sunglasses', 'Built in contrast', 'video'], ['hero.png', 'Portrait', 'A clear point of view'], ['black-portrait.png', 'Fashion', 'Built in contrast'], ['cafe-portrait.png', 'City life', 'Between takes'], ['apple-portrait.jpg', 'Travel', 'A passing frame']],
+    collaborations: [
+      ['ralph-lauren', 'RALPH LAUREN', 'https://www.instagram.com/p/DVx718TAfjf/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
+      ['nike', 'NIKE', 'https://www.instagram.com/p/DUmiM1mAS3t/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
+    ],
     socialLabel: 'Historical snapshot', socialHandle: 'Instagram', followers: '8,254',
     factsLabel: 'Audience snapshot · historical', facts: [
       ['Male audience', '75.9%'], ['Female audience', '24.1%'], ['18–24', '38.7%'], ['25–34', '27.9%'],
@@ -915,7 +957,7 @@ function WorldPhoneVideo({ src, label, priority }) {
 }
 
 function ArtistCollaborationScene({ artist, collaborations }) {
-  return <section className="maya-scene maya-scene--cases"><Container><div className="maya-safe maya-safe--cases"><Eyebrow number="05">Selected collaborations</Eyebrow><h2>Made with<br />brands.</h2><div className={`maya-collaboration-grid maya-collaboration-grid--${collaborations.length}`}>{collaborations.map(([file, brand, url], index) => <a className="maya-collaboration-card" href={url} key={file} target="_blank" rel="noreferrer"><img src={`${assets}artists/collaborations/${artist.id}/${file}.jpg`} alt={`${artist.display_name} collaboration with ${brand}`} loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><span>{brand} ↗</span></a>)}</div></div></Container></section>
+  return <section className="maya-scene maya-scene--cases"><Container><div className={`maya-safe maya-safe--cases maya-safe--cases--${collaborations.length}`}><Eyebrow number="05">Selected collaborations</Eyebrow><h2>Made with<br />brands.</h2><div className={`maya-collaboration-grid maya-collaboration-grid--${collaborations.length}`}>{collaborations.map(([file, brand, url], index) => <a className="maya-collaboration-card" href={url} key={file} target="_blank" rel="noreferrer"><img src={`${assets}artists/collaborations/${artist.id}/${file}.jpg`} alt={`${artist.display_name} collaboration with ${brand}`} loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><span>{brand} ↗</span></a>)}</div></div></Container></section>
 }
 
 function ArtistStoryProfile({ artist, language, story }) {
