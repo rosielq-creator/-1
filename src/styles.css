@@ -413,7 +413,7 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
 .maya-about-intro p { margin:0; font-size:clamp(14px,1.08vw,18px); line-height:1.35; }
 .maya-safe--identity { top:16%; right:0; width:40%; color:#f4f1ec; transform:scale(1.05); transform-origin:top right; }
 .maya-safe--identity h2 { margin-bottom:28px; }
-.maya-identity-portrait { position:absolute; z-index:1; top:7svh; left:5%; width:clamp(310px,28vw,470px); height:86svh; margin:0; pointer-events:none; transform:translateX(5vw) scale(1.05); transform-origin:center bottom; }
+.maya-identity-portrait { position:absolute; z-index:1; top:17svh; left:5%; width:clamp(310px,28vw,470px); height:78svh; margin:0; pointer-events:none; transform:translateX(5vw) scale(.95); transform-origin:center bottom; }
 .maya-identity-portrait img { width:100%; height:100%; object-fit:contain; object-position:center bottom; filter:drop-shadow(0 24px 22px rgba(20,15,17,.16)); }
 .maya-dossier { display:grid; grid-template-columns:1fr 1fr; margin:0; border-top:1px solid rgba(244,241,236,.32); }
 .maya-dossier > div { min-width:0; min-height:76px; padding:14px 0; border-bottom:1px solid rgba(244,241,236,.25); }
