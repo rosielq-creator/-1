@@ -414,7 +414,9 @@ function useArtistDirectoryNarrative() {
 function DirectoryArtistCard({ artist, language, className = '', style }) {
   const labels = directoryLabels[language]
   const role = language === 'zh' ? artist.role_zh : artist.role_en
-  return <a className={`directory-artist-card ${className}`} href={`#/artists/${artist.profile_slug}`} aria-label={`${labels.profile}: ${artist.display_name}`} style={style}>
+  const profileHash = `#/artists/${artist.profile_slug}`
+  const openProfile = () => { window.location.hash = profileHash }
+  return <a className={`directory-artist-card ${className}`} href={profileHash} onClick={openProfile} aria-label={`${labels.profile}: ${artist.display_name}`} style={style}>
     <img src={artist.src} alt={`Portrait of ${artist.display_name}`} style={{ objectPosition: artist.position }} loading="lazy" decoding="async" />
     <span className="directory-card-scrim" aria-hidden="true" />
     <span className="directory-card-number">{artist.number} / 05</span>
