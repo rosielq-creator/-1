@@ -500,7 +500,7 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
   .maya-scene .container { height:auto; min-height:0; }
   .maya-safe { position:relative; inset:auto!important; width:100%!important; }
   .maya-safe--hero { min-height:70svh; }
-  .next-artist-link { position:relative; top:auto; right:auto; display:inline-block; margin-top:26px; }
+  .next-artist-link { position:absolute; top:82px; right:0; display:inline-block; margin:0; }
   .maya-safe--hero h1 { font-size:clamp(92px,25vw,150px); line-height:1.08; }
   .maya-safe--hero .maya-role { margin-top:16px; }
   .maya-safe--identity,.maya-safe--detail { width:min(100%,620px)!important; color:#f4f1ec; }
