@@ -451,6 +451,12 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
 .maya-phone-rail figcaption strong { font-size:17px; }
 .maya-phone-rail figcaption span { font:600 9px/1.2 var(--mono); letter-spacing:.05em; text-transform:uppercase; }
 .maya-safe--social { inset:10% 0 auto; width:100%; }
+.maya-safe--cases { inset:9% 0 auto; width:100%; color:#111; }
+.maya-safe--cases h2 { margin:18px 0 clamp(32px,5svh,54px); font-size:clamp(54px,5.4vw,90px); line-height:.84; }
+.maya-collaboration-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(14px,1.5vw,26px); }
+.maya-collaboration-card { display:grid; gap:12px; min-width:0; font:600 clamp(11px,1vw,16px)/1 var(--mono); letter-spacing:.04em; text-transform:uppercase; }
+.maya-collaboration-card img { display:block; width:100%; aspect-ratio:1/1.13; object-fit:cover; background:#d3c4c5; transition:transform 240ms ease; }
+.maya-collaboration-card:hover img { transform:translateY(-5px); }
 .maya-social-layout { display:grid; grid-template-columns:minmax(0,.92fr) minmax(0,1fr) minmax(270px,.8fr); gap:clamp(40px,4vw,80px); align-items:start; margin-top:clamp(130px,16svh,180px); }
 .maya-social-handle { display:inline-block; max-width:100%; margin-bottom:28px; border-bottom:1px solid currentColor; padding-bottom:6px; font:600 clamp(18px,1.6vw,28px)/1 var(--mono); letter-spacing:-.04em; }
 .maya-followers { display:grid; min-width:0; max-width:100%; gap:12px; font-size:clamp(64px,5.65vw,108px); line-height:.76; letter-spacing:-.105em; white-space:nowrap; }
@@ -520,6 +526,9 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
   .maya-mobile-crop { display:block; width:min(58vw,310px); max-height:56svh; margin:34px 0 0 auto; object-fit:contain; object-position:center bottom; opacity:.9; }
   .maya-mobile-crop--hero { margin:28px auto 0; }
   .maya-safe--world { display:grid; grid-template-columns:1fr; gap:36px; }
+  .maya-safe--cases { position:relative; inset:auto!important; width:100%!important; }
+  .maya-collaboration-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+  .maya-safe--cases h2 { margin-bottom:28px; }
   .maya-world-copy { padding:0; }
   .maya-phone { justify-self:center; width:min(82vw,350px); }
   .maya-social-layout { grid-template-columns:1fr; gap:42px; margin-top:40px; }

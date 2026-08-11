@@ -649,6 +649,12 @@ const mayaWorldImages = [
   ['pink-editorial.jpg', 'Fashion', 'Soft structure'], ['pink-closeup.jpg', 'Beauty', 'A quiet close-up'],
   ['black-tailoring.jpg', 'Art', 'A tailored pause'], ['street-grey.jpg', 'City life', 'Between places'],
 ].map(([file, category, caption]) => ({ src: `${assets}artists/maya-world/mockup/${file}`, category, caption }))
+const mayaCollaborations = [
+  ['eatppeum', 'EAT PPEUM', 'https://www.instagram.com/p/C2guQy3pK0C/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
+  ['dontaskmyplan', "DON'T ASK MY PLAN", 'https://www.instagram.com/p/C27hAEMJg3O/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
+  ['emis', 'EMIS', 'https://www.instagram.com/p/C6s3I2DrGuK/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
+  ['tamburins', 'TAMBURINS', 'https://www.instagram.com/p/C7jaRSxJXXV/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
+]
 
 const mayaStoryCopy = {
   en: {
@@ -708,7 +714,7 @@ function useMayaProfileMotion() {
           .fromTo(to, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, pointerEvents: 'auto', duration: .42 }, at + .18)
       }
       const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
-        trigger: root, start: 'top top', end: () => `+=${window.innerHeight * 6.2}`, pin: stage,
+        trigger: root, start: 'top top', end: () => `+=${window.innerHeight * 7.4}`, pin: stage,
         scrub: .75, anticipatePin: 1, invalidateOnRefresh: true,
       } })
       // Keep the Maya camera inside the left subject lane while the dossier owns the right reading lane.
@@ -727,8 +733,9 @@ function useMayaProfileMotion() {
       timeline.to(camera, { autoAlpha: 0, duration: .34 }, 2.82)
         .to(atmosphere, { xPercent: -3, yPercent: 2, scale: 1.02, backgroundColor: '#e7ded9', duration: 1.15 }, 3.05)
       revealScene(timeline, scenes[2], scenes[3], 3.18)
-      timeline.to(atmosphere, { backgroundColor: '#efa7b1', duration: .72 }, 4.42)
       revealScene(timeline, scenes[3], scenes[4], 4.48)
+      timeline.to(atmosphere, { backgroundColor: '#efa7b1', duration: .72 }, 5.48)
+      revealScene(timeline, scenes[4], scenes[5], 5.54)
       requestAnimationFrame(() => ScrollTrigger.refresh())
     }, root)
     return () => ctx.revert()
@@ -801,7 +808,8 @@ function MayaProfile({ artist, language }) {
       <section className="maya-scene maya-scene--identity"><Container><figure className="maya-identity-portrait" aria-hidden="true"><img src={mayaWalking.src} alt="" fetchPriority="high" /></figure><div className="maya-safe maya-safe--identity"><Eyebrow number="02">{copy.dossier}</Eyebrow><h2>Identity</h2><dl className="maya-dossier"><div><dt>{copy.height}</dt><dd>{dossier.height}</dd></div><div><dt>{copy.weight}</dt><dd>{dossier.weight}</dd></div><div><dt>{copy.measurements}</dt><dd>{dossier.measurements}</dd></div><div><dt>{copy.shoe}</dt><dd>{dossier.shoe_size}</dd></div><div><dt>{copy.base}</dt><dd>{artist.locations.join(' / ')}</dd></div><div><dt>{copy.languages}</dt><dd>{artist.languages.join(' / ')}</dd></div><div className="maya-dossier-wide"><dt>{copy.type}</dt><dd>{artist.creative_talents.join(' / ')}</dd></div></dl></div><img className="maya-mobile-crop" src={mayaWalking.src} alt={mayaWalking.alt} /></Container></section>
       <section className="maya-scene maya-scene--detail"><Container><div className="maya-safe maya-safe--detail"><Eyebrow number="03">{copy.personality}</Eyebrow><h2 className="maya-detail-title"><span>Details of</span><span>character.</span></h2><div className="maya-personality-list">{copy.personalityItems.map(([title, text], index) => <article className="maya-personality-item" key={title}><b>{String(index + 1).padStart(2, '0')}</b><div className="maya-personality-copy"><h3>{title}</h3><p>{text}</p></div></article>)}</div></div><img className="maya-mobile-crop" src={mayaStanding.src} alt={mayaStanding.alt} /></Container></section>
       <section className="maya-scene maya-scene--world"><Container><div className="maya-safe maya-safe--world"><div className="maya-world-copy"><Eyebrow number="04">{copy.world}</Eyebrow><h2>{copy.world}</h2><p>{copy.worldLead}</p><p>{copy.aboutLines[2]}</p></div><MayaWorldPhone copy={copy} /></div></Container></section>
-      <section className="maya-scene maya-scene--social"><Container><div className="maya-safe maya-safe--social"><Eyebrow number="05">{copy.social}</Eyebrow><div className="maya-social-layout"><div className="maya-social-metric"><a className="maya-social-handle" href={social.url} target="_blank" rel="noreferrer">{social.platform} · {social.handle} ↗</a><strong className="maya-followers">{dossier.followers_snapshot}<small>{copy.followers}</small></strong></div><div className="maya-audience"><p>{copy.audience}</p><dl><div><dt>{copy.age2534}</dt><dd>{audience.age_25_34}</dd></div><div><dt>{copy.age1824}</dt><dd>{audience.age_18_24}</dd></div><div><dt>{copy.male}</dt><dd>{audience.male_audience}</dd></div><div><dt>{copy.female}</dt><dd>{audience.female_audience}</dd></div><div className="maya-audience-countries"><dt>{copy.countries}</dt><dd>{audience.countries}</dd></div></dl></div><div className="maya-cta"><h2>{language === 'zh' ? <><span>想一起</span><span>创作</span><span>些什么</span><span>吗？</span></> : <><span>Want to</span><span>create</span><span>something</span><span>together?</span></>}</h2><a className="maya-primary-link" href="#contact">{copy.work} →</a></div></div></div></Container></section>
+      <section className="maya-scene maya-scene--cases"><Container><div className="maya-safe maya-safe--cases"><Eyebrow number="05">Selected collaborations</Eyebrow><h2>Made with<br />brands.</h2><div className="maya-collaboration-grid">{mayaCollaborations.map(([file, brand, url], index) => <a className="maya-collaboration-card" href={url} key={file} target="_blank" rel="noreferrer"><img src={`${assets}artists/collaborations/maya/${file}.jpg`} alt={`Maya collaboration with ${brand}`} loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><span>{brand} ↗</span></a>)}</div></div></Container></section>
+      <section className="maya-scene maya-scene--social"><Container><div className="maya-safe maya-safe--social"><Eyebrow number="06">{copy.social}</Eyebrow><div className="maya-social-layout"><div className="maya-social-metric"><a className="maya-social-handle" href={social.url} target="_blank" rel="noreferrer">{social.platform} · {social.handle} ↗</a><strong className="maya-followers">{dossier.followers_snapshot}<small>{copy.followers}</small></strong></div><div className="maya-audience"><p>{copy.audience}</p><dl><div><dt>{copy.age2534}</dt><dd>{audience.age_25_34}</dd></div><div><dt>{copy.age1824}</dt><dd>{audience.age_18_24}</dd></div><div><dt>{copy.male}</dt><dd>{audience.male_audience}</dd></div><div><dt>{copy.female}</dt><dd>{audience.female_audience}</dd></div><div className="maya-audience-countries"><dt>{copy.countries}</dt><dd>{audience.countries}</dd></div></dl></div><div className="maya-cta"><h2>{language === 'zh' ? <><span>想一起</span><span>创作</span><span>些什么</span><span>吗？</span></> : <><span>Want to</span><span>create</span><span>something</span><span>together?</span></>}</h2><a className="maya-primary-link" href="#contact">{copy.work} →</a></div></div></div></Container></section>
     </div>
   </main>
 }
