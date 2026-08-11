@@ -454,6 +454,8 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
 .maya-safe--cases { inset:9% 0 auto; width:100%; color:#111; }
 .maya-safe--cases h2 { margin:18px 0 clamp(32px,5svh,54px); font-size:clamp(54px,5.4vw,90px); line-height:.84; }
 .maya-collaboration-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(14px,1.5vw,26px); }
+.maya-collaboration-grid--5 { grid-template-columns:repeat(5,minmax(0,1fr)); }
+.maya-collaboration-grid--6 { grid-template-columns:repeat(6,minmax(0,1fr)); }
 .maya-collaboration-card { display:grid; gap:12px; min-width:0; font:600 clamp(11px,1vw,16px)/1 var(--mono); letter-spacing:.04em; text-transform:uppercase; }
 .maya-collaboration-card img { display:block; width:100%; height:auto; max-height:46svh; object-fit:contain; background:transparent; transition:transform 240ms ease; }
 .maya-collaboration-card:hover img { transform:translateY(-5px); }
