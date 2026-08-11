@@ -856,7 +856,7 @@ function useArtistStoryMotion() {
       revealScene(timeline, scenes[0], scenes[1], .78)
       timeline.set(poses[0], { autoAlpha: 0 }, 1.75).set(poses[2], { autoAlpha: 1 }, 1.75)
         // Non-Maya pose studies use a looser 03 camera so every artist's head stays in frame.
-        .to(camera, { autoAlpha: 1, xPercent: -170, yPercent: 7, scale: 1.35, transformOrigin: '50% 30%', duration: 1.25 }, 1.75)
+        .to(camera, { autoAlpha: 1, xPercent: -170, yPercent: -10, scale: 1.35, transformOrigin: '50% 30%', duration: 1.25 }, 1.75)
         .to(atmosphere, { xPercent: 6, yPercent: -4, scale: 1.14, backgroundColor: 'var(--story-deep)', duration: 1.25 }, 1.75)
       revealScene(timeline, scenes[1], scenes[2], 1.92)
       personality.forEach((item, index) => timeline.to(item, { x: 12, duration: .18 }, 2.15 + index * .22))
