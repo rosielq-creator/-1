@@ -451,6 +451,10 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
 .maya-social-handle { display:inline-block; max-width:100%; margin-bottom:28px; border-bottom:1px solid currentColor; padding-bottom:6px; font:600 clamp(18px,1.6vw,28px)/1 var(--mono); letter-spacing:-.04em; }
 .maya-followers { display:grid; min-width:0; max-width:100%; gap:12px; font-size:clamp(64px,5.65vw,108px); line-height:.76; letter-spacing:-.105em; white-space:nowrap; }
 .maya-followers small { font:600 9px/1 var(--mono); letter-spacing:.08em; text-transform:uppercase; }
+.maya-social-metric--multiple { display:grid; gap:28px; }
+.maya-social-metric--multiple .maya-social-metric-item { display:grid; gap:4px; }
+.maya-social-metric--multiple .maya-social-handle { margin-bottom:4px; font-size:clamp(13px,1.1vw,18px); }
+.maya-social-metric--multiple .maya-followers { font-size:clamp(52px,4.2vw,78px); }
 .maya-audience { align-self:start; padding-top:14px; border-top:1px solid rgba(17,17,17,.27); }
 .maya-audience > p { margin:0 0 12px; color:rgba(17,17,17,.62); font:600 8px/1.2 var(--mono); letter-spacing:.08em; text-transform:uppercase; }
 .maya-audience dl { display:grid; grid-template-columns:1fr 1fr; margin:0; }
