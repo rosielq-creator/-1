@@ -443,6 +443,10 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
 .maya-phone-rail::-webkit-scrollbar { display:none; }
 .maya-phone-rail figure { position:relative; flex:0 0 100%; min-width:100%; height:100%; margin:0; overflow:hidden; scroll-snap-align:start; }
 .maya-phone-rail img { width:100%; height:100%; object-fit:cover; object-position:center; }
+.maya-phone-video { display:block; width:100%; height:100%; object-fit:cover; object-position:center; background:#111; }
+.maya-phone-video-controls { position:absolute; z-index:2; top:12px; right:12px; display:flex; gap:6px; }
+.maya-phone-video-controls button { display:grid; width:28px; height:28px; place-items:center; border:0; border-radius:50%; padding:0; color:#fff; background:rgba(12,10,11,.66); font:600 11px/1 var(--mono); backdrop-filter:blur(4px); }
+.maya-phone-video-controls button:hover { background:#00a651; }
 .maya-phone-rail figcaption { position:absolute; right:0; bottom:0; left:0; display:grid; gap:4px; padding:36px 16px 14px; color:#fff; background:rgba(12,10,11,.45); }
 .maya-phone-rail figcaption strong { font-size:17px; }
 .maya-phone-rail figcaption span { font:600 9px/1.2 var(--mono); letter-spacing:.05em; text-transform:uppercase; }

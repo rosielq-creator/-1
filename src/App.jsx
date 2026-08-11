@@ -588,7 +588,7 @@ const storyProfiles = {
       ['Playful', 'The work stays serious only as long as it needs to be.'],
     ],
     worldLead: 'Streets, journeys and small scenes worth keeping.',
-    world: [['mario-hero.jpg', 'City life', 'The everyday frame'], ['mario-editorial.jpg', 'Style', 'A sharper line'], ['mario-campaign.jpg', 'Campaign', 'Built for motion'], ['yotree-cover.jpg', 'Travel', 'A different pace']],
+    world: [['video/shanghai-day-3.mp4', 'Shanghai · Day 3', 'A moving city note', 'video'], ['video/ocean-time.mp4', 'Ocean time', 'A quieter horizon', 'video'], ['mario-editorial.jpg', 'Style', 'A sharper line'], ['mario-campaign.jpg', 'Campaign', 'Built for motion']],
     socialLabel: 'Social snapshots · historical', socialHandle: 'Instagram', followers: '13.5K',
     socialMetrics: [
       ['Instagram', 'Historical snapshot', '13.5K'],
@@ -863,10 +863,33 @@ function ArtistWorldPhone({ artist, story, copy }) {
   return <div className="maya-phone" aria-label={`${artist.display_name} Instagram-style visual diary`}>
     <div className="maya-phone-top"><span>10:24</span><b>{artist.display_name.toLowerCase()}</b><span>•••</span></div>
     <div ref={railRef} className="maya-phone-rail" tabIndex="0" onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp} onScroll={onScroll}>
-      {story.world.map(([file, category, caption], index) => <figure key={file}><img src={`${assets}artists/profile-media/${artist.id}/${file}`} alt={`${artist.display_name} — ${category}: ${caption}`} loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><figcaption><strong>{category}</strong><span>{caption}</span></figcaption></figure>)}
+      {story.world.map(([file, category, caption, kind], index) => <figure key={file}>{kind === 'video' ? <WorldPhoneVideo src={`${assets}artists/profile-media/${artist.id}/${file}`} label={`${artist.display_name} — ${category}: ${caption}`} priority={index === 0} /> : <img src={`${assets}artists/profile-media/${artist.id}/${file}`} alt={`${artist.display_name} — ${category}: ${caption}`} loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} />}<figcaption><strong>{category}</strong><span>{caption}</span></figcaption></figure>)}
     </div>
     <div className="maya-phone-bottom"><span>{page} / {story.world.length}</span><span>{copy.swipe} ↔</span></div>
   </div>
+}
+
+function WorldPhoneVideo({ src, label, priority }) {
+  const videoRef = useRef(null)
+  const [muted, setMuted] = useState(true)
+  const [playing, setPlaying] = useState(true)
+  const stopRailDrag = (event) => event.stopPropagation()
+  const togglePlayback = (event) => {
+    stopRailDrag(event)
+    const video = videoRef.current
+    if (!video) return
+    if (video.paused) video.play().then(() => setPlaying(true)).catch(() => setPlaying(false))
+    else { video.pause(); setPlaying(false) }
+  }
+  const toggleMuted = (event) => {
+    stopRailDrag(event)
+    const video = videoRef.current
+    if (!video) return
+    const nextMuted = !video.muted
+    video.muted = nextMuted
+    setMuted(nextMuted)
+  }
+  return <><video ref={videoRef} className="maya-phone-video" src={src} aria-label={label} autoPlay muted loop playsInline preload={priority ? 'auto' : 'metadata'} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} /><div className="maya-phone-video-controls" aria-label="Video controls"><button type="button" onPointerDown={stopRailDrag} onClick={togglePlayback} aria-label={playing ? 'Pause video' : 'Play video'}>{playing ? 'Ⅱ' : '▶'}</button><button type="button" onPointerDown={stopRailDrag} onClick={toggleMuted} aria-label={muted ? 'Turn sound on' : 'Mute video'}>{muted ? '🔇' : '🔊'}</button></div></>
 }
 
 function ArtistStoryProfile({ artist, language, story }) {
@@ -878,7 +901,7 @@ function ArtistStoryProfile({ artist, language, story }) {
   const cssVars = { '--story-base': story.palette.base, '--story-atmosphere': story.palette.atmosphere, '--story-deep': story.palette.deep, '--story-glow': story.palette.glow, '--story-ink': story.palette.ink }
   useLayoutEffect(() => {
     // Decode the three pose frames together. The camera is ready before the visitor reaches either cross-fade.
-    const sources = [pose('hero'), pose('identity'), pose('detail'), ...story.world.slice(0, 2).map(([file]) => `${assets}artists/profile-media/${artist.id}/${file}`)]
+    const sources = [pose('hero'), pose('identity'), pose('detail'), ...story.world.slice(0, 2).filter(([, , , kind]) => kind !== 'video').map(([file]) => `${assets}artists/profile-media/${artist.id}/${file}`)]
     sources.forEach((src) => { const image = new Image(); image.src = src; image.decode?.().catch(() => {}) })
   }, [artist.id])
   return <main id="main" ref={rootRef} className="maya-profile artist-story-profile" style={cssVars}>
