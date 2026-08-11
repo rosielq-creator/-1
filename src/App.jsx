@@ -52,6 +52,21 @@ const works = [
   { name: 'MGM', slug: 'mgm', category: 'Brand world', video: `${assets}work/mgm-macau.mp4`, poster: `${assets}work/mgm-cover.jpg`, position: '50% 50%' },
 ]
 
+// Work pages use the approved current-project delivery package. Homepage media stays separate.
+const workProjects = [
+  { brand: 'Macau MGM', name: 'MGM Film 01', slug: 'mgm-film-01', category: 'Hospitality', video: `${assets}work/projects/mgm-film-01.mp4`, poster: `${assets}work/projects/mgm-film-01.jpg` },
+  { brand: 'Macau MGM', name: 'MGM Film 02', slug: 'mgm-film-02', category: 'Hospitality', video: `${assets}work/projects/mgm-film-02.mp4`, poster: `${assets}work/projects/mgm-film-02.jpg` },
+  { brand: 'Macau MGM', name: 'MGM Film 03', slug: 'mgm-film-03', category: 'Hospitality', video: `${assets}work/projects/mgm-film-03.mp4`, poster: `${assets}work/projects/mgm-film-03.jpg` },
+  { brand: 'The Peninsula Hong Kong', name: "Father's Day", slug: 'peninsula-fathers-day', category: 'Hospitality', video: `${assets}work/projects/peninsula-fathers-day.mp4`, poster: `${assets}work/projects/peninsula-fathers-day.jpg`, portrait: true },
+  { brand: 'PARKnSHOP', name: 'Weekly Offer', slug: 'parknshop-weekly-offer', category: 'Retail', video: `${assets}work/projects/parknshop-weekly-offer.mp4`, poster: `${assets}work/projects/parknshop-weekly-offer.jpg` },
+  { brand: 'Octopus', name: 'Octopus Film', slug: 'octopus-film', category: 'Retail / Urban Lifestyle', video: `${assets}work/projects/octopus-film.mp4`, poster: `${assets}work/projects/octopus-film.jpg` },
+  { brand: 'ChillGOOD × TVB Takoyaki', name: 'Music Video', slug: 'chillgood-takoyaki', category: 'Entertainment', video: `${assets}work/projects/chillgood-takoyaki.mp4`, poster: `${assets}work/projects/chillgood-takoyaki.jpg` },
+  { brand: 'GRAMS', name: 'Color', slug: 'grams-color', category: 'Fashion & Lifestyle', video: `${assets}work/projects/grams-color.mp4`, poster: `${assets}work/projects/grams-color.jpg` },
+  { brand: 'GRAMS', name: 'Black & White', slug: 'grams-bw', category: 'Fashion & Lifestyle', video: `${assets}work/projects/grams-bw.mp4`, poster: `${assets}work/projects/grams-bw.jpg` },
+  { brand: 'KOISEA', name: 'Landscape Cut', slug: 'koisea-landscape', category: 'Fashion & Lifestyle', video: `${assets}work/projects/koisea-landscape.mp4`, poster: `${assets}work/projects/koisea-landscape.png` },
+  { brand: 'KOISEA', name: 'Underground Cut', slug: 'koisea-underground', category: 'Fashion & Lifestyle', video: `${assets}work/projects/koisea-underground.mp4`, poster: `${assets}work/projects/koisea-underground.jpg` },
+]
+
 const copy = {
   en: {
     nav: ['About', 'Artists', 'Work', 'Brands', 'Services', 'Contact'],
@@ -853,12 +868,12 @@ function ArtistStoryProfile({ artist, language, story }) {
 }
 
 function WorkOverview() {
-  return <main id="main" className="subpage subpage--light"><Container><PageHeader eyebrow="Selected work / 04" title={<>Made<br />to move.</>} back="#/" /><div className="work-index">{works.map((work, index) => <a className="work-index-card" href={`#/work/${work.slug}`} key={work.slug}><span>{String(index + 1).padStart(2, '0')}</span><strong>{work.name}</strong><i>▶</i><small>View case →</small></a>)}</div></Container></main>
+  return <main id="main" className="subpage subpage--light"><Container><PageHeader eyebrow={`Selected work / ${String(workProjects.length).padStart(2, '0')}`} title={<>Made<br />to move.</>} back="#/" /><div className="work-index">{workProjects.map((work, index) => <a className="work-index-card" href={`#/work/${work.slug}`} key={work.slug}><img src={work.poster} alt="" loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><span>{String(index + 1).padStart(2, '0')}</span><div><em>{work.brand}</em><strong>{work.name}</strong><i>▶</i></div><small>View film →</small></a>)}</div></Container></main>
 }
 
 function WorkDetail({ work }) {
   if (!work) return <NotFound />
-  return <main id="main" className="subpage subpage--light"><Container><div className="detail-grid detail-grid--work"><div><PageHeader eyebrow="Selected work" title={work.name} back="#/work" /><p className="detail-role">Video case study</p><p className="detail-tags">Media placeholder · 16:9</p></div><div className="detail-work-media" aria-label={`${work.name} media placeholder`}><span>▶</span><strong>{work.name}</strong><small>Video media coming soon</small></div></div></Container></main>
+  return <main id="main" className="subpage subpage--light"><Container><div className="detail-grid detail-grid--work"><div><PageHeader eyebrow={work.brand} title={work.name} back="#/work" /><p className="detail-role">{work.category}</p><p className="detail-tags">Selected work · Film</p></div><div className={`detail-work-media ${work.portrait ? 'detail-work-media--portrait' : ''}`}><video controls playsInline preload="metadata" poster={work.poster} aria-label={`${work.brand} — ${work.name}`}><source src={work.video} type="video/mp4" /></video></div></div></Container></main>
 }
 
 function NotFound() { return <main id="main" className="subpage subpage--dark"><Container><PageHeader eyebrow="404" title="Not found." back="#/" /></Container></main> }
@@ -889,7 +904,7 @@ export default function App() {
     : route.type === 'artists' ? <ArtistsOverview language={language} />
       : route.type === 'artist-detail' ? <ArtistDetail artist={directoryArtists.find((artist) => artist.profile_slug === route.slug)} language={language} />
         : route.type === 'work' ? <WorkOverview />
-          : route.type === 'work-detail' ? <WorkDetail work={works.find((work) => work.slug === route.slug)} />
+          : route.type === 'work-detail' ? <WorkDetail work={workProjects.find((work) => work.slug === route.slug)} />
             : <NotFound />
   return <><a className="skip-link" href="#main">Skip to content</a><Header language={language} setLanguage={setLanguage} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />{content}<Footer /></>
 }
