@@ -835,10 +835,10 @@ h2,
 .home-main .section-copy h2,
 .home-main .world-copy h2,
 .home-main .contact-layout h2 {
-  font-family:var(--sans);
-  font-weight:800;
-  letter-spacing:-.055em;
-  line-height:.88;
+  font-family:var(--display-condensed);
+  font-weight:700;
+  letter-spacing:-.025em;
+  line-height:.86;
 }
 
 /* The artist-directory opener follows the tall reference silhouette and never breaks mid-title. */

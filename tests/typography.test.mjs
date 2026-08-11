@@ -9,8 +9,8 @@ test('restores the original Green Tomato display stack', () => {
   assert.match(css, /\.home-main\s+\.hero\s+h1\s*\{[^}]*font-family:\s*var\(--brand-display\)/s)
 })
 
-test('uses one compact bold homepage heading system', () => {
-  assert.match(css, /\.home-main\s+\.section-copy\s+h2[^{]*\{[^}]*font-family:\s*var\(--sans\)[^}]*font-weight:\s*800[^}]*letter-spacing:\s*-\.055em[^}]*line-height:\s*\.88/s)
+test('uses one tall condensed homepage heading system below the hero', () => {
+  assert.match(css, /\.home-main\s+\.section-copy\s+h2[^{]*\{[^}]*font-family:\s*var\(--display-condensed\)[^}]*font-weight:\s*700[^}]*letter-spacing:\s*-\.025em[^}]*line-height:\s*\.86/s)
 })
 
 test('keeps the Maya collaboration heading clear of its cards', () => {
