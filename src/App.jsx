@@ -997,11 +997,11 @@ function ArtistStoryProfile({ artist, language, story }) {
 }
 
 const workFormats = [
-  ['reels', 'Reels', 'Small moments, in motion.', '短视频', '轻快瞬间，持续流动。'],
-  ['commercial', 'Commercials', 'Brands in full focus.', '商业广告', '让品牌成为主角。'],
-  ['mv', 'Music videos', 'Sound, seen differently.', '音乐视频', '让声音被看见。'],
-  ['drama', 'Drama', 'Stories that stay with you.', '剧情短片', '留在心里的故事。'],
-  ['photo', 'Photography', 'Still, never static.', '平面影像', '静止，也持续发生。'],
+  ['reels', 'Quick Cuts', 'Small moments, in motion.', '灵感快切', '轻快瞬间，持续流动。'],
+  ['commercial', 'Brand Worlds', 'Brands in full focus.', '品牌世界', '让品牌成为主角。'],
+  ['mv', 'Sound in Motion', 'Sound, seen differently.', '声画现场', '让声音被看见。'],
+  ['drama', 'Narrative Frames', 'Stories that stay with you.', '叙事片场', '留在心里的故事。'],
+  ['photo', 'Still Worlds', 'Still, never static.', '静帧世界', '静止，也持续发生。'],
 ]
 const workFormatFor = (work) => (['mgm-film-01', 'mgm-film-02', 'mgm-film-03', 'peninsula-fathers-day'].includes(work.slug) ? 'reels' : work.slug === 'chillgood-takoyaki' ? 'mv' : 'commercial')
 
