@@ -10,7 +10,7 @@ test('restores the original Green Tomato display stack', () => {
 })
 
 test('uses one DM Sans Medium homepage heading system below the hero', () => {
-  assert.match(css, /\.home-main\s+\.section-copy\s+h2[^{]*\{[^}]*font-family:\s*var\(--sans\)[^}]*font-weight:\s*500[^}]*font-size:\s*clamp\(48px,\s*5vw,\s*92px\)[^}]*letter-spacing:\s*-7\.66px[^}]*line-height:\s*\.94/s)
+  assert.match(css, /\.home-main\s+\.section-copy\s+h2[^{]*\{[^}]*font-family:\s*var\(--sans\)[^}]*font-weight:\s*500[^}]*font-size:\s*clamp\(46px,\s*calc\(5vw\s*-\s*2px\),\s*90px\)[^}]*letter-spacing:\s*-7\.66px[^}]*line-height:\s*\.94/s)
   assert.match(css, /@media\s*\(min-width:761px\)[\s\S]*\.home-main\s+\.section-copy\s+h2,[\s\S]*\.home-main\s+\.world-copy\s+h2\s*\{[^}]*white-space:\s*nowrap/s)
   assert.match(css, /\.home-main\s+\.work-section\s+\.work-grid\s*\{[^}]*grid-column:\s*7\s*\/\s*-1/s)
 })
@@ -28,6 +28,8 @@ test('keeps the artist directory title condensed, bold, and on one line', () => 
 
 test('tightens all five profile name wordmarks', () => {
   assert.match(css, /\.maya-safe--hero\s+h1\s*\{[^}]*letter-spacing:\s*-\.055em/s)
+  assert.match(css, /\.artist-story-profile\s+\.maya-safe--hero\s+h1\s*\{[^}]*letter-spacing:\s*-\.1em/s)
+  assert.match(css, /@media\s*\(max-width:760px\)[\s\S]*\.maya-safe--hero\s+h1\s*\{[^}]*padding-bottom:\s*24px/s)
 })
 
 test('matches the homepage support typography contract', () => {

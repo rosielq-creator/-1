@@ -836,7 +836,7 @@ h2,
 .home-main .world-copy h2 {
   font-family:var(--sans);
   font-weight:500;
-  font-size:clamp(48px, 5vw, 92px);
+  font-size:clamp(46px, calc(5vw - 2px), 90px);
   letter-spacing:-7.66px;
   line-height:.94;
 }
@@ -885,6 +885,9 @@ h2,
   font-weight:800;
   letter-spacing:-.055em;
 }
+.artist-story-profile .maya-safe--hero h1 {
+  letter-spacing:-.1em;
+}
 
 /* Maya's editorial title stays serif, but owns a safe block above the first card row. */
 .maya-safe--cases > .eyebrow {
@@ -915,6 +918,7 @@ h2,
 @media (max-width:760px) {
   .home-main .section-copy h2,
   .home-main .world-copy h2 { letter-spacing:-.055em; }
+  .maya-safe--hero h1 { padding-bottom:24px; }
   .maya-collaboration-grid,
   .maya-collaboration-grid--5,
   .maya-collaboration-grid--6,
