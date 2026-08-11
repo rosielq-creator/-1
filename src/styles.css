@@ -425,9 +425,9 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
 .maya-personality-item { position:relative; display:grid; grid-template-columns:34px 1fr; gap:clamp(16px,1.6vw,28px); align-items:start; min-height:clamp(86px,10svh,112px); padding:clamp(18px,2.1svh,28px) 0; border-top:1px solid rgba(244,241,236,.24); opacity:1; }
 .maya-personality-item:last-child { border-bottom:1px solid rgba(244,241,236,.24); }
 .maya-personality-item b { color:rgba(244,241,236,.48); font:600 9px/1 var(--mono); }
-.maya-personality-copy { display:grid; grid-template-columns:minmax(220px,.88fr) minmax(240px,1.12fr); gap:clamp(18px,2vw,36px); align-items:baseline; }
-.maya-personality-item h3 { font-size:clamp(30px,2.5vw,44px); line-height:.94; white-space:nowrap; }
-.maya-personality-item p { max-width:360px; margin:0; color:rgba(244,241,236,.82); font-size:clamp(15px,1.16vw,18px); line-height:1.35; }
+.maya-personality-copy { display:grid; grid-template-columns:minmax(250px,1.05fr) minmax(230px,.95fr); gap:clamp(18px,2vw,36px); align-items:baseline; }
+.maya-personality-item h3 { min-width:0; font-size:clamp(25px,2.15vw,38px); line-height:.94; letter-spacing:-.075em; white-space:normal; }
+.maya-personality-item p { min-width:0; max-width:360px; margin:0; color:rgba(244,241,236,.82); font-size:clamp(15px,1.16vw,18px); line-height:1.35; }
 .maya-safe--world { inset:9% 0 auto; display:grid; grid-template-columns:minmax(240px,.8fr) minmax(280px,1fr); gap:clamp(50px,9vw,150px); align-items:center; width:100%; }
 .maya-world-copy { align-self:start; max-width:390px; padding-top:5svh; }
 .maya-world-copy p { max-width:320px; margin:18px 0 0; font-size:clamp(15px,1.15vw,19px); line-height:1.4; }

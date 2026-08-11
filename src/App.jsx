@@ -137,7 +137,7 @@ const artistProfileMedia = {
     hero: 'hero.png', gallery: ['black-portrait.png', 'cafe-portrait.png', 'apple-portrait.jpg'],
     poses: { walk: 'walk.webp', lean: 'lean.webp', seat: 'seat.webp' },
     bio: 'Noah Jae is a visual storyteller whose work moves between fashion, film and travel, balancing a precise point of view with an understated urban energy.',
-    dossier: [['Height', '183 cm'], ['Weight', '70 kg'], ['Measurements', '88 / 77 / 91'], ['Shoe size', '43'], ['Based in', 'Hong Kong / Seoul / Tokyo'], ['Languages', 'Cantonese / Mandarin / English'], ['Followers', '8,254']],
+    dossier: [['Height', '180 cm'], ['Weight', '70 kg'], ['Measurements', '88 / 77 / 91'], ['Shoe size', '43'], ['Based in', 'Hong Kong / Seoul / Tokyo'], ['Languages', 'Cantonese / Mandarin / English'], ['Followers', '8,254']],
   },
 }
 
@@ -531,6 +531,60 @@ const storyProfiles = {
     factsLabel: 'Profile signal', facts: [['Based in', 'Los Angeles / Seoul'], ['Languages', 'English / Korean'], ['Focus', 'Music / Fashion / City Culture']],
     cta: 'Want to create something together?', next: 'Next artist · Ooona', nextSlug: 'ooona',
   },
+  ooona: {
+    palette: { base: '#e6e5d9', atmosphere: '#d2d7ca', deep: '#202824', glow: 'rgba(92, 116, 101, .24)', ink: '#19211d' },
+    poses: { hero: 'walk.webp', identity: 'lean.webp', detail: 'seat.webp' },
+    role: 'Beauty / Wellness Artist', hello: 'Hi, I’m Ooona.',
+    intro: ['I make room for small rituals, clear energy and lightness.', 'Beauty feels most alive when it moves with the body and the day.'],
+    personalityTitle: ['Softness with', 'a pulse.'],
+    personality: [
+      ['Grounded', 'I return to simple routines that make space for feeling.'],
+      ['Luminous', 'I look for light, skin and movement that feel unforced.'],
+      ['Curious', 'Wellness is a living practice, never a fixed answer.'],
+      ['Open', 'The best images leave room to breathe and become your own.'],
+    ],
+    worldLead: 'Beauty, motion and everyday rituals in my own rhythm.',
+    world: [['hero.jpg', 'Beauty', 'A bright beginning'], ['mirror.jpg', 'Reflection', 'Looking closer'], ['stairs.jpg', 'City life', 'A gentle ascent'], ['sport.jpg', 'Motion', 'Energy in practice']],
+    socialLabel: 'Instagram snapshot · historical', socialHandle: 'Instagram', followers: '15.1K',
+    factsLabel: 'Profile signal', facts: [['Based in', 'Seoul'], ['Languages', 'Korean / English'], ['Focus', 'Beauty / Wellness / Lifestyle']],
+    cta: 'Want to create something together?', next: 'Next artist · Mario', nextSlug: 'mario',
+  },
+  mario: {
+    palette: { base: '#dfd3c2', atmosphere: '#c8b6a0', deep: '#24201d', glow: 'rgba(116, 84, 55, .25)', ink: '#211b16' },
+    poses: { hero: 'walk.webp', identity: 'lean.webp', detail: 'seat.webp' },
+    role: 'Lifestyle Creator / Photographer', hello: 'Hi, I’m Mario.',
+    intro: ['I photograph the pace, texture and humour of everyday city life.', 'Streetwear, sport and travel are the ways I keep the frame moving.'],
+    personalityTitle: ['The city,', 'up close.'],
+    personality: [
+      ['Observant', 'The smallest detail can carry the whole story.'],
+      ['Restless', 'I follow the next street, train and game without overplanning it.'],
+      ['Direct', 'A good image says enough before it explains itself.'],
+      ['Playful', 'The work stays serious only as long as it needs to be.'],
+    ],
+    worldLead: 'Streets, journeys and small scenes worth keeping.',
+    world: [['mario-hero.jpg', 'City life', 'The everyday frame'], ['mario-editorial.jpg', 'Style', 'A sharper line'], ['mario-campaign.jpg', 'Campaign', 'Built for motion'], ['yotree-cover.jpg', 'Travel', 'A different pace']],
+    socialLabel: 'Instagram snapshot · historical', socialHandle: 'Instagram', followers: '13.5K',
+    factsLabel: 'Profile signal', facts: [['Based in', 'Guangdong'], ['Languages', 'Mandarin / Cantonese / English'], ['Focus', 'Lifestyle / Sport / Travel']],
+    cta: 'Want to create something together?', next: 'Next artist · Noah', nextSlug: 'noah',
+  },
+  noah: {
+    palette: { base: '#d7dce0', atmosphere: '#b8c1c8', deep: '#182127', glow: 'rgba(53, 78, 93, .28)', ink: '#11191f' },
+    poses: { hero: 'walk.webp', identity: 'lean.webp', detail: 'seat.webp' },
+    role: 'Film / Fashion Artist', hello: 'Hi, I’m Noah.',
+    intro: ['I tell visual stories through movement, distance and a clean silhouette.', 'Fashion, film and travel meet somewhere between restraint and velocity.'],
+    personalityTitle: ['Move with', 'intention.'],
+    personality: [
+      ['Cinematic', 'I see each frame as part of a longer sequence.'],
+      ['Measured', 'The strongest gesture is often the most controlled one.'],
+      ['Restless', 'New cities reset the way I look at the familiar.'],
+      ['Focused', 'I keep the line clean and the energy moving forward.'],
+    ],
+    worldLead: 'Visual notes from fashion, film and life in transit.',
+    world: [['hero.png', 'Portrait', 'A clear point of view'], ['black-portrait.png', 'Fashion', 'Built in contrast'], ['cafe-portrait.png', 'City life', 'Between takes'], ['apple-portrait.jpg', 'Travel', 'A passing frame']],
+    socialLabel: 'Instagram snapshot · historical', socialHandle: 'Instagram', followers: '8,254',
+    factsLabel: 'Profile signal', facts: [['Based in', 'Hong Kong / Seoul / Tokyo'], ['Languages', 'Cantonese / Mandarin / English'], ['Focus', 'Film / Fashion / Photography']],
+    cta: 'Want to create something together?', next: 'Next artist · Maya', nextSlug: 'maya',
+  },
 }
 
 function ArtistProfile({ artist, language, media }) {
@@ -631,11 +685,10 @@ function useMayaProfileMotion() {
       personality.forEach((item, index) => {
         timeline.to(item, { x: 12, duration: .18 }, 2.15 + index * .22)
       })
-      timeline.to(camera, { xPercent: 96, yPercent: 4, scale: .78, transformOrigin: '50% 50%', duration: 1.15 }, 3.05)
+      timeline.to(camera, { autoAlpha: 0, xPercent: 96, yPercent: 4, scale: .78, transformOrigin: '50% 50%', duration: .28 }, 3.05)
         .to(atmosphere, { xPercent: -3, yPercent: 2, scale: 1.02, backgroundColor: '#e7ded9', duration: 1.15 }, 3.05)
       revealScene(timeline, scenes[2], scenes[3], 3.18)
-      timeline.to(camera, { autoAlpha: 0, xPercent: 140, scale: .64, duration: .85 }, 4.42)
-        .to(atmosphere, { backgroundColor: '#efa7b1', duration: .72 }, 4.42)
+      timeline.to(atmosphere, { backgroundColor: '#efa7b1', duration: .72 }, 4.42)
       revealScene(timeline, scenes[3], scenes[4], 4.48)
       requestAnimationFrame(() => ScrollTrigger.refresh())
     }, root)
@@ -727,16 +780,15 @@ function useArtistStoryMotion() {
         .to(atmosphere, { xPercent: -5, yPercent: 3, scale: 1.08, backgroundColor: 'var(--story-deep)', duration: 1.3 }, .45)
         .to(poses[0], { autoAlpha: 0, duration: .15 }, .72).to(poses[1], { autoAlpha: 1, duration: .15 }, .74)
       revealScene(timeline, scenes[0], scenes[1], .78)
-      timeline.to(camera, { xPercent: -195, yPercent: -12, scale: 1.84, transformOrigin: '50% 51%', duration: 1.25 }, 1.75)
+      timeline.to(camera, { xPercent: -150, yPercent: 12, scale: 1.34, transformOrigin: '50% 32%', duration: 1.25 }, 1.75)
         .to(atmosphere, { xPercent: 6, yPercent: -4, scale: 1.14, backgroundColor: 'var(--story-deep)', duration: 1.25 }, 1.75)
         .to(poses[1], { autoAlpha: 0, duration: .15 }, 1.86).to(poses[2], { autoAlpha: 1, duration: .15 }, 1.88)
       revealScene(timeline, scenes[1], scenes[2], 1.92)
       personality.forEach((item, index) => timeline.to(item, { x: 12, duration: .18 }, 2.15 + index * .22))
-      timeline.to(camera, { xPercent: 96, yPercent: 4, scale: .78, transformOrigin: '50% 50%', duration: 1.15 }, 3.05)
+      timeline.to(camera, { autoAlpha: 0, xPercent: 96, yPercent: 4, scale: .78, transformOrigin: '50% 50%', duration: .28 }, 3.05)
         .to(atmosphere, { xPercent: -3, yPercent: 2, scale: 1.02, backgroundColor: 'var(--story-base)', duration: 1.15 }, 3.05)
       revealScene(timeline, scenes[2], scenes[3], 3.18)
-      timeline.to(camera, { autoAlpha: 0, xPercent: 140, scale: .64, duration: .85 }, 4.42)
-        .to(atmosphere, { backgroundColor: 'var(--story-base)', duration: .72 }, 4.42)
+      timeline.to(atmosphere, { backgroundColor: 'var(--story-base)', duration: .72 }, 4.42)
       revealScene(timeline, scenes[3], scenes[4], 4.48)
       requestAnimationFrame(() => ScrollTrigger.refresh())
     }, root)
