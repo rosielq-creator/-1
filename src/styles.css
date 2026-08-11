@@ -480,6 +480,10 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
 .maya-social-handle { display:inline-block; max-width:100%; margin-bottom:16px; border-bottom:1px solid currentColor; padding-bottom:6px; font:600 clamp(14px,1.15vw,19px)/1.12 var(--mono); letter-spacing:.02em; text-transform:uppercase; }
 .maya-followers { display:grid; min-width:0; max-width:100%; gap:10px; font-size:clamp(54px,4.7vw,88px); line-height:.82; letter-spacing:-.085em; white-space:nowrap; }
 .maya-followers small { font:600 9px/1.25 var(--mono); letter-spacing:.08em; text-transform:uppercase; }
+.maya-social-links { display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; }
+.maya-social-links a { display:inline-flex; align-items:center; gap:7px; border:1px solid rgba(17,17,17,.45); padding:8px 10px; color:inherit; font:600 10px/1 var(--mono); letter-spacing:.04em; text-transform:uppercase; transition:background 180ms ease,color 180ms ease; }
+.maya-social-links a:hover,.maya-social-links a:focus-visible { background:#00a651; border-color:#00a651; color:#fff; }
+.maya-social-links b { font:inherit; }.maya-social-links i { font-style:normal; }
 .maya-social-metric--multiple { display:grid; gap:28px; }
 .maya-social-metric--multiple .maya-social-metric-item { display:grid; gap:4px; }
 .maya-social-metric--multiple .maya-social-handle { margin-bottom:4px; font-size:clamp(13px,1.1vw,18px); }
