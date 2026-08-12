@@ -852,7 +852,7 @@ h2,
   font-family:var(--sans);
   font-weight:500;
   font-size:clamp(40.515px, calc(4.5125vw - 2.805px), 80.225px);
-  letter-spacing:-6.66px;
+  letter-spacing:-5px;
   line-height:.94;
 }
 .home-main .artists-section .section-copy > p:not(.eyebrow) {
