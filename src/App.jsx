@@ -56,7 +56,7 @@ const works = [
 // Work pages use the approved current-project delivery package. Homepage media stays separate.
 const workProjects = [
   { brand: 'Macau MGM', name: 'MGM Spa', slug: 'mgm-film-01', category: 'Hospitality', video: `${assets}work/projects/mgm-film-01.mp4`, poster: `${assets}work/projects/mgm-film-01.jpg`, artistIds: ['bailey'] },
-  { brand: 'Macau MGM', name: 'MGM Film 02', slug: 'mgm-film-02', category: 'Hospitality', video: `${assets}work/projects/mgm-film-02.mp4`, poster: `${assets}work/projects/mgm-film-02.jpg` },
+  { brand: 'Macau MGM', name: 'MGM Film 02', slug: 'mgm-film-02', category: 'Hospitality', video: `${assets}work/projects/mgm-film-02.mp4`, poster: `${assets}work/projects/mgm-film-02.jpg`, artistIds: ['bailey'] },
   { brand: 'Macau MGM', name: 'MGM Pool', slug: 'mgm-film-03', category: 'Hospitality', video: `${assets}work/projects/mgm-film-03.mp4`, poster: `${assets}work/projects/mgm-film-03.jpg`, artistIds: ['connor', 'bailey'] },
   { brand: 'The Peninsula', name: 'The Peninsula Hong Kong', slug: 'peninsula-fathers-day', category: 'Hospitality', video: `${assets}work/projects/peninsula-fathers-day.mp4`, poster: `${assets}work/projects/peninsula-fathers-day.jpg`, portrait: true },
   { brand: 'PARKnSHOP', name: 'Weekly Offer', slug: 'parknshop-weekly-offer', category: 'Retail', video: `${assets}work/projects/parknshop-weekly-offer.mp4`, poster: `${assets}work/projects/parknshop-weekly-offer.jpg` },
