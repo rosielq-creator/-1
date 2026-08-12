@@ -917,12 +917,13 @@ const mayaStanding = { src: `${assets}artists/maya-guide/standing.png`, alt: 'Ma
 const mayaWalking = { src: `${assets}artists/maya-guide/walk.png`, alt: 'Maya in a side-profile pink luxury fashion look' }
 
 const mayaWorldImages = [
+  ['seedance-travel-vlog.mp4', 'On the move', 'A handheld travel note', 'video'],
   ['pink-editorial.jpg', 'Fashion', 'Soft structure'], ['pink-closeup.jpg', 'Beauty', 'A quiet close-up'],
   ['black-tailoring.jpg', 'Art', 'A tailored pause'], ['street-grey.jpg', 'City life', 'Between places'],
   ['cafe-peace.jpg', 'Pause', 'A small moment between plans'], ['camera-selfie.jpg', 'Self portrait', 'Behind the camera'],
   ['graffiti-street.jpg', 'City life', 'A street-side pause'], ['chrome-street.jpg', 'Style', 'A sharper silhouette'],
   ['cafe-window.jpg', 'Afternoon', 'A table by the window'],
-].map(([file, category, caption]) => ({ src: `${assets}artists/maya-world/mockup/${file}`, category, caption }))
+].map(([file, category, caption, kind]) => ({ src: `${assets}artists/maya-world/mockup/${file}`, category, caption, kind }))
 const mayaCollaborations = [
   ['hifather', 'HI FATHER', 'https://www.instagram.com/p/C14WnnsJ037/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
   ['ugg', 'UGG × MUSINSA', 'https://www.instagram.com/p/C0GCsQmJtgB/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
@@ -932,6 +933,18 @@ const mayaCollaborations = [
   ['tamburins', 'TAMBURINS', 'https://www.instagram.com/p/Cz8cKQ6BDvG/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
   ['chillgood-tv', 'CHILLGOOD_TV', '#/work/chillgood-takoyaki', 'video'],
 ]
+
+function MayaCollaborationCard({ item, index, onVideo }) {
+  const [file, brand, url, kind] = item
+  if (kind === 'video') {
+    const work = workProjects.find((entry) => entry.slug === 'chillgood-takoyaki')
+    return <button className="maya-collaboration-card maya-collaboration-card--video" type="button" onClick={() => work && onVideo(work)} aria-label={`Play ${brand}`}>
+      <div className="maya-collaboration-media"><video src={work?.video} poster={work?.poster} muted playsInline preload="metadata" aria-label={`Maya collaboration with ${brand}`} /></div>
+      <span>{brand} ↗</span>
+    </button>
+  }
+  return <a className="maya-collaboration-card" href={url} key={file} target="_blank" rel="noreferrer"><div className="maya-collaboration-media"><img src={`${assets}artists/collaborations/maya/${file}.jpg`} alt={`Maya collaboration with ${brand}`} loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /></div><span>{brand} ↗</span></a>
+}
 
 const mayaStoryCopy = {
   en: {
@@ -1073,7 +1086,7 @@ function MayaWorldPhone({ copy }) {
   return <div className="maya-phone" aria-label="Maya Instagram-style visual diary">
     <div className="maya-phone-top"><span>10:24</span><b>@mayakim02</b><span>•••</span></div>
     <div ref={railRef} className="maya-phone-rail" tabIndex="0" onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp} onScroll={onScroll}>
-      {mayaWorldImages.map((image, index) => <figure key={image.src}><img src={image.src} alt={`Maya — ${image.category}: ${image.caption}`} loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><figcaption><strong>{image.category}</strong><span>{image.caption}</span></figcaption></figure>)}
+      {mayaWorldImages.map((image, index) => <figure key={image.src}>{image.kind === 'video' ? <WorldPhoneVideo src={image.src} label={`Maya — ${image.category}: ${image.caption}`} priority={index === 0} /> : <img src={image.src} alt={`Maya — ${image.category}: ${image.caption}`} loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} />}<figcaption><strong>{image.category}</strong><span>{image.caption}</span></figcaption></figure>)}
     </div>
     <div className="maya-phone-bottom"><span>{page} / {mayaWorldImages.length}</span><span>{copy.swipe} ↔</span></div>
   </div>
@@ -1082,6 +1095,7 @@ function MayaWorldPhone({ copy }) {
 function MayaProfile({ artist, language }) {
   const rootRef = useMayaProfileMotion()
   useProfileStart(artist.id)
+  const [activeWork, setActiveWork] = useState(null)
   const dossier = artist.personal_dossier
   const social = artist.social_snapshot
   const copy = mayaStoryCopy[language]
@@ -1103,9 +1117,10 @@ function MayaProfile({ artist, language }) {
       <section className="maya-scene maya-scene--identity"><Container><figure className="maya-identity-portrait" aria-hidden="true"><img src={mayaWalking.src} alt="" fetchPriority="high" /></figure><div className="maya-safe maya-safe--identity"><Eyebrow number="02">{copy.dossier}</Eyebrow><h2>{ui.identity}</h2><dl className="maya-dossier"><div><dt>{copy.height}</dt><dd>{dossier.height}</dd></div><div><dt>{copy.weight}</dt><dd>{dossier.weight}</dd></div><div><dt>{copy.measurements}</dt><dd>{dossier.measurements}</dd></div><div><dt>{copy.shoe}</dt><dd>{dossier.shoe_size}</dd></div><div><dt>{copy.base}</dt><dd>{artist.locations.join(' / ')}</dd></div><div><dt>{copy.languages}</dt><dd>{artist.languages.join(' / ')}</dd></div><div className="maya-dossier-wide"><dt>{copy.type}</dt><dd>{artist.creative_talents.join(' / ')}</dd></div></dl></div><img className="maya-mobile-crop" src={mayaWalking.src} alt={mayaWalking.alt} /></Container></section>
       <section className="maya-scene maya-scene--detail"><Container><div className="maya-safe maya-safe--detail"><Eyebrow number="03">{copy.personality}</Eyebrow><h2 className="maya-detail-title"><span>Details of</span><span>character.</span></h2><div className="maya-personality-list">{copy.personalityItems.map(([title, text], index) => <article className="maya-personality-item" key={title}><b>{String(index + 1).padStart(2, '0')}</b><div className="maya-personality-copy"><h3>{title}</h3><p>{text}</p></div></article>)}</div></div><img className="maya-mobile-crop" src={mayaStanding.src} alt={mayaStanding.alt} /></Container></section>
       <section className="maya-scene maya-scene--world"><Container><div className="maya-safe maya-safe--world"><div className="maya-world-copy"><Eyebrow number="04">{copy.world}</Eyebrow><h2>{copy.world}</h2><p>{copy.worldLead}</p><p>{copy.aboutLines[2]}</p></div><MayaWorldPhone copy={copy} /></div></Container></section>
-      <section className="maya-scene maya-scene--cases"><Container><div className={`maya-safe maya-safe--cases maya-safe--cases--${mayaCollaborations.length}`}><Eyebrow number="05">{ui.collaborations}</Eyebrow><h2>{ui.madeWith}</h2><div className={`maya-collaboration-grid maya-collaboration-grid--${mayaCollaborations.length}`}>{mayaCollaborations.map(([file, brand, url, kind], index) => kind === 'video' ? <article className="maya-collaboration-card maya-collaboration-card--video" key={file}><div className="maya-collaboration-media"><video src={`${assets}artists/collaborations/maya/${file}.mp4`} poster={`${assets}artists/collaborations/maya/${file}.jpg`} controls playsInline preload="metadata" aria-label={`Maya collaboration with ${brand}`} /></div><a href={url}><span>{brand} ↗</span></a></article> : <a className="maya-collaboration-card" href={url} key={file} target="_blank" rel="noreferrer"><div className="maya-collaboration-media"><img src={`${assets}artists/collaborations/maya/${file}.jpg`} alt={`Maya collaboration with ${brand}`} loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /></div><span>{brand} ↗</span></a>)}</div></div></Container></section>
+      <section className="maya-scene maya-scene--cases"><Container><div className={`maya-safe maya-safe--cases maya-safe--cases--${mayaCollaborations.length}`}><Eyebrow number="05">{ui.collaborations}</Eyebrow><h2>{ui.madeWith}</h2><div className={`maya-collaboration-grid maya-collaboration-grid--${mayaCollaborations.length}`}>{mayaCollaborations.map((item, index) => <MayaCollaborationCard item={item} index={index} onVideo={setActiveWork} key={item[0]} />)}</div></div></Container></section>
       <section className="maya-scene maya-scene--social"><Container><div className="maya-safe maya-safe--social"><Eyebrow number="06">{copy.social}</Eyebrow><div className="maya-social-layout"><div className="maya-social-metric"><a className="maya-social-handle" href={social.url} target="_blank" rel="noreferrer">{social.platform} · {social.handle} ↗</a><strong className="maya-followers">{dossier.followers_snapshot}<small>{copy.followers}</small></strong><SocialAccountLinks links={[[social.platform, social.handle, social.url]]} /></div><div className="maya-audience"><p>{copy.audience}</p><dl><div><dt>{copy.age2534}</dt><dd>{audience.age_25_34}</dd></div><div><dt>{copy.age1824}</dt><dd>{audience.age_18_24}</dd></div><div><dt>{copy.male}</dt><dd>{audience.male_audience}</dd></div><div><dt>{copy.female}</dt><dd>{audience.female_audience}</dd></div><div className="maya-audience-countries"><dt>{copy.countries}</dt><dd>{audience.countries}</dd></div></dl></div><div className="maya-cta"><h2>{language === 'en' ? <><span>Want to</span><span>create</span><span>something</span><span>together?</span></> : language === 'zh-Hant' ? <><span>想一起</span><span>創作</span><span>些什麼</span><span>嗎？</span></> : <><span>想一起</span><span>创作</span><span>些什么</span><span>吗？</span></>}</h2><a className="maya-primary-link" href="#contact">{copy.work} →</a></div></div></div></Container></section>
     </div>
+    {activeWork && <WorkPlayerModal work={activeWork} language={language} initialMuted onClose={() => setActiveWork(null)} />}
   </main>
 }
 
