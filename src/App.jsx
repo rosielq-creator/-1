@@ -630,18 +630,24 @@ function CastingProfile({ artist, language, profile }) {
   const labelMap = language === 'zh-Hant'
     ? { Height: '身高', Weight: '體重', Measurements: '三圍', 'Shoe size': '鞋碼', 'Based in': '常駐地', Languages: '語言', 'Artist type': '藝術家類型' }
     : language === 'zh' ? { Height: '身高', Weight: '体重', Measurements: '三围', 'Shoe size': '鞋码', 'Based in': '常驻地', Languages: '语言', 'Artist type': '艺术家类型' } : {}
-  const poseSrc = `${assets}artists/profile-poses/${artist.id}/hero.png`
+  const pose = (name) => `${assets}artists/profile-poses/${artist.id}/${name}.png`
+  useEffect(() => {
+    ;['hero', 'identity', 'detail'].forEach((name) => {
+      const image = new Image()
+      image.src = pose(name)
+    })
+  }, [artist.id])
   return <main id="main" ref={rootRef} data-artist={artist.id} className="maya-profile artist-story-profile casting-story-profile" style={{ '--story-base': profile.palette.base, '--story-atmosphere': profile.palette.atmosphere, '--story-deep': profile.palette.deep, '--story-glow': profile.palette.glow, '--story-ink': profile.palette.ink }}>
     <div className="maya-stage">
       <div className="maya-atmosphere" aria-hidden="true" />
       <figure className="maya-camera story-camera" aria-hidden="true">
-        <img className="story-camera-pose" src={poseSrc} alt="" fetchPriority="high" decoding="async" />
-        <img className="story-camera-pose" src={poseSrc} alt="" decoding="async" />
-        <img className="story-camera-pose" src={poseSrc} alt="" decoding="async" />
+        <img className="story-camera-pose" src={pose('hero')} alt="" fetchPriority="high" decoding="async" />
+        <img className="story-camera-pose" src={pose('identity')} alt="" fetchPriority="high" decoding="async" />
+        <img className="story-camera-pose" src={pose('detail')} alt="" fetchPriority="high" decoding="async" />
       </figure>
-      <section className="maya-scene maya-scene--hero"><Container><div className="maya-safe maya-safe--hero"><a className="back-link" href="#/artists">← {copy.back}</a><Eyebrow number="01">{copy.profile}</Eyebrow><h1>{artist.display_name}</h1><p className="maya-role">{role}</p><p className="maya-hello">{profile.hello}</p><div className="maya-about-intro"><p>{profile.slogan}</p></div></div><a className="next-artist-link" href={`#/artists/${profile.nextSlug}`}>{profile.nextLabel[language]} →</a><img className="maya-mobile-crop maya-mobile-crop--hero" src={poseSrc} alt={`${artist.display_name} portrait`} /></Container></section>
-      <section className="maya-scene maya-scene--identity"><Container><div className="maya-safe maya-safe--identity"><Eyebrow number="02">{copy.dossier}</Eyebrow><h2>{copy.identity}</h2><dl className="maya-dossier">{profile.dossier.map(([label, value]) => <div key={label} className={label === 'Artist type' ? 'maya-dossier-wide' : ''}><dt>{labelMap[label] || label}</dt><dd>{value}</dd></div>)}</dl></div><img className="maya-mobile-crop" src={poseSrc} alt={`${artist.display_name} portrait`} /></Container></section>
-      <section className="maya-scene maya-scene--detail"><Container><div className="maya-safe maya-safe--detail"><Eyebrow number="03">{copy.personality}</Eyebrow><h2 className="maya-detail-title">{profile.personalityTitle.map((line) => <span key={line}>{line}</span>)}</h2><div className="maya-personality-list">{profile.personality.map(([title, text], index) => <article className="maya-personality-item" key={title}><b>{String(index + 1).padStart(2, '0')}</b><div className="maya-personality-copy"><h3>{title}</h3><p>{text}</p></div></article>)}</div></div><img className="maya-mobile-crop" src={poseSrc} alt={`${artist.display_name} portrait`} /></Container></section>
+      <section className="maya-scene maya-scene--hero"><Container><div className="maya-safe maya-safe--hero"><a className="back-link" href="#/artists">← {copy.back}</a><Eyebrow number="01">{copy.profile}</Eyebrow><h1>{artist.display_name}</h1><p className="maya-role">{role}</p><p className="maya-hello">{profile.hello}</p><div className="maya-about-intro"><p>{profile.slogan}</p></div></div><a className="next-artist-link" href={`#/artists/${profile.nextSlug}`}>{profile.nextLabel[language]} →</a><img className="maya-mobile-crop maya-mobile-crop--hero" src={pose('hero')} alt={`${artist.display_name} hero pose`} /></Container></section>
+      <section className="maya-scene maya-scene--identity"><Container><figure className="maya-identity-portrait" aria-hidden="true"><img src={pose('identity')} alt="" fetchPriority="high" decoding="async" /></figure><div className="maya-safe maya-safe--identity"><Eyebrow number="02">{copy.dossier}</Eyebrow><h2>{copy.identity}</h2><dl className="maya-dossier">{profile.dossier.map(([label, value]) => <div key={label} className={label === 'Artist type' ? 'maya-dossier-wide' : ''}><dt>{labelMap[label] || label}</dt><dd>{value}</dd></div>)}</dl></div><img className="maya-mobile-crop" src={pose('identity')} alt={`${artist.display_name} identity pose`} /></Container></section>
+      <section className="maya-scene maya-scene--detail"><Container><div className="maya-safe maya-safe--detail"><Eyebrow number="03">{copy.personality}</Eyebrow><h2 className="maya-detail-title">{profile.personalityTitle.map((line) => <span key={line}>{line}</span>)}</h2><div className="maya-personality-list">{profile.personality.map(([title, text], index) => <article className="maya-personality-item" key={title}><b>{String(index + 1).padStart(2, '0')}</b><div className="maya-personality-copy"><h3>{title}</h3><p>{text}</p></div></article>)}</div></div><img className="maya-mobile-crop" src={pose('detail')} alt={`${artist.display_name} detail pose`} /></Container></section>
       <CastingCollaborationScene profile={profile} language={language} copy={copy} />
       <CastingContactScene profile={profile} language={language} copy={copy} />
     </div>
