@@ -1125,6 +1125,8 @@ function useArtistStoryMotion() {
       const atmosphere = root.querySelector('.maya-atmosphere')
       const personality = gsap.utils.toArray('.maya-personality-item')
       const hasCases = Boolean(root.querySelector('.maya-scene--cases'))
+      const isMarioCases = root.dataset.artist === 'mario' && hasCases
+      const casesGrid = root.querySelector('.maya-scene--cases .maya-collaboration-grid')
       const detailScale = root.dataset.artist === 'noah' ? 1.1 : 1.35
       gsap.set(scenes, { autoAlpha: 0, y: 22, pointerEvents: 'none' })
       gsap.set(scenes[0], { autoAlpha: 1, y: 0, pointerEvents: 'auto' })
@@ -1133,7 +1135,7 @@ function useArtistStoryMotion() {
       gsap.set(personality, { opacity: 1, x: 0 })
       gsap.set(camera, { xPercent: 0, yPercent: 0, scale: 1, transformOrigin: '50% 50%' })
       const revealScene = (timeline, from, to, at) => timeline.to(from, { autoAlpha: 0, y: -20, pointerEvents: 'none', duration: .32 }, at).fromTo(to, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, pointerEvents: 'auto', duration: .42 }, at + .18)
-      const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: root, start: 'top top', end: () => `+=${window.innerHeight * (hasCases ? 7.4 : 6.2)}`, pin: stage, scrub: .75, anticipatePin: 1, invalidateOnRefresh: true } })
+      const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: root, start: 'top top', end: () => `+=${window.innerHeight * (isMarioCases ? 8.7 : (hasCases ? 7.4 : 6.2))}`, pin: stage, scrub: .75, anticipatePin: 1, invalidateOnRefresh: true } })
       timeline.to(camera, { xPercent: -188, yPercent: 12, scale: 1.78, transformOrigin: '50% 16%', duration: 1.3 }, .45)
         .to(atmosphere, { xPercent: -5, yPercent: 3, scale: 1.08, backgroundColor: 'var(--story-deep)', duration: 1.3 }, .45)
         .to(camera, { autoAlpha: 0, duration: .16 }, .75)
@@ -1150,7 +1152,17 @@ function useArtistStoryMotion() {
       revealScene(timeline, scenes[2], scenes[3], 3.18)
       timeline.to(atmosphere, { backgroundColor: 'var(--story-base)', duration: .72 }, 4.42)
       revealScene(timeline, scenes[3], scenes[4], 4.48)
-      if (hasCases) revealScene(timeline, scenes[4], scenes[5], 5.54)
+      if (isMarioCases) {
+        // Mario has two rows of collaborations. Let the complete grid travel
+        // through the pinned stage before revealing 06, instead of clipping
+        // the second row at the viewport edge.
+        gsap.set(casesGrid, { y: 0, willChange: 'transform' })
+        timeline.to(casesGrid, {
+          y: () => -Math.max(0, casesGrid ? casesGrid.scrollHeight - window.innerHeight * .64 : 0),
+          duration: 1.8
+        }, 4.82)
+        revealScene(timeline, scenes[4], scenes[5], 7.05)
+      } else if (hasCases) revealScene(timeline, scenes[4], scenes[5], 5.54)
       requestAnimationFrame(() => ScrollTrigger.refresh())
     }, root)
     return () => ctx.revert()
