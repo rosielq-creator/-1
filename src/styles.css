@@ -297,6 +297,13 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
 .work-player-meta { position:absolute; z-index:1; left:18px; bottom:50px; display:grid; gap:3px; color:var(--paper); text-transform:uppercase; pointer-events:none; }
 .work-player-meta strong { font:600 13px/1 var(--mono); letter-spacing:.06em; }
 .work-player-meta span { color:rgba(244,242,238,.7); font:500 10px/1 var(--mono); letter-spacing:.08em; }
+.work-player-cast { position:absolute; z-index:2; right:16px; bottom:54px; display:grid; gap:8px; color:var(--paper); text-transform:uppercase; }
+.work-player-cast > span { color:rgba(244,242,238,.68); font:600 9px/1 var(--mono); letter-spacing:.08em; }
+.work-player-cast > div { display:flex; gap:8px; }
+.work-player-cast a { display:grid; grid-template-columns:30px auto; align-items:center; gap:7px; min-width:104px; padding:5px 7px 5px 5px; border:1px solid rgba(244,242,238,.34); background:rgba(5,6,6,.58); color:var(--paper); text-decoration:none; backdrop-filter:blur(5px); }
+.work-player-cast a:hover,.work-player-cast a:focus-visible { border-color:var(--paper); background:rgba(5,6,6,.82); }
+.work-player-cast img { width:30px; height:38px; object-fit:cover; object-position:50% 35%; }
+.work-player-cast strong { font:600 10px/1 var(--mono); letter-spacing:.06em; }
 .work-player-controls { position:absolute; z-index:2; right:14px; bottom:14px; left:14px; display:flex; align-items:center; gap:10px; }
 .work-player-controls .work-progress { min-width:0; }
 .work-player-close { position:absolute; z-index:2; top:12px; right:14px; display:grid; place-items:center; width:28px; height:28px; padding:0; border:0; background:rgba(0,0,0,.18); color:var(--paper); font:300 28px/.8 Arial,sans-serif; cursor:pointer; }
@@ -307,6 +314,8 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
   .work-player-modal { padding:16px; }
   .work-player-dialog,.work-player-modal--portrait .work-player-dialog { width:min(100%,calc(100svh - 32px)); }
   .work-player-meta { left:14px; bottom:46px; }
+  .work-player-cast { right:14px; bottom:78px; }
+  .work-player-cast > div { flex-direction:column; gap:5px; }
 }
 
 /* Home narrative: visual reveals never change the measured plant coordinates. */
@@ -671,6 +680,7 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
 
 .artist-archive-rail { cursor:grab; }
 .artist-archive-rail:active { cursor:grabbing; }
+.directory-artist-card.is-focused { border-color:var(--green); box-shadow:0 0 0 3px var(--green),0 0 36px rgba(0,166,81,.35); }
 
 /* Meet All Artists: title → central orbit → static exhibition ring. */
 .artist-directory-stage { min-height:calc(100svh - 80px); }

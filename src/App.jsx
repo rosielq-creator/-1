@@ -40,11 +40,11 @@ const directoryLabels = {
     eyebrow: '数字艺人档案', title: '认识全部数字艺人', intro: '面向品牌、内容与文化领域的数字人才阵容。',
     growing: '即将上线', archive: '数字艺人档案', all: '全部', reset: '重置筛选',
     gender: '性别', language: '语言', type: '类型', city: '城市', results: '位艺术家',
-    profile: '查看人物档案', comingSoon: '人物档案即将上线', confirmed: '已确认资料',
+    profile: '查看人物档案', comingSoon: '人物档案即将上线', featuredIn: '出演 · MGM', confirmed: '已确认资料',
     location: '常驻地区', languages: '使用语言', talents: '创作能力', back: '返回数字艺人列表',
   },
 }
-directoryLabels['zh-Hant'] = { ...directoryLabels.zh, eyebrow: '藝術家檔案', title: '遇見所有藝術家', intro: '正在成長的全新現實。', archive: '藝術家檔案', reset: '重設篩選', gender: '性別', language: '語言', city: '城市', profile: '查看檔案', comingSoon: '檔案正在成長', confirmed: '已確認資料', location: '城市', languages: '語言', talents: '創作類型', back: '返回藝術家列表' }
+directoryLabels['zh-Hant'] = { ...directoryLabels.zh, eyebrow: '藝術家檔案', title: '遇見所有藝術家', intro: '正在成長的全新現實。', archive: '藝術家檔案', reset: '重設篩選', gender: '性別', language: '語言', city: '城市', profile: '查看檔案', comingSoon: '檔案正在成長', featuredIn: '出演 · MGM', confirmed: '已確認資料', location: '城市', languages: '語言', talents: '創作類型', back: '返回藝術家列表' }
 
 const works = [
   { name: 'The Peninsula', slug: 'the-peninsula', category: 'Brand film', categoryZh: '品牌影片', video: `${assets}work/the-peninsula.mp4`, poster: `${assets}work/the-peninsula-cover.jpg`, position: '50% 38%', portrait: true },
@@ -55,14 +55,14 @@ const works = [
 
 // Work pages use the approved current-project delivery package. Homepage media stays separate.
 const workProjects = [
-  { brand: 'Macau MGM', name: 'MGM Film 01', slug: 'mgm-film-01', category: 'Hospitality', video: `${assets}work/projects/mgm-film-01.mp4`, poster: `${assets}work/projects/mgm-film-01.jpg` },
+  { brand: 'Macau MGM', name: 'MGM Spa', slug: 'mgm-film-01', category: 'Hospitality', video: `${assets}work/projects/mgm-film-01.mp4`, poster: `${assets}work/projects/mgm-film-01.jpg`, artistIds: ['bailey'] },
   { brand: 'Macau MGM', name: 'MGM Film 02', slug: 'mgm-film-02', category: 'Hospitality', video: `${assets}work/projects/mgm-film-02.mp4`, poster: `${assets}work/projects/mgm-film-02.jpg` },
-  { brand: 'Macau MGM', name: 'MGM Film 03', slug: 'mgm-film-03', category: 'Hospitality', video: `${assets}work/projects/mgm-film-03.mp4`, poster: `${assets}work/projects/mgm-film-03.jpg` },
+  { brand: 'Macau MGM', name: 'MGM Pool', slug: 'mgm-film-03', category: 'Hospitality', video: `${assets}work/projects/mgm-film-03.mp4`, poster: `${assets}work/projects/mgm-film-03.jpg`, artistIds: ['connor', 'bailey'] },
   { brand: 'The Peninsula', name: 'The Peninsula Hong Kong', slug: 'peninsula-fathers-day', category: 'Hospitality', video: `${assets}work/projects/peninsula-fathers-day.mp4`, poster: `${assets}work/projects/peninsula-fathers-day.jpg`, portrait: true },
   { brand: 'PARKnSHOP', name: 'Weekly Offer', slug: 'parknshop-weekly-offer', category: 'Retail', video: `${assets}work/projects/parknshop-weekly-offer.mp4`, poster: `${assets}work/projects/parknshop-weekly-offer.jpg` },
   { brand: 'Octopus', name: 'Octopus Film', slug: 'octopus-film', category: 'Retail / Urban Lifestyle', video: `${assets}work/projects/octopus-film.mp4`, poster: `${assets}work/projects/octopus-film.jpg` },
   { brand: 'ChillGOOD_TV', name: '章魚燒 Takoyaki', slug: 'chillgood-takoyaki', category: 'Music Video', video: `${assets}work/projects/chillgood-takoyaki.mp4`, poster: `${assets}work/projects/chillgood-takoyaki.jpg` },
-  { brand: 'ChillGOOD_TV', name: '波斯', slug: 'chillgood-animation', category: 'Music Video', video: `${assets}work/projects/chillgood-animation.mp4`, poster: `${assets}work/projects/chillgood-animation.jpg` },
+  { brand: 'ChillGOOD_TV', name: '波斯', slug: 'chillgood-animation', category: 'Music Video', video: `${assets}work/projects/chillgood-animation.mp4`, poster: `${assets}work/projects/chillgood-animation.jpg`, artistIds: ['amber'] },
   { brand: 'The Peninsula', name: 'The Peninsula Hong Kong', slug: 'peninsula-whisky-still', category: 'Photography', poster: `${assets}work/projects/peninsula-whisky-still.jpg`, photo: true },
   { brand: 'GRAMS', name: 'Color', slug: 'grams-color', category: 'Fashion & Lifestyle', video: `${assets}work/projects/grams-color.mp4`, poster: `${assets}work/projects/grams-color.jpg` },
   { brand: 'GRAMS', name: 'Black & White', slug: 'grams-bw', category: 'Fashion & Lifestyle', video: `${assets}work/projects/grams-bw.mp4`, poster: `${assets}work/projects/grams-bw.jpg` },
@@ -140,9 +140,11 @@ copy['zh-Hant'] = { ...copy.zh,
 
 function getRoute() {
   const value = window.location.hash.replace(/^#/, '')
-  const parts = value.split('/').filter(Boolean)
-  if (parts[0] === 'artists') return { type: parts[1] ? 'artist-detail' : 'artists', slug: parts[1] }
-  if (parts[0] === 'work') return { type: parts[1] ? 'work-detail' : 'work', slug: parts[1] }
+  const [path, query = ''] = value.split('?')
+  const parts = path.split('/').filter(Boolean)
+  const params = new URLSearchParams(query)
+  if (parts[0] === 'artists') return { type: parts[1] ? 'artist-detail' : 'artists', slug: parts[1], focus: params.get('focus') }
+  if (parts[0] === 'work') return { type: parts[1] ? 'work-detail' : 'work', slug: parts[1], open: params.get('open') }
   return { type: 'home', anchor: value.replace(/^\//, '') }
 }
 
@@ -369,7 +371,7 @@ function WorkCard({ work, onPlay, t }) {
   </article>
 }
 
-function WorkPlayerModal({ work, initialMuted, onClose }) {
+function WorkPlayerModal({ work, initialMuted, onClose, language }) {
   const videoRef = useRef(null)
   const isPhoto = Boolean(work.photo)
   const [playing, setPlaying] = useState(false)
@@ -406,6 +408,7 @@ function WorkPlayerModal({ work, initialMuted, onClose }) {
     <div className="work-player-dialog" onMouseDown={(event) => event.stopPropagation()}>
       {isPhoto ? <img className="work-player-video" src={work.poster} alt={`${work.brand} — ${work.name}`} /> : <video ref={videoRef} className="work-player-video" src={work.video} poster={work.poster} playsInline muted={muted} style={{ objectPosition: work.position }} onPlaying={() => setPlaying(true)} onPause={() => setPlaying(false)} onEnded={() => { setPlaying(false); setProgress(0) }} onTimeUpdate={(event) => setProgress(event.currentTarget.duration ? event.currentTarget.currentTime / event.currentTarget.duration : 0)} />}
       <div className="work-player-meta"><strong>{work.name}</strong><span>{work.category}</span></div>
+      {work.artistIds?.length > 0 && <div className="work-player-cast"><span>{language === 'en' ? 'Featured artists' : language === 'zh-Hant' ? '出演藝術家' : '出演艺人'}</span><div>{work.artistIds.map((id) => { const artist = directoryArtists.find((item) => item.id === id); if (!artist) return null; return <a key={id} href={`#/artists?focus=${id}`} onClick={onClose}><img src={artist.src} alt="" /><strong>{artist.display_name}</strong></a> })}</div></div>}
       {!isPhoto && <div className="work-player-controls">
         <button className="work-control work-control--play" type="button" onClick={togglePlayback} aria-label={playing ? 'Pause video' : 'Play video'}>{playing ? 'Ⅱ' : '▶'}</button>
         <input className="work-progress" type="range" min="0" max="1" step="0.001" value={progress} onChange={seek} aria-label="Video progress" />
@@ -485,14 +488,14 @@ function useArtistDirectoryNarrative() {
   return rootRef
 }
 
-function DirectoryArtistCard({ artist, language, className = '', style }) {
+function DirectoryArtistCard({ artist, language, className = '', style, ...props }) {
   const labels = directoryLabels[language]
   const role = language === 'en' ? artist.role_en : artist.role_zh
   const profileHash = artist.profile_slug ? `#/artists/${artist.profile_slug}` : null
   const openProfile = (event) => { event.preventDefault(); window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); window.location.hash = profileHash }
   const cardContent = <><img src={artist.src} alt={`Portrait of ${artist.display_name}`} style={{ objectPosition: artist.position }} loading="lazy" decoding="async" /><span className="directory-card-scrim" aria-hidden="true" /><span className="directory-card-number">{artist.number} / 07</span><span className="directory-card-info"><strong>{artist.display_name}</strong><small>{role}</small><em>{artist.creative_talents.slice(0, 3).join(' · ')}</em></span>{profileHash ? <span className="directory-card-link">{labels.profile} <b aria-hidden="true">→</b></span> : <span className="directory-card-link directory-card-link--soon">{labels.comingSoon}</span>}</>
-  if (!profileHash) return <div className={`directory-artist-card ${className} directory-artist-card--soon`} aria-label={artist.display_name} style={style}>{cardContent}</div>
-  return <a className={`directory-artist-card ${className}`} href={profileHash} onClick={openProfile} aria-label={`${labels.profile}: ${artist.display_name}`} style={style}>{cardContent}</a>
+  if (!profileHash) return <div {...props} className={`directory-artist-card ${className} directory-artist-card--soon`} aria-label={artist.display_name} style={style}>{cardContent}</div>
+  return <a {...props} className={`directory-artist-card ${className}`} href={profileHash} onClick={openProfile} aria-label={`${labels.profile}: ${artist.display_name}`} style={style}>{cardContent}</a>
 }
 
 function ArtistFilters({ filters, setFilters, language }) {
@@ -510,7 +513,7 @@ function ArtistFilters({ filters, setFilters, language }) {
   </div>
 }
 
-function ArtistArchive({ language }) {
+function ArtistArchive({ language, focus }) {
   const labels = directoryLabels[language]
   const [filters, setFilters] = useState({ gender: 'all', language: 'all', type: 'all', city: 'all' })
   const dragRef = useRef({ active: false, moved: false, startX: 0, startScrollLeft: 0 })
@@ -520,6 +523,15 @@ function ArtistArchive({ language }) {
     && (filters.type === 'all' || artist.creative_talents.includes(filters.type))
     && (filters.city === 'all' || artist.locations.includes(filters.city))
   )), [filters])
+  useEffect(() => {
+    if (!focus) return
+    const target = document.querySelector(`[data-artist-id="${focus}"]`)
+    if (!target) return
+    target.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' })
+    target.classList.add('is-focused')
+    const timer = window.setTimeout(() => target.classList.remove('is-focused'), 1800)
+    return () => window.clearTimeout(timer)
+  }, [focus, filteredArtists.length])
   const startDrag = (event) => {
     if (event.pointerType === 'touch') return
     const rail = event.currentTarget
@@ -540,14 +552,14 @@ function ArtistArchive({ language }) {
     </Container>
     <div className="artist-archive-rail" tabIndex="0" aria-label={labels.archive} onPointerDown={startDrag} onPointerMove={drag} onPointerUp={stopDrag} onPointerCancel={stopDrag}>
       <div className="artist-archive-track">
-        {filteredArtists.map((artist, index) => <DirectoryArtistCard key={artist.id} artist={artist} language={language} className="artist-archive-card" style={{ '--archive-offset': `${(2 - index) * 30}vw`, '--archive-delay': `${index * 85}ms` }} />)}
+        {filteredArtists.map((artist, index) => <DirectoryArtistCard key={artist.id} artist={artist} language={language} className="artist-archive-card" style={{ '--archive-offset': `${(2 - index) * 30}vw`, '--archive-delay': `${index * 85}ms` }} data-artist-id={artist.id} />)}
         {!filteredArtists.length && <p className="artist-empty">No artists match these filters.</p>}
       </div>
     </div>
   </section>
 }
 
-function ArtistsOverview({ language }) {
+function ArtistsOverview({ language, focus }) {
   const labels = directoryLabels[language]
   const rootRef = useArtistDirectoryNarrative()
   const titleLetters = [...labels.title.toUpperCase()]
@@ -559,7 +571,7 @@ function ArtistsOverview({ language }) {
         <span className="artist-directory-intro">{labels.intro}</span>
       </Container>
     </section>
-    <ArtistArchive language={language} />
+    <ArtistArchive language={language} focus={focus} />
   </main>
 }
 
@@ -1124,14 +1136,14 @@ const workFormats = [
 ]
 const workFormatFor = (work) => (work.photo ? 'photo' : work.slug === 'peninsula-fathers-day' ? 'reels' : ['chillgood-takoyaki', 'chillgood-animation'].includes(work.slug) ? 'mv' : 'commercial')
 
-function WorkOverview({ language }) {
+function WorkOverview({ language, initialWorkSlug }) {
   const [format, setFormat] = useState('reels')
-  const [activeWork, setActiveWork] = useState(null)
+  const [activeWork, setActiveWork] = useState(() => workProjects.find((work) => work.slug === initialWorkSlug) || null)
   const current = workFormats.find(([id]) => id === format)
   const items = workProjects.filter((work) => workFormatFor(work) === format)
   const t = copy[language]
   const localized = language === 'zh-Hant'
-  return <><main id="main" className="subpage subpage--light"><Container><PageHeader className="work-page-heading" eyebrow={`${t.selectedWork} / ${String(workProjects.length).padStart(2, '0')}`} title={t.madeToMove} back="#/" /><div className="work-format-tabs" role="tablist" aria-label={t.workFormats}>{workFormats.map(([id, label, , zhLabel, , zhHantLabel]) => <button key={id} type="button" role="tab" aria-selected={format === id} className={format === id ? 'is-active' : ''} onClick={() => setFormat(id)}>{language === 'en' ? label : localized ? zhHantLabel : zhLabel}</button>)}</div><div className="work-format-heading"><span>{language === 'en' ? current[1] : localized ? current[5] : current[3]}</span><p>{language === 'en' ? current[2] : localized ? current[6] : current[4]}</p></div>{items.length ? <div className="work-index">{items.map((work, index) => <button type="button" className="work-index-card" onClick={() => setActiveWork(work)} key={work.slug} aria-label={`${t.openWork}: ${work.name}`}><img src={work.poster} alt="" loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><span>{String(index + 1).padStart(2, '0')}</span><div><em>{work.brand}</em><strong>{work.name}</strong><i>▶</i></div><small>{t.openWork} →</small></button>)}</div> : <p className="work-empty">{t.moreWork}</p>}</Container></main>{activeWork && <WorkPlayerModal work={activeWork} initialMuted onClose={() => setActiveWork(null)} />}</>
+  return <><main id="main" className="subpage subpage--light"><Container><PageHeader className="work-page-heading" eyebrow={`${t.selectedWork} / ${String(workProjects.length).padStart(2, '0')}`} title={t.madeToMove} back="#/" /><div className="work-format-tabs" role="tablist" aria-label={t.workFormats}>{workFormats.map(([id, label, , zhLabel, , zhHantLabel]) => <button key={id} type="button" role="tab" aria-selected={format === id} className={format === id ? 'is-active' : ''} onClick={() => setFormat(id)}>{language === 'en' ? label : localized ? zhHantLabel : zhLabel}</button>)}</div><div className="work-format-heading"><span>{language === 'en' ? current[1] : localized ? current[5] : current[3]}</span><p>{language === 'en' ? current[2] : localized ? current[6] : current[4]}</p></div>{items.length ? <div className="work-index">{items.map((work, index) => <button type="button" className="work-index-card" onClick={() => setActiveWork(work)} key={work.slug} aria-label={`${t.openWork}: ${work.name}`}><img src={work.poster} alt="" loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><span>{String(index + 1).padStart(2, '0')}</span><div><em>{work.brand}</em><strong>{work.name}</strong><i>▶</i></div><small>{t.openWork} →</small></button>)}</div> : <p className="work-empty">{t.moreWork}</p>}</Container></main>{activeWork && <WorkPlayerModal work={activeWork} language={language} initialMuted onClose={() => setActiveWork(null)} />}</>
 }
 
 function WorkDetail({ work }) {
@@ -1164,9 +1176,9 @@ export default function App() {
 
   const navigate = useCallback((hash) => { window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); window.location.hash = hash }, [])
   const content = route.type === 'home' ? <HomePage t={t} onNavigate={navigate} />
-    : route.type === 'artists' ? <ArtistsOverview language={language} />
+    : route.type === 'artists' ? <ArtistsOverview language={language} focus={route.focus} />
       : route.type === 'artist-detail' ? <ArtistDetail artist={directoryArtists.find((artist) => artist.profile_slug === route.slug)} language={language} />
-        : route.type === 'work' ? <WorkOverview language={language} />
+        : route.type === 'work' ? <WorkOverview language={language} initialWorkSlug={route.open} />
           : route.type === 'work-detail' ? <WorkDetail work={workProjects.find((work) => work.slug === route.slug)} />
             : <NotFound />
   return <><a className="skip-link" href="#main">{t.skip}</a><Header language={language} setLanguage={setLanguage} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />{content}<Footer language={language} /></>
