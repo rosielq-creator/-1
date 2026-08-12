@@ -37,7 +37,7 @@ test('tightens all five profile name wordmarks', () => {
 
 test('matches the homepage support typography contract', () => {
   assert.match(css, /\.home-main\s+\.artists-section\s+\.section-copy\s*>\s*p:not\(\.eyebrow\)\s*\{[^}]*font-family:\s*var\(--sans\)[^}]*font-weight:\s*400[^}]*font-size:\s*14\.4px[^}]*line-height:\s*21\.6px[^}]*letter-spacing:\s*normal/s)
-  assert.match(css, /\.home-main\s+\.directory-link\s*\{[^}]*font-family:\s*var\(--sans\)[^}]*font-weight:\s*500[^}]*font-size:\s*18px[^}]*letter-spacing:\s*1px/s)
+  assert.match(css, /\.home-main\s+\.directory-link\s*\{[^}]*font-family:\s*var\(--sans\)[^}]*font-weight:\s*700[^}]*font-size:\s*10px[^}]*letter-spacing:\s*\.08em/s)
   assert.match(css, /\.home-main\s+\.eyebrow\s*>\s*span\s*\{[^}]*font-family:\s*var\(--sans\)[^}]*font-weight:\s*700[^}]*font-size:\s*10\.88px[^}]*letter-spacing:\s*1\.09px/s)
 })
 

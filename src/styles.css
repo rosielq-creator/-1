@@ -145,6 +145,17 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
 
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
 
+/* Shared homepage CTA and portrait-frame contract. */
+:root { --frame-stroke:2px; }
+.text-link {
+  padding-bottom:3px;
+  border-bottom:var(--frame-stroke) solid currentColor;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.08em;
+}
+.artist-tile { border-width:var(--frame-stroke); }
+
 /* Work labels and interactive artist portraits. */
 .work-card { position:relative; display:grid; place-items:center; overflow:hidden; padding:0; }
 .work-card .work-play { font-size:13px; transition:transform 240ms ease; }
@@ -853,9 +864,11 @@ h2,
 }
 .home-main .directory-link {
   font-family:var(--sans);
-  font-weight:500;
-  font-size:18px;
-  letter-spacing:1px;
+  padding-bottom:3px;
+  border-bottom:var(--frame-stroke) solid currentColor;
+  font-weight:700;
+  font-size:10px;
+  letter-spacing:.08em;
 }
 .home-main .eyebrow > span {
   font-family:var(--sans);
