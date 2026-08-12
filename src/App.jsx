@@ -592,7 +592,7 @@ function ArtistDetail({ artist, language }) {
 
 const castingProfiles = {
   connor: {
-    palette: { base: '#d7d9d5', ink: '#111518', accent: '#30585a' },
+    palette: { base: '#d7d9d5', atmosphere: '#c4cbc6', deep: '#1c2929', glow: 'rgba(48, 88, 90, .22)', ink: '#111518', accent: '#30585a' },
     role: 'British-Chinese fashion and film talent', roleZh: '英籍华人时装／影像艺人',
     hello: 'I’m Connor.',
     slogan: 'A strong, composed presence built for fashion, film and movement.',
@@ -601,9 +601,10 @@ const castingProfiles = {
     personality: [['Grounded', 'A broad-shouldered presence with calm, physical confidence.'], ['Controlled', 'Every gesture stays intentional, clean and camera-ready.'], ['Magnetic', 'He holds attention without needing to force the frame.'], ['Direct', 'A clear, modern energy that reads instantly on screen.']],
     collaborations: [{ slug: 'mgm-film-03', label: 'MGM POOL', caption: 'Lead talent · Connor + Bailey' }],
     cta: ['Available for fashion, film and lifestyle casting.', 'Work with Connor →'],
+    nextSlug: 'bailey', nextLabel: { en: 'Next artist · Bailey', zh: '下一位艺术家 · Bailey', 'zh-Hant': '下一位藝術家 · Bailey' },
   },
   bailey: {
-    palette: { base: '#e4dcda', ink: '#151315', accent: '#7b5557' },
+    palette: { base: '#e4dcda', atmosphere: '#d4c7c4', deep: '#2a2022', glow: 'rgba(123, 85, 87, .2)', ink: '#151315', accent: '#7b5557' },
     role: 'Chinese-French fashion and lifestyle talent', roleZh: '华裔法籍时装／生活方式艺人',
     hello: 'I’m Bailey.',
     slogan: 'A polished, natural presence moving between fashion, wellness and lifestyle.',
@@ -612,22 +613,76 @@ const castingProfiles = {
     personality: [['Elegant', 'A precise, effortless image with a distinctly European ease.'], ['Calm', 'She brings softness and control to every campaign environment.'], ['Luminous', 'Natural expression, clean movement and an immediate camera connection.'], ['Expressive', 'A flexible presence that can move from wellness to fashion storytelling.']],
     collaborations: [{ slug: 'mgm-film-01', label: 'MGM SPA', caption: 'Lead talent · Bailey' }, { slug: 'mgm-film-02', label: 'MGM FILM', caption: 'Lead talent · Bailey' }, { slug: 'mgm-film-03', label: 'MGM POOL', caption: 'Lead talent · Connor + Bailey' }],
     cta: ['Available for fashion, wellness and lifestyle casting.', 'Work with Bailey →'],
+    nextSlug: 'maya', nextLabel: { en: 'Next artist · Maya', zh: '下一位艺术家 · Maya', 'zh-Hant': '下一位藝術家 · Maya' },
   },
 }
 
 function CastingProfile({ artist, language, profile }) {
+  const rootRef = useCastingProfileMotion()
+  useProfileStart(artist.id)
   const isEnglish = language === 'en'
+  const copy = language === 'zh-Hant'
+    ? { back: '返回藝術家列表', profile: '藝術家檔案', dossier: '個人資料', identity: 'Identity.', personality: '人物性格', collaborations: '合作案例', madeWith: <>Made with<br />brands.</>, contact: '聯絡合作', available: '可透過 Green Tomato 預約', notPublic: '未公開', booking: '僅接受合作預約' }
+    : language === 'zh'
+      ? { back: '返回艺术家列表', profile: '艺术家档案', dossier: '个人资料', identity: 'Identity.', personality: '人物性格', collaborations: '合作案例', madeWith: <>Made with<br />brands.</>, contact: '联系合作', available: '可通过 Green Tomato 预约', notPublic: '未公开', booking: '仅接受合作预约' }
+      : { back: 'Back to artists', profile: 'Artist profile', dossier: 'Personal dossier', identity: 'Identity.', personality: 'Personality', collaborations: 'Selected collaborations', madeWith: <>Made with<br />brands.</>, contact: 'Social + contact', available: 'Available through Green Tomato', notPublic: 'Not public', booking: 'Booking only' }
   const role = isEnglish ? profile.role : profile.roleZh
-  const workLabel = language === 'zh-Hant' ? '合作案例' : language === 'zh' ? '合作案例' : 'Selected collaborations'
-  const contactLabel = language === 'zh-Hant' ? '聯絡合作' : language === 'zh' ? '联系合作' : 'Contact / booking'
-  const available = language === 'zh-Hant' ? '可通过 Green Tomato 预约' : language === 'zh' ? '可通过 Green Tomato 预约' : 'Available through Green Tomato'
-  return <main id="main" className="casting-profile" style={{ '--casting-base': profile.palette.base, '--casting-ink': profile.palette.ink, '--casting-accent': profile.palette.accent }}>
-    <section className="casting-scene casting-scene--hero"><Container><a className="back-link" href="#/artists">← {language === 'en' ? 'Back to artists' : '返回艺术家列表'}</a><Eyebrow number="01">{language === 'en' ? 'Artist profile' : '艺术家档案'}</Eyebrow><div className="casting-hero-grid"><div><h1>{artist.display_name}</h1><p className="casting-role">{role}</p><p className="casting-hello">{profile.hello}</p><p className="casting-slogan">{profile.slogan}</p></div><figure><img src={artist.src} alt={`${artist.display_name} portrait`} fetchPriority="high" /></figure></div></Container></section>
-    <section className="casting-scene casting-scene--dossier"><Container><div className="casting-copy"><Eyebrow number="02">{language === 'en' ? 'Personal dossier' : '个人资料'}</Eyebrow><h2>Identity.</h2></div><dl className="casting-dossier">{profile.dossier.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{isEnglish ? value : value.replace('Based in', '常驻').replace('Languages', '语言')}</dd></div>)}</dl></Container></section>
-    <section className="casting-scene casting-scene--personality"><Container><div className="casting-copy"><Eyebrow number="03">{language === 'en' ? 'Personality' : '人物性格'}</Eyebrow><h2>{profile.personalityTitle.map((line) => <span key={line}>{line}</span>)}</h2></div><div className="casting-personality-list">{profile.personality.map(([title, text], index) => <article key={title}><b>{String(index + 1).padStart(2, '0')}</b><h3>{title}</h3><p>{text}</p></article>)}</div></Container></section>
-    <section className="casting-scene casting-scene--collaborations"><Container><Eyebrow number="04">{workLabel}</Eyebrow><h2>Made with<br />brands.</h2><div className="casting-collaboration-grid">{profile.collaborations.map((item) => { const work = workProjects.find((entry) => entry.slug === item.slug); return <a key={item.slug} href={`#/work?open=${item.slug}`} className="casting-collaboration-card"><img src={work?.poster} alt={`${item.label} collaboration`} loading="lazy" /><span>{item.label} ↗</span><small>{item.caption}</small></a> })}</div></Container></section>
-    <section className="casting-scene casting-scene--contact"><Container><Eyebrow number="05">{contactLabel}</Eyebrow><div className="casting-contact-grid"><div><h2>{isEnglish ? <>Let’s make<br />something clear.</> : <>一起打造<br />清晰的作品。</>}</h2><p>{available}</p></div><a className="maya-primary-link" href="#contact">{profile.cta[1]}</a></div></Container></section>
+  const labelMap = language === 'zh-Hant'
+    ? { Height: '身高', Weight: '體重', Measurements: '三圍', 'Shoe size': '鞋碼', 'Based in': '常駐地', Languages: '語言', 'Artist type': '藝術家類型' }
+    : language === 'zh' ? { Height: '身高', Weight: '体重', Measurements: '三围', 'Shoe size': '鞋码', 'Based in': '常驻地', Languages: '语言', 'Artist type': '艺术家类型' } : {}
+  const poseSrc = artist.src
+  return <main id="main" ref={rootRef} data-artist={artist.id} className="maya-profile artist-story-profile casting-story-profile" style={{ '--story-base': profile.palette.base, '--story-atmosphere': profile.palette.atmosphere, '--story-deep': profile.palette.deep, '--story-glow': profile.palette.glow, '--story-ink': profile.palette.ink }}>
+    <div className="maya-stage">
+      <div className="maya-atmosphere" aria-hidden="true" />
+      <figure className="maya-camera story-camera" aria-hidden="true">
+        <img className="story-camera-pose" src={poseSrc} alt="" fetchPriority="high" />
+        <img className="story-camera-pose" src={poseSrc} alt="" />
+        <img className="story-camera-pose" src={poseSrc} alt="" />
+      </figure>
+      <section className="maya-scene maya-scene--hero"><Container><div className="maya-safe maya-safe--hero"><a className="back-link" href="#/artists">← {copy.back}</a><Eyebrow number="01">{copy.profile}</Eyebrow><h1>{artist.display_name}</h1><p className="maya-role">{role}</p><p className="maya-hello">{profile.hello}</p><div className="maya-about-intro"><p>{profile.slogan}</p></div></div><a className="next-artist-link" href={`#/artists/${profile.nextSlug}`}>{profile.nextLabel[language]} →</a><img className="maya-mobile-crop maya-mobile-crop--hero" src={poseSrc} alt={`${artist.display_name} portrait`} /></Container></section>
+      <section className="maya-scene maya-scene--identity"><Container><div className="maya-safe maya-safe--identity"><Eyebrow number="02">{copy.dossier}</Eyebrow><h2>{copy.identity}</h2><dl className="maya-dossier">{profile.dossier.map(([label, value]) => <div key={label} className={label === 'Artist type' ? 'maya-dossier-wide' : ''}><dt>{labelMap[label] || label}</dt><dd>{value}</dd></div>)}</dl></div><img className="maya-mobile-crop" src={poseSrc} alt={`${artist.display_name} portrait`} /></Container></section>
+      <section className="maya-scene maya-scene--detail"><Container><div className="maya-safe maya-safe--detail"><Eyebrow number="03">{copy.personality}</Eyebrow><h2 className="maya-detail-title">{profile.personalityTitle.map((line) => <span key={line}>{line}</span>)}</h2><div className="maya-personality-list">{profile.personality.map(([title, text], index) => <article className="maya-personality-item" key={title}><b>{String(index + 1).padStart(2, '0')}</b><div className="maya-personality-copy"><h3>{title}</h3><p>{text}</p></div></article>)}</div></div><img className="maya-mobile-crop" src={poseSrc} alt={`${artist.display_name} portrait`} /></Container></section>
+      <CastingCollaborationScene profile={profile} language={language} copy={copy} />
+      <CastingContactScene profile={profile} language={language} copy={copy} />
+    </div>
   </main>
+}
+
+function CastingCollaborationScene({ profile, language, copy }) {
+  return <section className="maya-scene maya-scene--cases"><Container><div className={`maya-safe maya-safe--cases maya-safe--cases--${profile.collaborations.length}`}><Eyebrow number="04">{copy.collaborations}</Eyebrow><h2>{copy.madeWith}</h2><div className={`maya-collaboration-grid maya-collaboration-grid--${profile.collaborations.length}`}>{profile.collaborations.map((item, index) => { const work = workProjects.find((entry) => entry.slug === item.slug); return <a className="maya-collaboration-card" href={`#/work?open=${item.slug}`} key={item.slug}><div className="maya-collaboration-media"><img src={work?.poster} alt={`${item.label} collaboration`} loading={index === 0 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /></div><span>{item.label} ↗</span><small className="casting-collaboration-caption">{item.caption}</small></a> })}</div></div></Container></section>
+}
+
+function CastingContactScene({ profile, language, copy }) {
+  const isEnglish = language === 'en'
+  const heading = language === 'zh-Hant' ? ['想一起', '合作', '嗎？'] : language === 'zh' ? ['想一起', '合作', '吗？'] : ['Want to', 'work', 'together?']
+  return (
+    <section className="maya-scene maya-scene--social">
+      <Container>
+        <div className="maya-safe maya-safe--social">
+          <Eyebrow number="05">{copy.contact}</Eyebrow>
+          <div className="maya-social-layout casting-social-layout">
+            <div className="maya-social-metric">
+              <span className="maya-social-handle">{copy.notPublic}</span>
+              <strong className="maya-followers casting-private-label">{copy.booking}</strong>
+              <p className="casting-contact-note">{copy.available}</p>
+            </div>
+            <div className="maya-audience">
+              <p>{isEnglish ? 'Audience snapshot' : '受众数据'}</p>
+              <dl>
+                <div><dt>{isEnglish ? 'Social accounts' : '社交账号'}</dt><dd>{copy.notPublic}</dd></div>
+                <div><dt>{isEnglish ? 'Followers' : '粉丝数'}</dt><dd>{copy.notPublic}</dd></div>
+                <div className="maya-audience-countries"><dt>{isEnglish ? 'Representation' : '合作方式'}</dt><dd>{copy.booking}</dd></div>
+              </dl>
+            </div>
+            <div className="maya-cta">
+              <h2>{heading.map((line) => <span key={line}>{line}</span>)}</h2>
+              <a className="maya-primary-link" href="#/contact">{profile.cta[1]}</a>
+            </div>
+          </div>
+        </div>
+      </Container>
+    </section>
+  )
 }
 
 const storyProfiles = {
@@ -1090,6 +1145,52 @@ function useArtistStoryMotion() {
       timeline.to(atmosphere, { backgroundColor: 'var(--story-base)', duration: .72 }, 4.42)
       revealScene(timeline, scenes[3], scenes[4], 4.48)
       if (hasCases) revealScene(timeline, scenes[4], scenes[5], 5.54)
+      requestAnimationFrame(() => ScrollTrigger.refresh())
+    }, root)
+    return () => ctx.revert()
+  }, [])
+  return rootRef
+}
+
+// Casting profiles use the same pinned stage and camera rhythm as the five
+// established artist profiles, with 04 collaborations followed directly by 05 contact.
+function useCastingProfileMotion() {
+  const rootRef = useRef(null)
+  useLayoutEffect(() => {
+    const root = rootRef.current
+    if (!root) return undefined
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduceMotion || window.innerWidth <= 820) { root.dataset.mayaMotion = 'static'; return undefined }
+    root.dataset.mayaMotion = 'pinned'
+    const ctx = gsap.context(() => {
+      const stage = root.querySelector('.maya-stage')
+      const scenes = gsap.utils.toArray('.maya-scene')
+      const camera = root.querySelector('.maya-camera')
+      const poses = gsap.utils.toArray('.story-camera-pose')
+      const atmosphere = root.querySelector('.maya-atmosphere')
+      const personality = gsap.utils.toArray('.maya-personality-item')
+      gsap.set(scenes, { autoAlpha: 0, y: 22, pointerEvents: 'none' })
+      gsap.set(scenes[0], { autoAlpha: 1, y: 0, pointerEvents: 'auto' })
+      gsap.set(poses, { autoAlpha: 0 })
+      gsap.set(poses[0], { autoAlpha: 1 })
+      gsap.set(personality, { opacity: 1, x: 0 })
+      gsap.set(camera, { xPercent: 0, yPercent: 0, scale: 1, transformOrigin: '50% 50%' })
+      const revealScene = (timeline, from, to, at) => timeline.to(from, { autoAlpha: 0, y: -20, pointerEvents: 'none', duration: .32 }, at).fromTo(to, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, pointerEvents: 'auto', duration: .42 }, at + .18)
+      const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: root, start: 'top top', end: () => `+=${window.innerHeight * 6.2}`, pin: stage, scrub: .75, anticipatePin: 1, invalidateOnRefresh: true } })
+      timeline.to(camera, { xPercent: -188, yPercent: 12, scale: 1.78, transformOrigin: '50% 16%', duration: 1.3 }, .45)
+        .to(atmosphere, { xPercent: -5, yPercent: 3, scale: 1.08, backgroundColor: 'var(--story-deep)', duration: 1.3 }, .45)
+        .to(camera, { autoAlpha: 0, duration: .16 }, .75)
+      revealScene(timeline, scenes[0], scenes[1], .78)
+      timeline.set(poses[0], { autoAlpha: 0 }, 1.75).set(poses[2], { autoAlpha: 1 }, 1.75)
+        .to(camera, { autoAlpha: 1, xPercent: -170, yPercent: -10, scale: 1.28, transformOrigin: '50% 30%', duration: 1.25 }, 1.75)
+        .to(atmosphere, { xPercent: 6, yPercent: -4, scale: 1.14, backgroundColor: 'var(--story-deep)', duration: 1.25 }, 1.75)
+      revealScene(timeline, scenes[1], scenes[2], 1.92)
+      personality.forEach((item, index) => timeline.to(item, { x: 12, duration: .18 }, 2.15 + index * .22))
+      timeline.to(camera, { autoAlpha: 0, duration: .34 }, 2.82)
+        .to(atmosphere, { xPercent: -3, yPercent: 2, scale: 1.02, backgroundColor: 'var(--story-base)', duration: 1.15 }, 3.05)
+      revealScene(timeline, scenes[2], scenes[3], 3.18)
+      timeline.to(atmosphere, { backgroundColor: 'var(--story-base)', duration: .72 }, 4.42)
+      revealScene(timeline, scenes[3], scenes[4], 4.48)
       requestAnimationFrame(() => ScrollTrigger.refresh())
     }, root)
     return () => ctx.revert()
