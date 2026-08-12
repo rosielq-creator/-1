@@ -150,9 +150,9 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
 .text-link {
   padding-bottom:3px;
   border-bottom:var(--frame-stroke) solid currentColor;
-  font-size:10px;
-  font-weight:700;
-  letter-spacing:.08em;
+  font-size:18px;
+  font-weight:500;
+  letter-spacing:1px;
 }
 .artist-tile { border-width:var(--frame-stroke); }
 
@@ -866,9 +866,9 @@ h2,
   font-family:var(--sans);
   padding-bottom:3px;
   border-bottom:var(--frame-stroke) solid currentColor;
-  font-weight:700;
-  font-size:10px;
-  letter-spacing:.08em;
+  font-weight:500;
+  font-size:18px;
+  letter-spacing:1px;
 }
 .home-main .eyebrow > span {
   font-family:var(--sans);
