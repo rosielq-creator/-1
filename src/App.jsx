@@ -578,6 +578,7 @@ function ArtistsOverview({ language, focus }) {
 function ArtistDetail({ artist, language }) {
   if (!artist) return <NotFound />
   if (artist.id === 'maya') return <MayaProfile artist={artist} language={language} />
+  if (castingProfiles[artist.id]) return <CastingProfile artist={artist} language={language} profile={castingProfiles[artist.id]} />
   if (storyProfiles[artist.id]) {
     const story = storyProfiles[artist.id]
     const localizedStory = language === 'en' ? story : localizeStoryProfile(artist.id, story, language)
@@ -587,6 +588,46 @@ function ArtistDetail({ artist, language }) {
   const labels = directoryLabels[language]
   const role = language === 'zh' ? artist.role_zh : artist.role_en
   return <main id="main" className="subpage subpage--dark"><Container><div className="detail-grid detail-grid--artist"><div><PageHeader eyebrow={`${artist.number} / Artist`} title={artist.display_name} back="#/artists" backLabel={labels.back} /><p className="detail-role">{role}</p><dl className="artist-confirmed-fields"><div><dt>{labels.location}</dt><dd>{artist.locations.join(' · ')}</dd></div><div><dt>{labels.languages}</dt><dd>{artist.languages.join(' · ')}</dd></div><div><dt>{labels.talents}</dt><dd>{artist.creative_talents.join(' · ')}</dd></div></dl><p className="artist-coming-soon">{labels.comingSoon}</p></div><figure className="detail-media"><img src={artist.src} alt={`Portrait of ${artist.display_name}`} style={{ objectPosition: artist.position }} /></figure></div></Container></main>
+}
+
+const castingProfiles = {
+  connor: {
+    palette: { base: '#d7d9d5', ink: '#111518', accent: '#30585a' },
+    role: 'British-Chinese fashion and film talent', roleZh: '英籍华人时装／影像艺人',
+    hello: 'I’m Connor.',
+    slogan: 'A strong, composed presence built for fashion, film and movement.',
+    dossier: [['Height', '187 cm'], ['Weight', '86 kg'], ['Shoe size', '45'], ['Based in', 'Hong Kong / London'], ['Languages', 'English / Cantonese / Mandarin'], ['Artist type', 'Fashion / Film / Lifestyle']],
+    personalityTitle: ['Strength with', 'quiet control.'],
+    personality: [['Grounded', 'A broad-shouldered presence with calm, physical confidence.'], ['Controlled', 'Every gesture stays intentional, clean and camera-ready.'], ['Magnetic', 'He holds attention without needing to force the frame.'], ['Direct', 'A clear, modern energy that reads instantly on screen.']],
+    collaborations: [{ slug: 'mgm-film-03', label: 'MGM POOL', caption: 'Lead talent · Connor + Bailey' }],
+    cta: ['Available for fashion, film and lifestyle casting.', 'Work with Connor →'],
+  },
+  bailey: {
+    palette: { base: '#e4dcda', ink: '#151315', accent: '#7b5557' },
+    role: 'Chinese-French fashion and lifestyle talent', roleZh: '华裔法籍时装／生活方式艺人',
+    hello: 'I’m Bailey.',
+    slogan: 'A polished, natural presence moving between fashion, wellness and lifestyle.',
+    dossier: [['Height', '174 cm'], ['Weight', '52 kg'], ['Measurements', '84 / 60 / 88'], ['Shoe size', '38'], ['Based in', 'Hong Kong / Paris'], ['Languages', 'English / Mandarin / French'], ['Artist type', 'Fashion / Wellness / Lifestyle']],
+    personalityTitle: ['Lightness with', 'a refined edge.'],
+    personality: [['Elegant', 'A precise, effortless image with a distinctly European ease.'], ['Calm', 'She brings softness and control to every campaign environment.'], ['Luminous', 'Natural expression, clean movement and an immediate camera connection.'], ['Expressive', 'A flexible presence that can move from wellness to fashion storytelling.']],
+    collaborations: [{ slug: 'mgm-film-01', label: 'MGM SPA', caption: 'Lead talent · Bailey' }, { slug: 'mgm-film-02', label: 'MGM FILM', caption: 'Lead talent · Bailey' }, { slug: 'mgm-film-03', label: 'MGM POOL', caption: 'Lead talent · Connor + Bailey' }],
+    cta: ['Available for fashion, wellness and lifestyle casting.', 'Work with Bailey →'],
+  },
+}
+
+function CastingProfile({ artist, language, profile }) {
+  const isEnglish = language === 'en'
+  const role = isEnglish ? profile.role : profile.roleZh
+  const workLabel = language === 'zh-Hant' ? '合作案例' : language === 'zh' ? '合作案例' : 'Selected collaborations'
+  const contactLabel = language === 'zh-Hant' ? '聯絡合作' : language === 'zh' ? '联系合作' : 'Contact / booking'
+  const available = language === 'zh-Hant' ? '可通过 Green Tomato 预约' : language === 'zh' ? '可通过 Green Tomato 预约' : 'Available through Green Tomato'
+  return <main id="main" className="casting-profile" style={{ '--casting-base': profile.palette.base, '--casting-ink': profile.palette.ink, '--casting-accent': profile.palette.accent }}>
+    <section className="casting-scene casting-scene--hero"><Container><a className="back-link" href="#/artists">← {language === 'en' ? 'Back to artists' : '返回艺术家列表'}</a><Eyebrow number="01">{language === 'en' ? 'Artist profile' : '艺术家档案'}</Eyebrow><div className="casting-hero-grid"><div><h1>{artist.display_name}</h1><p className="casting-role">{role}</p><p className="casting-hello">{profile.hello}</p><p className="casting-slogan">{profile.slogan}</p></div><figure><img src={artist.src} alt={`${artist.display_name} portrait`} fetchPriority="high" /></figure></div></Container></section>
+    <section className="casting-scene casting-scene--dossier"><Container><div className="casting-copy"><Eyebrow number="02">{language === 'en' ? 'Personal dossier' : '个人资料'}</Eyebrow><h2>Identity.</h2></div><dl className="casting-dossier">{profile.dossier.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{isEnglish ? value : value.replace('Based in', '常驻').replace('Languages', '语言')}</dd></div>)}</dl></Container></section>
+    <section className="casting-scene casting-scene--personality"><Container><div className="casting-copy"><Eyebrow number="03">{language === 'en' ? 'Personality' : '人物性格'}</Eyebrow><h2>{profile.personalityTitle.map((line) => <span key={line}>{line}</span>)}</h2></div><div className="casting-personality-list">{profile.personality.map(([title, text], index) => <article key={title}><b>{String(index + 1).padStart(2, '0')}</b><h3>{title}</h3><p>{text}</p></article>)}</div></Container></section>
+    <section className="casting-scene casting-scene--collaborations"><Container><Eyebrow number="04">{workLabel}</Eyebrow><h2>Made with<br />brands.</h2><div className="casting-collaboration-grid">{profile.collaborations.map((item) => { const work = workProjects.find((entry) => entry.slug === item.slug); return <a key={item.slug} href={`#/work?open=${item.slug}`} className="casting-collaboration-card"><img src={work?.poster} alt={`${item.label} collaboration`} loading="lazy" /><span>{item.label} ↗</span><small>{item.caption}</small></a> })}</div></Container></section>
+    <section className="casting-scene casting-scene--contact"><Container><Eyebrow number="05">{contactLabel}</Eyebrow><div className="casting-contact-grid"><div><h2>{isEnglish ? <>Let’s make<br />something clear.</> : <>一起打造<br />清晰的作品。</>}</h2><p>{available}</p></div><a className="maya-primary-link" href="#contact">{profile.cta[1]}</a></div></Container></section>
+  </main>
 }
 
 const storyProfiles = {

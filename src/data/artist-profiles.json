@@ -108,9 +108,9 @@
       "creative_talents": ["Fashion", "Editorial"],
       "bio_en": null,
       "bio_zh": null,
-      "profile_status": "directory only; profile coming soon",
+      "profile_status": "profile ready; social accounts not public",
       "image": "images/connor.png",
-      "profile_slug": null
+      "profile_slug": "connor"
     },
     {
       "id": "bailey",
@@ -123,9 +123,9 @@
       "creative_talents": ["Fashion", "Editorial"],
       "bio_en": null,
       "bio_zh": null,
-      "profile_status": "directory only; profile coming soon",
+      "profile_status": "profile ready; social accounts not public",
       "image": "images/bailey.png",
-      "profile_slug": null
+      "profile_slug": "bailey"
     }
   ]
 }
