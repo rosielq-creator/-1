@@ -487,16 +487,12 @@ function useArtistDirectoryNarrative() {
 
 function DirectoryArtistCard({ artist, language, className = '', style }) {
   const labels = directoryLabels[language]
-  const role = language === 'zh' ? artist.role_zh : artist.role_en
-  const profileHash = `#/artists/${artist.profile_slug}`
+  const role = language === 'en' ? artist.role_en : artist.role_zh
+  const profileHash = artist.profile_slug ? `#/artists/${artist.profile_slug}` : null
   const openProfile = (event) => { event.preventDefault(); window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); window.location.hash = profileHash }
-  return <a className={`directory-artist-card ${className}`} href={profileHash} onClick={openProfile} aria-label={`${labels.profile}: ${artist.display_name}`} style={style}>
-    <img src={artist.src} alt={`Portrait of ${artist.display_name}`} style={{ objectPosition: artist.position }} loading="lazy" decoding="async" />
-    <span className="directory-card-scrim" aria-hidden="true" />
-    <span className="directory-card-number">{artist.number} / 05</span>
-    <span className="directory-card-info"><strong>{artist.display_name}</strong><small>{role}</small><em>{artist.creative_talents.slice(0, 3).join(' · ')}</em></span>
-    <span className="directory-card-link">{labels.profile} <b aria-hidden="true">→</b></span>
-  </a>
+  const cardContent = <><img src={artist.src} alt={`Portrait of ${artist.display_name}`} style={{ objectPosition: artist.position }} loading="lazy" decoding="async" /><span className="directory-card-scrim" aria-hidden="true" /><span className="directory-card-number">{artist.number} / 07</span><span className="directory-card-info"><strong>{artist.display_name}</strong><small>{role}</small><em>{artist.creative_talents.slice(0, 3).join(' · ')}</em></span>{profileHash ? <span className="directory-card-link">{labels.profile} <b aria-hidden="true">→</b></span> : <span className="directory-card-link directory-card-link--soon">{labels.comingSoon}</span>}</>
+  if (!profileHash) return <div className={`directory-artist-card ${className} directory-artist-card--soon`} aria-label={artist.display_name} style={style}>{cardContent}</div>
+  return <a className={`directory-artist-card ${className}`} href={profileHash} onClick={openProfile} aria-label={`${labels.profile}: ${artist.display_name}`} style={style}>{cardContent}</a>
 }
 
 function ArtistFilters({ filters, setFilters, language }) {

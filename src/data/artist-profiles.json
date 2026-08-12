@@ -96,6 +96,36 @@
       "profile_status": "directory profile only; biography is not confirmed",
       "image": "images/mario.png",
       "profile_slug": "mario"
+    },
+    {
+      "id": "connor",
+      "display_name": "Connor",
+      "gender": "male",
+      "role_en": "Fashion Artist",
+      "role_zh": "时装艺术家",
+      "locations": [],
+      "languages": [],
+      "creative_talents": ["Fashion", "Editorial"],
+      "bio_en": null,
+      "bio_zh": null,
+      "profile_status": "directory only; profile coming soon",
+      "image": "images/connor.png",
+      "profile_slug": null
+    },
+    {
+      "id": "bailey",
+      "display_name": "Bailey",
+      "gender": "female",
+      "role_en": "Fashion Artist",
+      "role_zh": "时装艺术家",
+      "locations": [],
+      "languages": [],
+      "creative_talents": ["Fashion", "Editorial"],
+      "bio_en": null,
+      "bio_zh": null,
+      "profile_status": "directory only; profile coming soon",
+      "image": "images/bailey.png",
+      "profile_slug": null
     }
   ]
 }
