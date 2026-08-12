@@ -546,6 +546,7 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
 .artist-story-profile .maya-audience > p { color:rgba(16,21,25,.66); }
 .artist-story-profile .maya-audience dt { color:rgba(16,21,25,.58); }
 .artist-story-profile .maya-audience dd { color:#101519; }
+.casting-social-layout--minimal { grid-template-columns:minmax(0,1fr) minmax(270px,.8fr); }
 
 @media (max-width:1100px) and (min-width:821px) {
   .maya-camera { right:5vw; width:34vw; }

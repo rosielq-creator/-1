@@ -630,14 +630,14 @@ function CastingProfile({ artist, language, profile }) {
   const labelMap = language === 'zh-Hant'
     ? { Height: '身高', Weight: '體重', Measurements: '三圍', 'Shoe size': '鞋碼', 'Based in': '常駐地', Languages: '語言', 'Artist type': '藝術家類型' }
     : language === 'zh' ? { Height: '身高', Weight: '体重', Measurements: '三围', 'Shoe size': '鞋码', 'Based in': '常驻地', Languages: '语言', 'Artist type': '艺术家类型' } : {}
-  const poseSrc = artist.src
+  const poseSrc = `${assets}artists/profile-poses/${artist.id}/hero.png`
   return <main id="main" ref={rootRef} data-artist={artist.id} className="maya-profile artist-story-profile casting-story-profile" style={{ '--story-base': profile.palette.base, '--story-atmosphere': profile.palette.atmosphere, '--story-deep': profile.palette.deep, '--story-glow': profile.palette.glow, '--story-ink': profile.palette.ink }}>
     <div className="maya-stage">
       <div className="maya-atmosphere" aria-hidden="true" />
       <figure className="maya-camera story-camera" aria-hidden="true">
-        <img className="story-camera-pose" src={poseSrc} alt="" fetchPriority="high" />
-        <img className="story-camera-pose" src={poseSrc} alt="" />
-        <img className="story-camera-pose" src={poseSrc} alt="" />
+        <img className="story-camera-pose" src={poseSrc} alt="" fetchPriority="high" decoding="async" />
+        <img className="story-camera-pose" src={poseSrc} alt="" decoding="async" />
+        <img className="story-camera-pose" src={poseSrc} alt="" decoding="async" />
       </figure>
       <section className="maya-scene maya-scene--hero"><Container><div className="maya-safe maya-safe--hero"><a className="back-link" href="#/artists">← {copy.back}</a><Eyebrow number="01">{copy.profile}</Eyebrow><h1>{artist.display_name}</h1><p className="maya-role">{role}</p><p className="maya-hello">{profile.hello}</p><div className="maya-about-intro"><p>{profile.slogan}</p></div></div><a className="next-artist-link" href={`#/artists/${profile.nextSlug}`}>{profile.nextLabel[language]} →</a><img className="maya-mobile-crop maya-mobile-crop--hero" src={poseSrc} alt={`${artist.display_name} portrait`} /></Container></section>
       <section className="maya-scene maya-scene--identity"><Container><div className="maya-safe maya-safe--identity"><Eyebrow number="02">{copy.dossier}</Eyebrow><h2>{copy.identity}</h2><dl className="maya-dossier">{profile.dossier.map(([label, value]) => <div key={label} className={label === 'Artist type' ? 'maya-dossier-wide' : ''}><dt>{labelMap[label] || label}</dt><dd>{value}</dd></div>)}</dl></div><img className="maya-mobile-crop" src={poseSrc} alt={`${artist.display_name} portrait`} /></Container></section>
@@ -660,19 +660,11 @@ function CastingContactScene({ profile, language, copy }) {
       <Container>
         <div className="maya-safe maya-safe--social">
           <Eyebrow number="05">{copy.contact}</Eyebrow>
-          <div className="maya-social-layout casting-social-layout">
+          <div className="maya-social-layout casting-social-layout casting-social-layout--minimal">
             <div className="maya-social-metric">
               <span className="maya-social-handle">{copy.notPublic}</span>
               <strong className="maya-followers casting-private-label">{copy.booking}</strong>
               <p className="casting-contact-note">{copy.available}</p>
-            </div>
-            <div className="maya-audience">
-              <p>{isEnglish ? 'Audience snapshot' : '受众数据'}</p>
-              <dl>
-                <div><dt>{isEnglish ? 'Social accounts' : '社交账号'}</dt><dd>{copy.notPublic}</dd></div>
-                <div><dt>{isEnglish ? 'Followers' : '粉丝数'}</dt><dd>{copy.notPublic}</dd></div>
-                <div className="maya-audience-countries"><dt>{isEnglish ? 'Representation' : '合作方式'}</dt><dd>{copy.booking}</dd></div>
-              </dl>
             </div>
             <div className="maya-cta">
               <h2>{heading.map((line) => <span key={line}>{line}</span>)}</h2>
