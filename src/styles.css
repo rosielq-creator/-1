@@ -722,6 +722,45 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
 .casting-contact-grid h2 { margin:0; font-size:clamp(72px,11vw,180px); letter-spacing:-.1em; line-height:.76; }
 .casting-contact-grid p { margin:26px 0 0; font:600 13px/1.2 var(--mono); letter-spacing:.06em; text-transform:uppercase; }
 .casting-contact-grid .maya-primary-link { border-color:var(--paper); color:var(--paper); }
+
+/* Casting case studies are compact playable previews, not the tall editorial frames used by artist portfolios. */
+.casting-story-profile .casting-collaboration-card {
+  appearance:none;
+  width:100%;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:var(--story-ink);
+  text-align:left;
+  font:inherit;
+  cursor:pointer;
+}
+.casting-story-profile .casting-collaboration-card .maya-collaboration-media {
+  aspect-ratio:16 / 9;
+  padding:0;
+  border:0;
+  background:#121516;
+  box-shadow:none;
+}
+.casting-story-profile .casting-collaboration-card .maya-collaboration-media::after { border:0; }
+.casting-story-profile .casting-collaboration-card .maya-collaboration-media > img,
+.casting-story-profile .casting-collaboration-card .maya-collaboration-media > video {
+  object-fit:cover;
+  filter:none;
+}
+.casting-story-profile .casting-collaboration-card:hover .maya-collaboration-media > img,
+.casting-story-profile .casting-collaboration-card:hover .maya-collaboration-media > video,
+.casting-story-profile .casting-collaboration-card:focus-visible .maya-collaboration-media > img,
+.casting-story-profile .casting-collaboration-card:focus-visible .maya-collaboration-media > video { transform:scale(1.02); }
+.casting-story-profile .casting-collaboration-card:focus-visible { outline:2px solid currentColor; outline-offset:5px; }
+
+/* Mario's selected collaborations keep the original complete 3:4 artwork frame. */
+@media (min-width:761px) {
+  .artist-story-profile[data-artist="mario"] .maya-collaboration-grid--6 .maya-collaboration-media {
+    aspect-ratio:3 / 4;
+    padding:clamp(8px,1.1vw,16px);
+  }
+}
 @media (max-width:760px) {
   .casting-scene { min-height:auto; padding:55px 0; }
   .casting-scene--hero { min-height:auto; }
@@ -1010,7 +1049,7 @@ h2,
     gap:20px clamp(18px,2.2vw,32px);
   }
   .artist-story-profile[data-artist="mario"] .maya-collaboration-grid--6 .maya-collaboration-media {
-    aspect-ratio:4 / 2.6;
+    aspect-ratio:3 / 4;
     padding:8px;
   }
   .artist-story-profile[data-artist="mario"] .maya-collaboration-grid--6 .maya-collaboration-media > img,
