@@ -899,6 +899,18 @@ h2,
 
 /* One readable 3:4 exhibition frame for every artist collaboration, without cropping. */
 .maya-collaboration-card { grid-template-rows:auto auto; align-items:start; }
+.maya-collaboration-card--video {
+  appearance:none;
+  -webkit-appearance:none;
+  width:100%;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  color:inherit;
+  text-align:left;
+  cursor:pointer;
+}
 .maya-collaboration-media {
   position:relative;
   display:grid;
@@ -933,6 +945,10 @@ h2,
   background:transparent;
   filter:drop-shadow(0 10px 16px rgba(18,20,22,.12));
   transition:transform 240ms ease;
+}
+.maya-collaboration-card--video .maya-collaboration-media {
+  border:2px solid #111;
+  box-sizing:border-box;
 }
 .maya-collaboration-card:hover .maya-collaboration-media > img { transform:scale(1.012); }
 .maya-collaboration-card > span,
