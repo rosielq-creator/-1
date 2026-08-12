@@ -1126,7 +1126,7 @@ function useArtistStoryMotion() {
       const personality = gsap.utils.toArray('.maya-personality-item')
       const hasCases = Boolean(root.querySelector('.maya-scene--cases'))
       const isMarioCases = root.dataset.artist === 'mario' && hasCases
-      const casesGrid = root.querySelector('.maya-scene--cases .maya-collaboration-grid')
+      const casesSafe = root.querySelector('.maya-scene--cases .maya-safe--cases')
       const detailScale = root.dataset.artist === 'noah' ? 1.1 : 1.35
       gsap.set(scenes, { autoAlpha: 0, y: 22, pointerEvents: 'none' })
       gsap.set(scenes[0], { autoAlpha: 1, y: 0, pointerEvents: 'auto' })
@@ -1153,12 +1153,12 @@ function useArtistStoryMotion() {
       timeline.to(atmosphere, { backgroundColor: 'var(--story-base)', duration: .72 }, 4.42)
       revealScene(timeline, scenes[3], scenes[4], 4.48)
       if (isMarioCases) {
-        // Mario has two rows of collaborations. Let the complete grid travel
-        // through the pinned stage before revealing 06, instead of clipping
-        // the second row at the viewport edge.
-        gsap.set(casesGrid, { y: 0, willChange: 'transform' })
-        timeline.to(casesGrid, {
-          y: () => -Math.max(0, casesGrid ? casesGrid.scrollHeight - window.innerHeight * .64 : 0),
+        // Mario has two rows of collaborations. Move the eyebrow, heading and
+        // both rows as one editorial block so the 05 label never gets stranded
+        // above the works while the visitor scrolls toward 06.
+        gsap.set(casesSafe, { y: 0, willChange: 'transform' })
+        timeline.to(casesSafe, {
+          y: () => -Math.max(0, casesSafe ? casesSafe.scrollHeight - window.innerHeight * .76 : 0),
           duration: 1.8
         }, 4.82)
         revealScene(timeline, scenes[4], scenes[5], 7.05)
