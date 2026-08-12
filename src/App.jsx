@@ -937,9 +937,13 @@ const mayaCollaborations = [
 function MayaCollaborationCard({ item, index, onVideo }) {
   const [file, brand, url, kind] = item
   if (kind === 'video') {
-    const work = workProjects.find((entry) => entry.slug === 'chillgood-takoyaki')
-    return <button className="maya-collaboration-card maya-collaboration-card--video" type="button" onClick={() => work && onVideo(work)} aria-label={`Play ${brand}`}>
-      <div className="maya-collaboration-media"><video src={work?.video} poster={work?.poster} muted playsInline preload="metadata" aria-label={`Maya collaboration with ${brand}`} /></div>
+    // Maya's selected-work video is the short collaboration cut stored with
+    // her profile. Do not reuse the long Work-page Takoyaki project here.
+    const video = `${assets}artists/collaborations/maya/${file}.mp4`
+    const poster = `${assets}artists/collaborations/maya/${file}.jpg`
+    const work = { brand, name: brand, category: 'Selected collaboration', video, poster }
+    return <button className="maya-collaboration-card maya-collaboration-card--video" type="button" onClick={() => onVideo(work)} aria-label={`Play ${brand}`}>
+      <div className="maya-collaboration-media"><video src={video} poster={poster} muted playsInline preload="metadata" aria-label={`Maya collaboration with ${brand}`} /></div>
       <span>{brand} ↗</span>
     </button>
   }
