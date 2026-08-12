@@ -1135,7 +1135,7 @@ function useArtistStoryMotion() {
       gsap.set(personality, { opacity: 1, x: 0 })
       gsap.set(camera, { xPercent: 0, yPercent: 0, scale: 1, transformOrigin: '50% 50%' })
       const revealScene = (timeline, from, to, at) => timeline.to(from, { autoAlpha: 0, y: -20, pointerEvents: 'none', duration: .32 }, at).fromTo(to, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, pointerEvents: 'auto', duration: .42 }, at + .18)
-      const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: root, start: 'top top', end: () => `+=${window.innerHeight * (isMarioCases ? 8.7 : (hasCases ? 7.4 : 6.2))}`, pin: stage, scrub: .75, anticipatePin: 1, invalidateOnRefresh: true } })
+      const timeline = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: root, start: 'top top', end: () => `+=${window.innerHeight * (isMarioCases ? 9.3 : (hasCases ? 7.4 : 6.2))}`, pin: stage, scrub: .75, anticipatePin: 1, invalidateOnRefresh: true } })
       timeline.to(camera, { xPercent: -188, yPercent: 12, scale: 1.78, transformOrigin: '50% 16%', duration: 1.3 }, .45)
         .to(atmosphere, { xPercent: -5, yPercent: 3, scale: 1.08, backgroundColor: 'var(--story-deep)', duration: 1.3 }, .45)
         .to(camera, { autoAlpha: 0, duration: .16 }, .75)
@@ -1158,10 +1158,10 @@ function useArtistStoryMotion() {
         // above the works while the visitor scrolls toward 06.
         gsap.set(casesSafe, { y: 0, willChange: 'transform' })
         timeline.to(casesSafe, {
-          y: () => -Math.max(0, casesSafe ? casesSafe.scrollHeight - window.innerHeight * .76 : 0),
-          duration: 1.8
-        }, 4.82)
-        revealScene(timeline, scenes[4], scenes[5], 7.05)
+          y: () => -Math.max(0, casesSafe ? casesSafe.scrollHeight - window.innerHeight * .86 : 0),
+          duration: 1.15
+        }, 6.35)
+        revealScene(timeline, scenes[4], scenes[5], 7.82)
       } else if (hasCases) revealScene(timeline, scenes[4], scenes[5], 5.54)
       requestAnimationFrame(() => ScrollTrigger.refresh())
     }, root)
