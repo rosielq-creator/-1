@@ -664,7 +664,7 @@ const storyProfiles = {
       ['polo-ralph-lauren', 'POLO RALPH LAUREN', 'https://www.instagram.com/p/DZ4op42CUif/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
       ['acqua-di-parma', 'ACQUA DI PARMA', 'https://www.instagram.com/p/DZouiMjCVa_/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
       ['mosay', 'MOSAY', 'https://www.instagram.com/p/DW5_E8PCTeC/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
-      ['dwn45nrcvd', 'MARIO', 'https://www.instagram.com/p/DWn45nRCVd_/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
+      ['dwn45nrcvd', 'GENTLE MONSTER', 'https://www.instagram.com/p/DWn45nRCVd_/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='],
     ],
     socialLabel: 'Social snapshots · historical', socialHandle: 'Instagram', followers: '13.5K', socialLinks: [['Instagram', '@marrrio._.m', 'https://www.instagram.com/marrrio._.m/'], ['小红书', 'Mario', 'https://www.xiaohongshu.com/user/profile/6712310b000000001d022632']],
     socialMetrics: [
