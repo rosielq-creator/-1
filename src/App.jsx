@@ -151,7 +151,7 @@ function getRoute() {
   const parts = path.split('/').filter(Boolean)
   const params = new URLSearchParams(query)
   if (parts[0] === 'artists') return { type: parts[1] ? 'artist-detail' : 'artists', slug: parts[1], focus: params.get('focus') }
-  if (parts[0] === 'work') return { type: parts[1] ? 'work-detail' : 'work', slug: parts[1], open: params.get('open') }
+  if (parts[0] === 'work') return { type: parts[1] ? 'work-detail' : 'work', slug: parts[1], open: params.get('open'), format: params.get('format') }
   return { type: 'home', anchor: value.replace(/^\//, '') }
 }
 
@@ -1324,8 +1324,8 @@ const workFormats = [
 ]
 const workFormatFor = (work) => (work.photo ? 'photo' : work.slug === 'maya-kim-vlog' ? 'drama' : ['peninsula-fathers-day', 'chunwo-dreamgirl-03', 'chow-sang-sang'].includes(work.slug) ? 'reels' : ['chillgood-takoyaki', 'chillgood-animation'].includes(work.slug) ? 'mv' : 'commercial')
 
-function WorkOverview({ language, initialWorkSlug }) {
-  const [format, setFormat] = useState('commercial')
+function WorkOverview({ language, initialWorkSlug, initialFormat }) {
+  const [format, setFormat] = useState(workFormats.some(([id]) => id === initialFormat) ? initialFormat : 'commercial')
   const [activeWork, setActiveWork] = useState(() => workProjects.find((work) => work.slug === initialWorkSlug) || null)
   const current = workFormats.find(([id]) => id === format)
   const items = workProjects.filter((work) => workFormatFor(work) === format)
@@ -1366,7 +1366,7 @@ export default function App() {
   const content = route.type === 'home' ? <HomePage t={t} onNavigate={navigate} />
     : route.type === 'artists' ? <ArtistsOverview language={language} focus={route.focus} />
       : route.type === 'artist-detail' ? <ArtistDetail artist={directoryArtists.find((artist) => artist.profile_slug === route.slug)} language={language} />
-        : route.type === 'work' ? <WorkOverview language={language} initialWorkSlug={route.open} />
+        : route.type === 'work' ? <WorkOverview language={language} initialWorkSlug={route.open} initialFormat={route.format} />
           : route.type === 'work-detail' ? <WorkDetail work={workProjects.find((work) => work.slug === route.slug)} />
             : <NotFound />
   return <><a className="skip-link" href="#main">{t.skip}</a><Header language={language} setLanguage={setLanguage} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />{content}<Footer language={language} /></>
