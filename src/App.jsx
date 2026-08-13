@@ -55,6 +55,7 @@ const works = [
 
 // Work pages use the approved current-project delivery package. Homepage media stays separate.
 const workProjects = [
+  { brand: 'airwallex', name: 'airwallex', slug: 'airwallex', category: 'Brand World', video: `${assets}work/projects/airwallex.mp4`, poster: `${assets}work/projects/airwallex.jpg` },
   { brand: 'Macau MGM', name: 'MGM Spa', slug: 'mgm-film-01', category: 'Hospitality', video: `${assets}work/projects/mgm-film-01.mp4`, poster: `${assets}work/projects/mgm-film-01.jpg`, artistIds: ['bailey'] },
   { brand: 'Macau MGM', name: 'MGM Film 02', slug: 'mgm-film-02', category: 'Hospitality', video: `${assets}work/projects/mgm-film-02.mp4`, poster: `${assets}work/projects/mgm-film-02.jpg`, artistIds: ['bailey'] },
   { brand: 'Macau MGM', name: 'MGM Pool', slug: 'mgm-film-03', category: 'Hospitality', video: `${assets}work/projects/mgm-film-03.mp4`, poster: `${assets}work/projects/mgm-film-03.jpg`, artistIds: ['connor', 'bailey'] },
