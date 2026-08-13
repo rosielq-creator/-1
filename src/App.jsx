@@ -410,7 +410,7 @@ function WorkPlayerModal({ work, initialMuted, onClose, language }) {
   }
   const closeFromBackdrop = (event) => { if (event.target === event.currentTarget) onClose() }
 
-  return <div className={`work-player-modal ${work.portrait || isPhoto ? 'work-player-modal--portrait' : ''}`} role="dialog" aria-modal="true" aria-label={`${work.name} ${isPhoto ? 'image' : 'video'} player`} onMouseDown={closeFromBackdrop}>
+  return <div className={`work-player-modal ${isPhoto ? 'work-player-modal--photo' : work.portrait ? 'work-player-modal--portrait' : ''}`} role="dialog" aria-modal="true" aria-label={`${work.name} ${isPhoto ? 'image' : 'video'} player`} onMouseDown={closeFromBackdrop}>
     <div className="work-player-dialog" onMouseDown={(event) => event.stopPropagation()}>
       {isPhoto ? <img className="work-player-video" src={work.poster} alt={`${work.brand} — ${work.name}`} /> : <video ref={videoRef} className="work-player-video" src={work.video} poster={work.poster} playsInline muted={muted} style={{ objectPosition: work.position }} onPlaying={() => setPlaying(true)} onPause={() => setPlaying(false)} onEnded={() => { setPlaying(false); setProgress(0) }} onTimeUpdate={(event) => setProgress(event.currentTarget.duration ? event.currentTarget.currentTime / event.currentTarget.duration : 0)} />}
       <div className="work-player-meta"><strong>{work.name}</strong><span>{work.category}</span></div>
