@@ -74,6 +74,7 @@ const workProjects = [
   { brand: 'GRAMS', name: 'Black & White', slug: 'grams-bw', category: 'Fashion & Lifestyle', video: `${assets}work/projects/grams-bw.mp4`, poster: `${assets}work/projects/grams-bw.jpg` },
   { brand: 'KOISEA', name: 'Landscape Cut', slug: 'koisea-landscape', category: 'Fashion & Lifestyle', video: `${assets}work/projects/koisea-landscape.mp4`, poster: `${assets}work/projects/koisea-landscape.png` },
   { brand: 'KOISEA', name: 'Underground Cut', slug: 'koisea-underground', category: 'Fashion & Lifestyle', video: `${assets}work/projects/koisea-underground.mp4`, poster: `${assets}work/projects/koisea-underground.jpg` },
+  { brand: 'Maya Kim', name: 'Vlog', slug: 'maya-kim-vlog', category: 'Narrative Frames', video: `${assets}work/projects/maya-kim-vlog.mp4`, poster: `${assets}work/projects/maya-kim-vlog.jpg` },
 ]
 
 const copy = {
@@ -1321,7 +1322,7 @@ const workFormats = [
   ['photo', 'Still Worlds', 'Still, never static.', '静帧世界', '静止，也持续发生。', '靜幀世界', '靜止，也持續發生。'],
   ['drama', 'Narrative Frames', 'Stories that stay with you.', '叙事片场', '留在心里的故事。', '敘事片場', '留在心裡的故事。'],
 ]
-const workFormatFor = (work) => (work.photo ? 'photo' : ['peninsula-fathers-day', 'chunwo-dreamgirl-03', 'chow-sang-sang'].includes(work.slug) ? 'reels' : ['chillgood-takoyaki', 'chillgood-animation'].includes(work.slug) ? 'mv' : 'commercial')
+const workFormatFor = (work) => (work.photo ? 'photo' : work.slug === 'maya-kim-vlog' ? 'drama' : ['peninsula-fathers-day', 'chunwo-dreamgirl-03', 'chow-sang-sang'].includes(work.slug) ? 'reels' : ['chillgood-takoyaki', 'chillgood-animation'].includes(work.slug) ? 'mv' : 'commercial')
 
 function WorkOverview({ language, initialWorkSlug }) {
   const [format, setFormat] = useState('commercial')
