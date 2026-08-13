@@ -1315,16 +1315,16 @@ function ArtistStoryProfile({ artist, language, story }) {
 }
 
 const workFormats = [
-  ['reels', 'Quick Cuts', 'Small moments, in motion.', '灵感快切', '轻快瞬间，持续流动。', '靈感快切', '輕快瞬間，持續流動。'],
   ['commercial', 'Brand Worlds', 'Brands in full focus.', '品牌世界', '让品牌成为主角。', '品牌世界', '讓品牌成為主角。'],
   ['mv', 'Sound in Motion', 'Sound, seen differently.', '声画现场', '让声音被看见。', '聲畫現場', '讓聲音被看見。'],
-  ['drama', 'Narrative Frames', 'Stories that stay with you.', '叙事片场', '留在心里的故事。', '敘事片場', '留在心裡的故事。'],
+  ['reels', 'Quick Cuts', 'Small moments, in motion.', '灵感快切', '轻快瞬间，持续流动。', '靈感快切', '輕快瞬間，持續流動。'],
   ['photo', 'Still Worlds', 'Still, never static.', '静帧世界', '静止，也持续发生。', '靜幀世界', '靜止，也持續發生。'],
+  ['drama', 'Narrative Frames', 'Stories that stay with you.', '叙事片场', '留在心里的故事。', '敘事片場', '留在心裡的故事。'],
 ]
 const workFormatFor = (work) => (work.photo ? 'photo' : work.slug === 'peninsula-fathers-day' ? 'reels' : ['chillgood-takoyaki', 'chillgood-animation'].includes(work.slug) ? 'mv' : 'commercial')
 
 function WorkOverview({ language, initialWorkSlug }) {
-  const [format, setFormat] = useState('reels')
+  const [format, setFormat] = useState('commercial')
   const [activeWork, setActiveWork] = useState(() => workProjects.find((work) => work.slug === initialWorkSlug) || null)
   const current = workFormats.find(([id]) => id === format)
   const items = workProjects.filter((work) => workFormatFor(work) === format)
