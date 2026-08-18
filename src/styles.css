@@ -103,7 +103,6 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
   .container { width:min(100% - 26px, 1152px); }
   .site-header { height:52px; }
   .brand-signature img { width:154px; height:29px; }
-  .header-actions { gap:10px; }
   .main-nav { top:52px; gap:13px; padding:13px; }
   .section,.section .container { min-height:608px; }
   .hero,.hero .container { min-height:calc(100svh - 52px); }
@@ -612,18 +611,11 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
 }
 
 /* Header language selector and GreenTomato wayfinding accents. */
-.header-actions { gap:22px; }
-.price-link { color:var(--ink); font:500 14px/1 var(--mono); text-transform:uppercase; }
-.price-link:hover { text-decoration:underline; text-underline-offset:5px; }
 .language-switcher { display:flex; align-items:center; border:1px solid var(--ink); }
 .language-switcher button { min-width:28px; border:0; border-left:1px solid var(--ink); padding:7px 6px 6px; color:var(--ink); background:transparent; font:600 10px/1 var(--mono); }
 .language-switcher button:first-child { border-left:0; }
 .language-switcher button.is-active { color:var(--paper); background:var(--ink); }
 .site-footer { color:#00a651; }
-
-@media (max-width:760px) {
-  .price-link { font-size:11px; }
-}
 
 /* Lightweight dossier pages for the three confirmed artist profiles. */
 .artist-profile-page { min-height:100svh; padding:clamp(96px,12svh,148px) 0 clamp(80px,11svh,136px); color:#f4f1ec; background:#0a0b0b; }

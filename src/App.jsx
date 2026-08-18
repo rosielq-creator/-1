@@ -338,10 +338,14 @@ function Header({ language, setLanguage, menuOpen, setMenuOpen }) {
     <Container className="header-inner">
       <a className="brand-signature" href="#/" aria-label={t.home}><img src={`${assets}brand/green-tomato-logo-green.png`} alt="GreenTomato" /></a>
       <nav className={menuOpen ? 'main-nav is-open' : 'main-nav'} aria-label={t.navigation}>
-        {t.nav.map((item, index) => <a key={navTargets[index]} href={navHrefs[index]} onClick={() => setMenuOpen(false)}>{item}</a>)}
+        {t.nav.slice(0, -1).map((item, index) => <a key={navTargets[index]} href={navHrefs[index]} onClick={() => setMenuOpen(false)}>{item}</a>)}
+        <a className="price-link" href="https://gt-ai-talent-rate-card.gthk-ai-2.chatgpt.site/?v=4" target="_blank" rel="noreferrer">{t.price}</a>
+        {t.nav.slice(-1).map((item, index) => {
+          const navIndex = t.nav.length - 1 + index
+          return <a key={navTargets[navIndex]} href={navHrefs[navIndex]} onClick={() => setMenuOpen(false)}>{item}</a>
+        })}
       </nav>
       <div className="header-actions">
-        <a className="price-link" href="https://gt-ai-talent-rate-card.gthk-ai-2.chatgpt.site/?v=4" target="_blank" rel="noreferrer">{t.price}</a>
         <div className="language-switcher" role="group" aria-label={t.language}>
           {languageOptions.map(([value, label, accessibleLabel]) => <button key={value} className={language === value ? 'is-active' : ''} type="button" onClick={() => { setLanguage(value); setMenuOpen(false) }} aria-pressed={language === value} aria-label={accessibleLabel}>{label}</button>)}
         </div>
