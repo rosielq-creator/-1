@@ -154,6 +154,7 @@ function getRoute() {
   const params = new URLSearchParams(query)
   if (parts[0] === 'artists') return { type: parts[1] ? 'artist-detail' : 'artists', slug: parts[1], focus: params.get('focus') }
   if (parts[0] === 'work') return { type: parts[1] ? 'work-detail' : 'work', slug: parts[1], open: params.get('open'), format: params.get('format') }
+  if (parts[0] === 'price') return { type: 'price' }
   return { type: 'home', anchor: value.replace(/^\//, '') }
 }
 
@@ -339,7 +340,7 @@ function Header({ language, setLanguage, menuOpen, setMenuOpen }) {
       <a className="brand-signature" href="#/" aria-label={t.home}><img src={`${assets}brand/green-tomato-logo-green.png`} alt="GreenTomato" /></a>
       <nav className={menuOpen ? 'main-nav is-open' : 'main-nav'} aria-label={t.navigation}>
         {t.nav.slice(0, -1).map((item, index) => <a key={navTargets[index]} href={navHrefs[index]} onClick={() => setMenuOpen(false)}>{item}</a>)}
-        <a className="price-link" href="https://gt-ai-talent-rate-card.gthk-ai-2.chatgpt.site/?v=4" target="_blank" rel="noreferrer">{t.price}</a>
+        <a className="price-link" href="#/price" onClick={() => setMenuOpen(false)}>{t.price}</a>
         {t.nav.slice(-1).map((item, index) => {
           const navIndex = t.nav.length - 1 + index
           return <a key={navTargets[navIndex]} href={navHrefs[navIndex]} onClick={() => setMenuOpen(false)}>{item}</a>
@@ -1347,6 +1348,17 @@ function WorkDetail({ work }) {
   return <main id="main" className="subpage subpage--light"><Container><div className="detail-grid detail-grid--work"><div><PageHeader className="work-page-heading" eyebrow={work.brand} title={work.name} back="#/work" /><p className="detail-role">{work.category}</p><p className="detail-tags">Selected work · {work.photo ? 'Photography' : 'Film'}</p></div><div className={`detail-work-media ${work.portrait || work.photo ? 'detail-work-media--portrait' : ''}`}>{work.photo ? <img src={work.poster} alt={`${work.brand} — ${work.name}`} /> : <video controls playsInline preload="metadata" poster={work.poster} aria-label={`${work.brand} — ${work.name}`}><source src={work.video} type="video/mp4" /></video>}</div></div></Container></main>
 }
 
+function PricePage() {
+  return <main id="main" className="price-page">
+    <iframe
+      className="price-frame"
+      src="https://gt-ai-talent-rate-card.gthk-ai-2.chatgpt.site/?v=4"
+      title="GreenTomato talent rate card"
+      loading="eager"
+    />
+  </main>
+}
+
 function NotFound() { return <main id="main" className="subpage subpage--dark"><Container><PageHeader eyebrow="404" title="Not found." back="#/" /></Container></main> }
 
 function Footer({ language }) { return <footer className="site-footer"><Container><a className="wordmark" href="#/">GreenTomato</a><span>© {new Date().getFullYear()} Green Tomato</span></Container></footer> }
@@ -1374,8 +1386,9 @@ export default function App() {
   const content = route.type === 'home' ? <HomePage t={t} onNavigate={navigate} />
     : route.type === 'artists' ? <ArtistsOverview language={language} focus={route.focus} />
       : route.type === 'artist-detail' ? <ArtistDetail artist={directoryArtists.find((artist) => artist.profile_slug === route.slug)} language={language} />
-        : route.type === 'work' ? <WorkOverview language={language} initialWorkSlug={route.open} initialFormat={route.format} />
-          : route.type === 'work-detail' ? <WorkDetail work={workProjects.find((work) => work.slug === route.slug)} />
+          : route.type === 'work' ? <WorkOverview language={language} initialWorkSlug={route.open} initialFormat={route.format} />
+            : route.type === 'work-detail' ? <WorkDetail work={workProjects.find((work) => work.slug === route.slug)} />
+              : route.type === 'price' ? <PricePage />
             : <NotFound />
   return <><a className="skip-link" href="#main">{t.skip}</a><Header language={language} setLanguage={setLanguage} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />{content}<Footer language={language} /></>
 }

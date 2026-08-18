@@ -617,6 +617,14 @@ main { position:relative; isolation:isolate; }.section { height:var(--section-h)
 .language-switcher button.is-active { color:var(--paper); background:var(--ink); }
 .site-footer { color:#00a651; }
 
+.price-page { min-height:calc(100svh - 64px); background:var(--paper); }
+.price-frame { display:block; width:100%; height:calc(100svh - 64px); border:0; background:var(--paper); }
+
+@media (max-width:760px) {
+  .price-page { min-height:calc(100svh - 52px); }
+  .price-frame { height:calc(100svh - 52px); }
+}
+
 /* Lightweight dossier pages for the three confirmed artist profiles. */
 .artist-profile-page { min-height:100svh; padding:clamp(96px,12svh,148px) 0 clamp(80px,11svh,136px); color:#f4f1ec; background:#0a0b0b; }
 .artist-profile-page .back-link { display:inline-block; margin-bottom:clamp(30px,5svh,64px); color:rgba(244,241,236,.78); }
