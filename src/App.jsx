@@ -56,6 +56,8 @@ const works = [
 // Work pages use the approved current-project delivery package. Homepage media stays separate.
 const workProjects = [
   { brand: 'airwallex', name: 'airwallex', slug: 'airwallex', category: 'Brand World', video: `${assets}work/projects/airwallex.mp4`, poster: `${assets}work/projects/airwallex.jpg` },
+  { brand: 'Cathy', name: 'HKmovie', slug: 'cathy-hkmovie', category: 'Brand World', video: `${assets}work/projects/cathy-hkmovie.mp4`, poster: `${assets}work/projects/cathy-hkmovie.jpg` },
+  { brand: 'AIVP', name: 'Crew', slug: 'aivp-crew', category: 'Crew', format: 'crew', video: `${assets}work/projects/aivp-crew.mp4`, poster: `${assets}work/projects/aivp-crew.jpg` },
   { brand: 'ChunWo-Dreamgirl', name: 'Dreamgirl 01', slug: 'chunwo-dreamgirl-01', category: 'Photography', poster: `${assets}work/projects/dream-girl-01.jpg`, photo: true },
   { brand: 'ChunWo-Dreamgirl', name: 'Dreamgirl 02', slug: 'chunwo-dreamgirl-02', category: 'Photography', poster: `${assets}work/projects/dream-girl-02.jpg`, photo: true },
   { brand: 'ChunWo-Dreamgirl', name: 'Dreamgirl 03', slug: 'chunwo-dreamgirl-03', category: 'Brand World', video: `${assets}work/projects/chunwo-dreamgirl-03.mp4`, poster: `${assets}work/projects/chunwo-dreamgirl-03.jpg`, portrait: true },
@@ -1321,6 +1323,7 @@ const workFormats = [
   ['reels', 'Quick Cuts', 'Small moments, in motion.', '灵感快切', '轻快瞬间，持续流动。', '靈感快切', '輕快瞬間，持續流動。'],
   ['photo', 'Still Worlds', 'Still, never static.', '静帧世界', '静止，也持续发生。', '靜幀世界', '靜止，也持續發生。'],
   ['drama', 'Narrative Frames', 'Stories that stay with you.', '叙事片场', '留在心里的故事。', '敘事片場', '留在心裡的故事。'],
+  ['crew', 'Crew', 'The people behind the picture.', '幕后团队', '让创作发生的人。', '幕後團隊', '讓創作發生的人。'],
 ]
 const workFormatFor = (work) => work.format || (work.photo ? 'photo' : ['peninsula-fathers-day', 'chunwo-dreamgirl-03', 'chow-sang-sang'].includes(work.slug) ? 'reels' : ['chillgood-takoyaki', 'chillgood-animation'].includes(work.slug) ? 'mv' : 'commercial')
 
