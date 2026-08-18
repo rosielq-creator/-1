@@ -104,6 +104,19 @@ const copy = {
     est: 'Est. Hong Kong', scroll: 'Scroll to grow', aboutEyebrow: 'About us', artistsEyebrow: 'Artists', workEyebrow: 'Work', brandsEyebrow: 'Brands & services', contactEyebrow: 'Contact',
     allArtists: 'View all artists', allWork: 'View all work', profile: 'View profile', playCase: 'Play case', selectedWork: 'Selected work', madeToMove: <>Made<br />to move.</>,
     workFormats: 'Work formats', openWork: 'Open work', moreWork: 'More stories are in development.', skip: 'Skip to content', home: 'Green Tomato home', navigation: 'Main navigation', language: 'Language',
+    workIntro: {
+      title: <>Unleash Your<br /><b>Creativity.</b></>,
+      lead: 'AI Video Production, shaped by human taste. We combine new tools with 20+ years of strategic and production experience to build distinct, brand-consistent stories with the flexibility to respond when culture moves.',
+      context: 'Bring us the brief, audience and places your work needs to live. We turn them into a clear creative direction, a shared production process and adaptable assets for every platform.',
+      processEyebrow: 'How we make it happen',
+      process: [
+        ['Concept Development & Script Creation', 'Transform marketing briefs into captivating scripts, aligning creative narratives with your brand voice and campaign objectives.'],
+        ['Visual Preview & Storyboard Design', 'Visualize mood, pacing and visual language early through AI-generated storyboards, so every stakeholder can align before production begins.'],
+        ['Footage Generation & Asset Creation', 'Create polished visuals, environments and performances with full creative control and room for ideas that conventional production can limit.'],
+        ['Editing & Visual Integration', 'Compose a cohesive story through considered pacing, effects, text, voiceover and music—made to feel like one complete world.'],
+        ['Revision & Final Output', 'Refine quickly with real-time feedback, then prepare multilingual adaptations and format variations for the platforms that matter.'],
+      ],
+    },
   },
   zh: {
     nav: ['关于我们', '数字艺人', '案例作品', '合作品牌', '服务能力', '联系我们'], price: '价格',
@@ -129,6 +142,19 @@ const copy = {
     est: '创立于香港', scroll: '向下探索', aboutEyebrow: '关于我们', artistsEyebrow: '数字艺人', workEyebrow: '案例作品', brandsEyebrow: '合作品牌与服务能力', contactEyebrow: '联系我们',
     allArtists: '认识全部数字艺人', allWork: '查看全部案例', profile: '查看人物档案', playCase: '播放影片', selectedWork: '精选案例', madeToMove: <>以结果<br />为导向。</>,
     workFormats: '案例分类', openWork: '查看项目', moreWork: '更多项目正在制作中。', skip: '跳至主要内容', home: 'Green Tomato 首页', navigation: '主导航', language: '语言',
+    workIntro: {
+      title: <>释放你的<br /><b>创意。</b></>,
+      lead: 'AI 影片制作，由人的审美判断掌舵。我们将新技术与团队逾 20 年的策略及制作经验结合，为品牌打造鲜明、一致，并能随文化脉动灵活回应的叙事。',
+      context: '把品牌 brief、受众与作品投放场景交给我们。我们将它们转化为清晰的创意方向、共同参与的制作流程，以及适配不同平台的内容资产。',
+      processEyebrow: '我们的制作方式',
+      process: [
+        ['概念开发与脚本创作', '将营销 brief 转化为有吸引力的脚本，让创意叙事精准贴合品牌语气与活动目标。'],
+        ['视觉预览与分镜设计', '以 AI 分镜预先建立情绪、节奏与视觉语言，让所有项目成员在制作开始前达成共识。'],
+        ['影像生成与素材创作', '在充分创意掌控下，制作精致的视觉、场景与角色表演，释放传统制作限制以外的想法。'],
+        ['剪辑与视觉整合', '通过节奏、特效、文字、旁白与音乐的细致整合，构成一个完整连贯的品牌世界。'],
+        ['修订与最终交付', '根据即时反馈快速调整，并制作多语言版本及适配各平台的不同格式。'],
+      ],
+    },
   },
 }
 
@@ -145,6 +171,19 @@ copy['zh-Hant'] = { ...copy.zh,
   aboutTitle: <>人的感知。<br />機器的可能。</>, aboutBody: '我們代表新一代創作者，將藝術與程式、想像與人的視角融合在一起。', artistsTitle: <>塑造全新現實的<br />創作者。</>, artistsBody: '導演、設計師與技術創作者，將大膽想法化為推動文化的作品。',
   workTitle: <>精選作品，<br />為觸動而生。</>, workBody: '從短片到品牌世界，我們創作能被感受並留下餘韻的故事。', brandsTitle: <>與品牌同行。<br />為文化而作。</>, worldTitle: <>我們構築<br />完整的世界。</>, worldItems: ['AI 人才選角', '角色創意顧問', '內容製作', '活動共創'], contactTitle: <>告訴我們<br />你的故事</>, form: ['姓名', '電郵', '專案 / 預算', '還有什麼想說'], send: '傳送訊息', sending: '傳送中…', sent: '謝謝，你的訊息已經送出。', sendError: '傳送失敗，請重試或直接寄信給我們。',
   est: '創立於香港', scroll: '向下捲動，繼續成長', aboutEyebrow: '關於我們', artistsEyebrow: '藝術家', workEyebrow: '作品', brandsEyebrow: '品牌與服務', contactEyebrow: '聯絡', allArtists: '查看所有藝術家', allWork: '查看全部作品', profile: '查看檔案', playCase: '播放案例', selectedWork: '精選作品', madeToMove: <>為流動<br />而作。</>, workFormats: '作品分類', openWork: '打開作品', moreWork: '更多作品正在製作中。', skip: '跳至主要內容', home: 'Green Tomato 首頁', navigation: '主導覽', language: '語言',
+  workIntro: {
+    title: <>釋放你的<br /><b>創意。</b></>,
+    lead: 'AI 影片製作，由人的美感判斷掌舵。我們結合新技術與團隊逾 20 年的策略及製作經驗，為品牌建構鮮明、一致，並能隨文化脈動靈活回應的敘事。',
+    context: '把品牌 brief、受眾與作品投放場景交給我們。我們將它們轉化為清晰的創意方向、共同參與的製作流程，以及適配不同平台的內容資產。',
+    processEyebrow: '我們的製作方式',
+    process: [
+      ['概念開發與腳本創作', '將行銷 brief 轉化為引人入勝的腳本，讓創意敘事精準貼合品牌語氣與活動目標。'],
+      ['視覺預覽與分鏡設計', '以 AI 分鏡預先建立情緒、節奏與視覺語言，讓所有專案成員在製作開始前達成共識。'],
+      ['影像生成與素材創作', '在充分創意掌控下，製作精緻的視覺、場景與角色表演，釋放傳統製作限制以外的想法。'],
+      ['剪輯與視覺整合', '透過節奏、特效、文字、旁白與音樂的細緻整合，構成一個完整連貫的品牌世界。'],
+      ['修訂與最終交付', '依據即時回饋快速調整，並製作多語言版本及適配各平台的不同格式。'],
+    ],
+  },
 }
 
 function getRoute() {
@@ -1340,7 +1379,7 @@ function WorkOverview({ language, initialWorkSlug, initialFormat }) {
   const items = workProjects.filter((work) => workFormatFor(work) === format)
   const t = copy[language]
   const localized = language === 'zh-Hant'
-  return <><main id="main" className="subpage subpage--light"><Container><PageHeader className="work-page-heading" eyebrow={`${t.selectedWork} / ${String(workProjects.length).padStart(2, '0')}`} title={t.madeToMove} back="#/" /><div className="work-format-tabs" role="tablist" aria-label={t.workFormats}>{workFormats.map(([id, label, , zhLabel, , zhHantLabel]) => <button key={id} type="button" role="tab" aria-selected={format === id} className={format === id ? 'is-active' : ''} onClick={() => setFormat(id)}>{language === 'en' ? label : localized ? zhHantLabel : zhLabel}</button>)}</div><div className="work-format-heading"><span>{language === 'en' ? current[1] : localized ? current[5] : current[3]}</span><p>{language === 'en' ? current[2] : localized ? current[6] : current[4]}</p></div>{items.length ? <div className={`work-index work-index--${format}`}>{items.map((work, index) => <button type="button" className="work-index-card" onClick={() => setActiveWork(work)} key={work.slug} aria-label={`${t.openWork}: ${work.name}`}><img src={work.poster} alt="" loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><span>{String(index + 1).padStart(2, '0')}</span><div><em>{work.name}</em><strong>{work.brand}</strong><i>▶</i></div><small>{t.openWork} →</small></button>)}</div> : <p className="work-empty">{t.moreWork}</p>}</Container></main>{activeWork && <WorkPlayerModal work={activeWork} language={language} initialMuted onClose={() => setActiveWork(null)} />}</>
+  return <><main id="main" className="subpage subpage--light"><Container><PageHeader className="work-page-heading" eyebrow={`${t.selectedWork} / ${String(workProjects.length).padStart(2, '0')}`} title={t.madeToMove} back="#/" /><section className="work-intro" aria-labelledby="work-intro-title"><div className="work-intro-copy"><h2 id="work-intro-title">{t.workIntro.title}</h2><p>{t.workIntro.lead}</p><p>{t.workIntro.context}</p></div><div className="work-process" aria-label={t.workIntro.processEyebrow}><p className="work-process-eyebrow">{t.workIntro.processEyebrow}</p><div className="work-process-grid">{t.workIntro.process.map(([title, description], index) => <article key={title} className="work-process-card"><span>{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{description}</p></article>)}</div></div></section><div className="work-format-tabs" role="tablist" aria-label={t.workFormats}>{workFormats.map(([id, label, , zhLabel, , zhHantLabel]) => <button key={id} type="button" role="tab" aria-selected={format === id} className={format === id ? 'is-active' : ''} onClick={() => setFormat(id)}>{language === 'en' ? label : localized ? zhHantLabel : zhLabel}</button>)}</div><div className="work-format-heading"><span>{language === 'en' ? current[1] : localized ? current[5] : current[3]}</span><p>{language === 'en' ? current[2] : localized ? current[6] : current[4]}</p></div>{items.length ? <div className={`work-index work-index--${format}`}>{items.map((work, index) => <button type="button" className="work-index-card" onClick={() => setActiveWork(work)} key={work.slug} aria-label={`${t.openWork}: ${work.name}`}><img src={work.poster} alt="" loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><span>{String(index + 1).padStart(2, '0')}</span><div><em>{work.name}</em><strong>{work.brand}</strong><i>▶</i></div><small>{t.openWork} →</small></button>)}</div> : <p className="work-empty">{t.moreWork}</p>}</Container></main>{activeWork && <WorkPlayerModal work={activeWork} language={language} initialMuted onClose={() => setActiveWork(null)} />}</>
 }
 
 function WorkDetail({ work }) {
