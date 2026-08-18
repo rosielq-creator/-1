@@ -81,7 +81,7 @@ const workProjects = [
 
 const copy = {
   en: {
-    nav: ['About', 'Artists', 'Work', 'Brands', 'Services', 'Contact'],
+    nav: ['About', 'Artists', 'Work', 'Brands', 'Services', 'Contact'], price: 'Price',
     heroKicker: 'A home for new realities',
     heroBody: 'We build identities, images and worlds for culture-shaping brands.',
     aboutTitle: <>Human taste.<br />Machine possibility.</>,
@@ -106,7 +106,7 @@ const copy = {
     workFormats: 'Work formats', openWork: 'Open work', moreWork: 'More stories are in development.', skip: 'Skip to content', home: 'Green Tomato home', navigation: 'Main navigation', language: 'Language',
   },
   zh: {
-    nav: ['关于我们', '数字艺人', '案例作品', '合作品牌', '服务能力', '联系我们'],
+    nav: ['关于我们', '数字艺人', '案例作品', '合作品牌', '服务能力', '联系我们'], price: '价格',
     heroKicker: '数字艺人与 AI 品牌内容创意工作室',
     heroBody: '我们为品牌打造数字艺人、内容作品与 AI 创意企划，建立面向新一代受众的品牌表达。',
     aboutTitle: <>人的创意，<br />AI 驱动的制作能力。</>,
@@ -141,7 +141,7 @@ const languageOptions = [
 ]
 
 copy['zh-Hant'] = { ...copy.zh,
-  nav: ['關於', '藝術家', '作品', '品牌', '服務', '聯絡'], menu: '選單', heroKicker: '新現實的創作之家', heroBody: '我們為塑造文化的品牌，構築身份、影像與世界。',
+  nav: ['關於', '藝術家', '作品', '品牌', '服務', '聯絡'], price: '價格', menu: '選單', heroKicker: '新現實的創作之家', heroBody: '我們為塑造文化的品牌，構築身份、影像與世界。',
   aboutTitle: <>人的感知。<br />機器的可能。</>, aboutBody: '我們代表新一代創作者，將藝術與程式、想像與人的視角融合在一起。', artistsTitle: <>塑造全新現實的<br />創作者。</>, artistsBody: '導演、設計師與技術創作者，將大膽想法化為推動文化的作品。',
   workTitle: <>精選作品，<br />為觸動而生。</>, workBody: '從短片到品牌世界，我們創作能被感受並留下餘韻的故事。', brandsTitle: <>與品牌同行。<br />為文化而作。</>, worldTitle: <>我們構築<br />完整的世界。</>, worldItems: ['AI 人才選角', '角色創意顧問', '內容製作', '活動共創'], contactTitle: <>告訴我們<br />你的故事</>, form: ['姓名', '電郵', '專案 / 預算', '還有什麼想說'], send: '傳送訊息', sending: '傳送中…', sent: '謝謝，你的訊息已經送出。', sendError: '傳送失敗，請重試或直接寄信給我們。',
   est: '創立於香港', scroll: '向下捲動，繼續成長', aboutEyebrow: '關於我們', artistsEyebrow: '藝術家', workEyebrow: '作品', brandsEyebrow: '品牌與服務', contactEyebrow: '聯絡', allArtists: '查看所有藝術家', allWork: '查看全部作品', profile: '查看檔案', playCase: '播放案例', selectedWork: '精選作品', madeToMove: <>為流動<br />而作。</>, workFormats: '作品分類', openWork: '打開作品', moreWork: '更多作品正在製作中。', skip: '跳至主要內容', home: 'Green Tomato 首頁', navigation: '主導覽', language: '語言',
@@ -341,6 +341,7 @@ function Header({ language, setLanguage, menuOpen, setMenuOpen }) {
         {t.nav.map((item, index) => <a key={navTargets[index]} href={navHrefs[index]} onClick={() => setMenuOpen(false)}>{item}</a>)}
       </nav>
       <div className="header-actions">
+        <a className="price-link" href="https://gt-ai-talent-rate-card.gthk-ai-2.chatgpt.site/?v=4" target="_blank" rel="noreferrer">{t.price}</a>
         <div className="language-switcher" role="group" aria-label={t.language}>
           {languageOptions.map(([value, label, accessibleLabel]) => <button key={value} className={language === value ? 'is-active' : ''} type="button" onClick={() => { setLanguage(value); setMenuOpen(false) }} aria-pressed={language === value} aria-label={accessibleLabel}>{label}</button>)}
         </div>
