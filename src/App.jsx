@@ -1372,14 +1372,36 @@ const workFormats = [
 ]
 const workFormatFor = (work) => work.format || (work.photo ? 'photo' : ['peninsula-fathers-day', 'chunwo-dreamgirl-03', 'chow-sang-sang'].includes(work.slug) ? 'reels' : ['chillgood-takoyaki', 'chillgood-animation'].includes(work.slug) ? 'mv' : 'commercial')
 
+function useWorkIntroMotion() {
+  const ref = useRef(null)
+  useEffect(() => {
+    const section = ref.current
+    if (!section) return undefined
+    section.classList.add('is-motion-ready')
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      section.classList.add('is-inview')
+      return undefined
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return
+      section.classList.add('is-inview')
+      observer.disconnect()
+    }, { threshold: 0.14, rootMargin: '0px 0px -9% 0px' })
+    observer.observe(section)
+    return () => observer.disconnect()
+  }, [])
+  return ref
+}
+
 function WorkOverview({ language, initialWorkSlug, initialFormat }) {
   const [format, setFormat] = useState(workFormats.some(([id]) => id === initialFormat) ? initialFormat : 'commercial')
   const [activeWork, setActiveWork] = useState(() => workProjects.find((work) => work.slug === initialWorkSlug) || null)
+  const workIntroRef = useWorkIntroMotion()
   const current = workFormats.find(([id]) => id === format)
   const items = workProjects.filter((work) => workFormatFor(work) === format)
   const t = copy[language]
   const localized = language === 'zh-Hant'
-  return <><main id="main" className="subpage subpage--light"><Container><PageHeader className="work-page-heading" eyebrow={`${t.selectedWork} / ${String(workProjects.length).padStart(2, '0')}`} title={t.madeToMove} back="#/" /><section className="work-intro" aria-labelledby="work-intro-title"><div className="work-intro-copy"><h2 id="work-intro-title">{t.workIntro.title}</h2><p>{t.workIntro.lead}</p><p>{t.workIntro.context}</p></div><div className="work-process" aria-label={t.workIntro.processEyebrow}><p className="work-process-eyebrow">{t.workIntro.processEyebrow}</p><div className="work-process-grid">{t.workIntro.process.map(([title, description], index) => <article key={title} className="work-process-card"><span>{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{description}</p></article>)}</div></div></section><div className="work-format-tabs" role="tablist" aria-label={t.workFormats}>{workFormats.map(([id, label, , zhLabel, , zhHantLabel]) => <button key={id} type="button" role="tab" aria-selected={format === id} className={format === id ? 'is-active' : ''} onClick={() => setFormat(id)}>{language === 'en' ? label : localized ? zhHantLabel : zhLabel}</button>)}</div><div className="work-format-heading"><span>{language === 'en' ? current[1] : localized ? current[5] : current[3]}</span><p>{language === 'en' ? current[2] : localized ? current[6] : current[4]}</p></div>{items.length ? <div className={`work-index work-index--${format}`}>{items.map((work, index) => <button type="button" className="work-index-card" onClick={() => setActiveWork(work)} key={work.slug} aria-label={`${t.openWork}: ${work.name}`}><img src={work.poster} alt="" loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><span>{String(index + 1).padStart(2, '0')}</span><div><em>{work.name}</em><strong>{work.brand}</strong><i>▶</i></div><small>{t.openWork} →</small></button>)}</div> : <p className="work-empty">{t.moreWork}</p>}</Container></main>{activeWork && <WorkPlayerModal work={activeWork} language={language} initialMuted onClose={() => setActiveWork(null)} />}</>
+  return <><main id="main" className="subpage subpage--light"><Container><PageHeader className="work-page-heading" eyebrow={`${t.selectedWork} / ${String(workProjects.length).padStart(2, '0')}`} title={t.madeToMove} back="#/" /><section ref={workIntroRef} className="work-intro" aria-labelledby="work-intro-title"><div className="work-intro-copy"><h2 id="work-intro-title">{t.workIntro.title}</h2><p>{t.workIntro.lead}</p><p>{t.workIntro.context}</p></div><div className="work-process" aria-label={t.workIntro.processEyebrow}><p className="work-process-eyebrow">{t.workIntro.processEyebrow}</p><div className="work-process-grid">{t.workIntro.process.map(([title, description], index) => <article key={title} className="work-process-card" style={{ '--process-delay': `${index * 95}ms` }}><span>{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{description}</p></article>)}</div></div></section><div className="work-format-tabs" role="tablist" aria-label={t.workFormats}>{workFormats.map(([id, label, , zhLabel, , zhHantLabel]) => <button key={id} type="button" role="tab" aria-selected={format === id} className={format === id ? 'is-active' : ''} onClick={() => setFormat(id)}>{language === 'en' ? label : localized ? zhHantLabel : zhLabel}</button>)}</div><div className="work-format-heading"><span>{language === 'en' ? current[1] : localized ? current[5] : current[3]}</span><p>{language === 'en' ? current[2] : localized ? current[6] : current[4]}</p></div>{items.length ? <div className={`work-index work-index--${format}`}>{items.map((work, index) => <button type="button" className="work-index-card" onClick={() => setActiveWork(work)} key={work.slug} aria-label={`${t.openWork}: ${work.name}`}><img src={work.poster} alt="" loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><span>{String(index + 1).padStart(2, '0')}</span><div><em>{work.name}</em><strong>{work.brand}</strong><i>▶</i></div><small>{t.openWork} →</small></button>)}</div> : <p className="work-empty">{t.moreWork}</p>}</Container></main>{activeWork && <WorkPlayerModal work={activeWork} language={language} initialMuted onClose={() => setActiveWork(null)} />}</>
 }
 
 function WorkDetail({ work }) {
