@@ -406,7 +406,7 @@ function ArtistCard({ artist, onOpen, total, t }) {
 }
 
 function WorkCard({ work, onPlay, t }) {
-  const [muted, setMuted] = useState(true)
+  const [muted, setMuted] = useState(false)
   const isChinese = t.language !== 'Language'
 
   const toggleMuted = (event) => {
@@ -425,7 +425,7 @@ function WorkCard({ work, onPlay, t }) {
   </article>
 }
 
-function WorkPlayerModal({ work, initialMuted, onClose, language }) {
+function WorkPlayerModal({ work, initialMuted = false, onClose, language }) {
   const videoRef = useRef(null)
   const isPhoto = Boolean(work.photo)
   const [playing, setPlaying] = useState(false)
@@ -477,7 +477,7 @@ function HomePage({ t, onNavigate }) {
   const homeRef = useHomeNarrative(true)
   const [formStatus, setFormStatus] = useState('idle')
   const [activeWork, setActiveWork] = useState(null)
-  const [workStartsMuted, setWorkStartsMuted] = useState(true)
+  const [workStartsMuted, setWorkStartsMuted] = useState(false)
   const onSubmit = async (event) => {
     event.preventDefault()
     const form = event.currentTarget
@@ -716,7 +716,7 @@ function CastingCollaborationScene({ profile, language, copy }) {
   const [activeWork, setActiveWork] = useState(null)
   return <>
     <section className="maya-scene maya-scene--cases"><Container><div className={`maya-safe maya-safe--cases maya-safe--cases--${profile.collaborations.length}`}><Eyebrow number="04">{copy.collaborations}</Eyebrow><h2>{copy.madeWith}</h2><div className={`maya-collaboration-grid maya-collaboration-grid--${profile.collaborations.length}`}>{profile.collaborations.map((item, index) => { const work = workProjects.find((entry) => entry.slug === item.slug); return <button className="maya-collaboration-card casting-collaboration-card" type="button" onClick={() => work && setActiveWork(work)} key={item.slug} aria-label={`Play ${item.label}`}><div className="maya-collaboration-media">{work?.video ? <video src={work.video} poster={work.poster} muted playsInline preload="metadata" aria-label={`${item.label} collaboration preview`} /> : <img src={work?.poster} alt={`${item.label} collaboration`} loading={index === 0 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} />}</div><span>{item.label} ↗</span><small className="casting-collaboration-caption">{item.caption}</small></button> })}</div></div></Container></section>
-    {activeWork && <WorkPlayerModal work={activeWork} language={language} initialMuted onClose={() => setActiveWork(null)} />}
+    {activeWork && <WorkPlayerModal work={activeWork} language={language} initialMuted={false} onClose={() => setActiveWork(null)} />}
   </>
 }
 
@@ -1178,7 +1178,7 @@ function MayaProfile({ artist, language }) {
       <section className="maya-scene maya-scene--cases"><Container><div className={`maya-safe maya-safe--cases maya-safe--cases--${mayaCollaborations.length}`}><Eyebrow number="05">{ui.collaborations}</Eyebrow><h2>{ui.madeWith}</h2><div className={`maya-collaboration-grid maya-collaboration-grid--${mayaCollaborations.length}`}>{mayaCollaborations.map((item, index) => <MayaCollaborationCard item={item} index={index} onVideo={setActiveWork} key={item[0]} />)}</div></div></Container></section>
       <section className="maya-scene maya-scene--social"><Container><div className="maya-safe maya-safe--social"><Eyebrow number="06">{copy.social}</Eyebrow><div className="maya-social-layout"><div className="maya-social-metric"><a className="maya-social-handle" href={social.url} target="_blank" rel="noreferrer">{social.platform} · {social.handle} ↗</a><strong className="maya-followers">{dossier.followers_snapshot}<small>{copy.followers}</small></strong><SocialAccountLinks links={[[social.platform, social.handle, social.url]]} /></div><div className="maya-audience"><p>{copy.audience}</p><dl><div><dt>{copy.age2534}</dt><dd>{audience.age_25_34}</dd></div><div><dt>{copy.age1824}</dt><dd>{audience.age_18_24}</dd></div><div><dt>{copy.male}</dt><dd>{audience.male_audience}</dd></div><div><dt>{copy.female}</dt><dd>{audience.female_audience}</dd></div><div className="maya-audience-countries"><dt>{copy.countries}</dt><dd>{audience.countries}</dd></div></dl></div><div className="maya-cta"><h2>{language === 'en' ? <><span>Want to</span><span>create</span><span>something</span><span>together?</span></> : language === 'zh-Hant' ? <><span>想一起</span><span>創作</span><span>些什麼</span><span>嗎？</span></> : <><span>想一起</span><span>创作</span><span>些什么</span><span>吗？</span></>}</h2><a className="maya-primary-link" href="#contact">{copy.work} →</a></div></div></div></Container></section>
     </div>
-    {activeWork && <WorkPlayerModal work={activeWork} language={language} initialMuted onClose={() => setActiveWork(null)} />}
+    {activeWork && <WorkPlayerModal work={activeWork} language={language} initialMuted={false} onClose={() => setActiveWork(null)} />}
   </main>
 }
 
@@ -1403,7 +1403,7 @@ function WorkOverview({ language, initialWorkSlug, initialFormat }) {
   const items = workProjects.filter((work) => workFormatFor(work) === format)
   const t = copy[language]
   const localized = language === 'zh-Hant'
-  return <><main id="main" className="subpage subpage--light"><Container><PageHeader className="work-page-heading" eyebrow={`${t.selectedWork} / ${String(workProjects.length).padStart(2, '0')}`} title={t.madeToMove} back="#/" />{showWorkIntro && <section ref={workIntroRef} className="work-intro" aria-labelledby="work-intro-title"><div className="work-intro-copy"><h2 id="work-intro-title">{t.workIntro.title}</h2><p>{t.workIntro.lead}</p><p>{t.workIntro.context}</p></div><div className="work-process" aria-label={t.workIntro.processEyebrow}><p className="work-process-eyebrow">{t.workIntro.processEyebrow}</p><div className="work-process-grid"><svg className="work-process-vine" viewBox="0 0 1200 560" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M 82 118 C 262 72, 540 94, 760 130 S 1000 150, 1110 112 M 82 118 C 126 230, 152 315, 190 420 S 432 424, 618 366 S 920 315, 1086 434" /><g><circle cx="82" cy="118" r="9" /><circle cx="1110" cy="112" r="9" /><circle cx="190" cy="420" r="9" /><circle cx="618" cy="366" r="9" /><circle cx="1086" cy="434" r="9" /></g></svg>{t.workIntro.process.map(([title, description], index) => <article key={title} className="work-process-card" style={{ '--process-delay': `${index * 95}ms` }}><span>{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{description}</p></article>)}</div></div></section>}<div className="work-format-tabs" role="tablist" aria-label={t.workFormats}>{workFormats.map(([id, label, , zhLabel, , zhHantLabel]) => <button key={id} type="button" role="tab" aria-selected={format === id} className={format === id ? 'is-active' : ''} onClick={() => setFormat(id)}>{language === 'en' ? label : localized ? zhHantLabel : zhLabel}</button>)}</div><div className="work-format-heading"><span>{language === 'en' ? current[1] : localized ? current[5] : current[3]}</span><p>{language === 'en' ? current[2] : localized ? current[6] : current[4]}</p></div>{items.length ? <div className={`work-index work-index--${format}`}>{items.map((work, index) => <button type="button" className="work-index-card" onClick={() => setActiveWork(work)} key={work.slug} aria-label={`${t.openWork}: ${work.name}`}><img src={work.poster} alt="" loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><span>{String(index + 1).padStart(2, '0')}</span><div><em>{work.name}</em><strong>{work.brand}</strong><i>▶</i></div><small>{t.openWork} →</small></button>)}</div> : <p className="work-empty">{t.moreWork}</p>}</Container></main>{activeWork && <WorkPlayerModal work={activeWork} language={language} initialMuted onClose={() => setActiveWork(null)} />}</>
+  return <><main id="main" className="subpage subpage--light"><Container><PageHeader className="work-page-heading" eyebrow={`${t.selectedWork} / ${String(workProjects.length).padStart(2, '0')}`} title={t.madeToMove} back="#/" />{showWorkIntro && <section ref={workIntroRef} className="work-intro" aria-labelledby="work-intro-title"><div className="work-intro-copy"><h2 id="work-intro-title">{t.workIntro.title}</h2><p>{t.workIntro.lead}</p><p>{t.workIntro.context}</p></div><div className="work-process" aria-label={t.workIntro.processEyebrow}><p className="work-process-eyebrow">{t.workIntro.processEyebrow}</p><div className="work-process-grid"><svg className="work-process-vine" viewBox="0 0 1200 560" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M 82 118 C 262 72, 540 94, 760 130 S 1000 150, 1110 112 M 82 118 C 126 230, 152 315, 190 420 S 432 424, 618 366 S 920 315, 1086 434" /><g><circle cx="82" cy="118" r="9" /><circle cx="1110" cy="112" r="9" /><circle cx="190" cy="420" r="9" /><circle cx="618" cy="366" r="9" /><circle cx="1086" cy="434" r="9" /></g></svg>{t.workIntro.process.map(([title, description], index) => <article key={title} className="work-process-card" style={{ '--process-delay': `${index * 95}ms` }}><span>{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{description}</p></article>)}</div></div></section>}<div className="work-format-tabs" role="tablist" aria-label={t.workFormats}>{workFormats.map(([id, label, , zhLabel, , zhHantLabel]) => <button key={id} type="button" role="tab" aria-selected={format === id} className={format === id ? 'is-active' : ''} onClick={() => setFormat(id)}>{language === 'en' ? label : localized ? zhHantLabel : zhLabel}</button>)}</div><div className="work-format-heading"><span>{language === 'en' ? current[1] : localized ? current[5] : current[3]}</span><p>{language === 'en' ? current[2] : localized ? current[6] : current[4]}</p></div>{items.length ? <div className={`work-index work-index--${format}`}>{items.map((work, index) => <button type="button" className="work-index-card" onClick={() => setActiveWork(work)} key={work.slug} aria-label={`${t.openWork}: ${work.name}`}><img src={work.poster} alt="" loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><span>{String(index + 1).padStart(2, '0')}</span><div><em>{work.name}</em><strong>{work.brand}</strong><i>▶</i></div><small>{t.openWork} →</small></button>)}</div> : <p className="work-empty">{t.moreWork}</p>}</Container></main>{activeWork && <WorkPlayerModal work={activeWork} language={language} initialMuted={false} onClose={() => setActiveWork(null)} />}</>
 }
 
 function WorkDetail({ work }) {
