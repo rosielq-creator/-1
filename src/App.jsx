@@ -8,6 +8,9 @@ gsap.registerPlugin(ScrollTrigger)
 
 // Vite supplies `/` locally and `/-1/` on GitHub Pages.
 const assets = `${import.meta.env.BASE_URL}assets/`
+// Work films are replaced in-place during production. Version their requests so
+// GitHub Pages and the browser never combine stale byte ranges with a new MP4.
+const workVideoRevision = '20260820b'
 const vineScaleY = 1.035
 
 const artists = [
@@ -452,6 +455,8 @@ function WorkPlayerModal({ work, initialMuted = false, onClose, language }) {
   const [playing, setPlaying] = useState(false)
   const [muted, setMuted] = useState(initialMuted)
   const [progress, setProgress] = useState(0)
+  const [loading, setLoading] = useState(!isPhoto)
+  const videoSrc = isPhoto ? null : `${work.video}?v=${workVideoRevision}`
 
   useEffect(() => {
     const video = videoRef.current
@@ -460,6 +465,7 @@ function WorkPlayerModal({ work, initialMuted = false, onClose, language }) {
     if (!isPhoto && video) {
       video.defaultMuted = false
       video.muted = false
+      video.load()
       video.play().catch(() => setPlaying(false))
     }
     return () => { window.removeEventListener('keydown', onKeyDown); video?.pause() }
@@ -468,7 +474,11 @@ function WorkPlayerModal({ work, initialMuted = false, onClose, language }) {
   const togglePlayback = () => {
     const video = videoRef.current
     if (!video) return
-    if (video.paused) video.play().catch(() => setPlaying(false))
+    if (video.paused) {
+      if (video.networkState === HTMLMediaElement.NETWORK_EMPTY) video.load()
+      setLoading(true)
+      video.play().catch(() => { setPlaying(false); setLoading(false) })
+    }
     else video.pause()
   }
   const toggleMuted = () => {
@@ -485,11 +495,11 @@ function WorkPlayerModal({ work, initialMuted = false, onClose, language }) {
 
   return <div className={`work-player-modal ${isPhoto ? 'work-player-modal--photo' : work.portrait ? 'work-player-modal--portrait' : ''}`} role="dialog" aria-modal="true" aria-label={`${work.name} ${isPhoto ? 'image' : 'video'} player`} onMouseDown={closeFromBackdrop}>
     <div className="work-player-dialog" onMouseDown={(event) => event.stopPropagation()}>
-      {isPhoto ? <img className="work-player-video" src={work.poster} alt={`${work.brand} — ${work.name}`} /> : <video ref={videoRef} className="work-player-video" src={work.video} poster={work.poster} preload="metadata" playsInline muted={muted} style={{ objectPosition: work.position }} onPlaying={() => setPlaying(true)} onPause={() => setPlaying(false)} onEnded={() => { setPlaying(false); setProgress(0) }} onTimeUpdate={(event) => setProgress(event.currentTarget.duration ? event.currentTarget.currentTime / event.currentTarget.duration : 0)} />}
+      {isPhoto ? <img className="work-player-video" src={work.poster} alt={`${work.brand} — ${work.name}`} /> : <video ref={videoRef} className="work-player-video" src={videoSrc} poster={work.poster} preload="auto" playsInline muted={muted} style={{ objectPosition: work.position }} onCanPlay={() => setLoading(false)} onWaiting={() => setLoading(true)} onPlaying={() => { setPlaying(true); setLoading(false) }} onPause={() => setPlaying(false)} onEnded={() => { setPlaying(false); setProgress(0); setLoading(false) }} onError={() => { setPlaying(false); setLoading(false) }} onTimeUpdate={(event) => setProgress(event.currentTarget.duration ? event.currentTarget.currentTime / event.currentTarget.duration : 0)} />}
       <div className="work-player-meta"><strong>{work.name}</strong><span>{work.category}</span></div>
       {work.artistIds?.length > 0 && <div className="work-player-cast"><span>{language === 'en' ? 'Featured artists' : language === 'zh-Hant' ? '出演藝術家' : '出演艺人'}</span><div>{work.artistIds.map((id) => { const artist = directoryArtists.find((item) => item.id === id); if (!artist) return null; return <a key={id} href={`#/artists?focus=${id}`} onClick={onClose}><img src={artist.src} alt="" /><strong>{artist.display_name}</strong></a> })}</div></div>}
       {!isPhoto && <div className="work-player-controls">
-        <button className="work-control work-control--play" type="button" onClick={togglePlayback} aria-label={playing ? 'Pause video' : 'Play video'}>{playing ? 'Ⅱ' : '▶'}</button>
+        <button className="work-control work-control--play" type="button" onClick={togglePlayback} aria-label={playing ? 'Pause video' : loading ? 'Loading video' : 'Play video'}>{playing ? 'Ⅱ' : loading ? '…' : '▶'}</button>
         <input className="work-progress" type="range" min="0" max="1" step="0.001" value={progress} onChange={seek} aria-label="Video progress" />
         <button className="work-control" type="button" onClick={toggleMuted} aria-label={muted ? 'Unmute video' : 'Mute video'}>{muted ? '🔇' : '🔊'}</button>
       </div>}
