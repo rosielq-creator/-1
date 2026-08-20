@@ -114,8 +114,15 @@ const copy = {
         ['Visual Preview & Storyboard Design', 'Visualize mood, pacing and visual language early through AI-generated storyboards, so every stakeholder can align before production begins.'],
         ['Footage Generation & Asset Creation', 'Create polished visuals, environments and performances with full creative control and room for ideas that conventional production can limit.'],
         ['Editing & Visual Integration', 'Compose a cohesive story through considered pacing, effects, text, voiceover and music—made to feel like one complete world.'],
-        ['Revision & Final Output', 'Refine quickly with real-time feedback, then prepare multilingual adaptations and format variations for the platforms that matter.'],
+        ['Revision, Sign-off & Final Output', 'Refine quickly with real-time feedback, secure sign-off and prepare multilingual adaptations and format variations for the platforms that matter.'],
       ],
+      scopeEyebrow: 'How we work together',
+      scopeTitle: 'A shared process, from brief to final cut.',
+      scope: ['Pre-production meetings & research', 'Storyboards, feedback & revisions', 'Video production, feedback & revisions', 'Post-production, feedback & revisions'],
+      whyTitle: 'Why it works',
+      why: ['Move from brief to first cut faster', 'Keep more creative directions open', 'Stay flexible as ideas evolve'],
+      whatTitle: 'What we make',
+      what: ['AI video & photography', 'Commercials & brand films', 'TVCs', 'Social reels', 'Music videos', 'Narrative drama'],
     },
   },
   zh: {
@@ -152,8 +159,15 @@ const copy = {
         ['视觉预览与分镜设计', '以 AI 分镜预先建立情绪、节奏与视觉语言，让所有项目成员在制作开始前达成共识。'],
         ['影像生成与素材创作', '在充分创意掌控下，制作精致的视觉、场景与角色表演，释放传统制作限制以外的想法。'],
         ['剪辑与视觉整合', '通过节奏、特效、文字、旁白与音乐的细致整合，构成一个完整连贯的品牌世界。'],
-        ['修订与最终交付', '根据即时反馈快速调整，并制作多语言版本及适配各平台的不同格式。'],
+        ['修订、签核与最终交付', '根据即时反馈快速调整，确认签核后制作多语言版本及适配各平台的不同格式。'],
       ],
+      scopeEyebrow: '我们的合作方式',
+      scopeTitle: '从 brief 出发，一起完成最终作品。',
+      scope: ['前期会议与资料研究', '分镜设计、反馈与修订', '视频制作、反馈与修订', '后期制作、反馈与修订'],
+      whyTitle: '为什么这样做',
+      why: ['从 brief 到初剪，更高效', '保留更多创意方向', '随着想法变化，灵活调整'],
+      whatTitle: '我们制作什么',
+      what: ['AI 影片与摄影', '商业广告与品牌影片', 'TVC 电视广告', '社交短片 Reels', '音乐影像 MV', '叙事作品 Drama'],
     },
   },
 }
@@ -181,8 +195,15 @@ copy['zh-Hant'] = { ...copy.zh,
       ['視覺預覽與分鏡設計', '以 AI 分鏡預先建立情緒、節奏與視覺語言，讓所有專案成員在製作開始前達成共識。'],
       ['影像生成與素材創作', '在充分創意掌控下，製作精緻的視覺、場景與角色表演，釋放傳統製作限制以外的想法。'],
       ['剪輯與視覺整合', '透過節奏、特效、文字、旁白與音樂的細緻整合，構成一個完整連貫的品牌世界。'],
-      ['修訂與最終交付', '依據即時回饋快速調整，並製作多語言版本及適配各平台的不同格式。'],
+      ['修訂、簽核與最終交付', '依據即時回饋快速調整，完成簽核後製作多語言版本及適配各平台的不同格式。'],
     ],
+    scopeEyebrow: '我們的合作方式',
+    scopeTitle: '從 brief 出發，一起完成最終作品。',
+    scope: ['前期會議與資料研究', '分鏡設計、回饋與修訂', '影片製作、回饋與修訂', '後期製作、回饋與修訂'],
+    whyTitle: '為什麼這樣做',
+    why: ['從 brief 到初剪，更高效', '保留更多創意方向', '隨著想法變化，靈活調整'],
+    whatTitle: '我們製作什麼',
+    what: ['AI 影片與攝影', '商業廣告與品牌影片', 'TVC 電視廣告', '社交短片 Reels', '音樂影像 MV', '敘事作品 Drama'],
   },
 }
 
@@ -436,7 +457,11 @@ function WorkPlayerModal({ work, initialMuted = false, onClose, language }) {
     const video = videoRef.current
     const onKeyDown = (event) => { if (event.key === 'Escape') onClose() }
     window.addEventListener('keydown', onKeyDown)
-    if (!isPhoto) video?.play().catch(() => setPlaying(false))
+    if (!isPhoto && video) {
+      video.defaultMuted = false
+      video.muted = false
+      video.play().catch(() => setPlaying(false))
+    }
     return () => { window.removeEventListener('keydown', onKeyDown); video?.pause() }
   }, [isPhoto, onClose])
 
@@ -523,7 +548,7 @@ function HomePage({ t, onNavigate }) {
 }
 
 function PageHeader({ eyebrow, title, back, backLabel = 'Back', className = '' }) {
-  return <div className={`page-heading ${className}`.trim()}><a className="back-link" href={back}>← {backLabel}</a><Eyebrow>{eyebrow}</Eyebrow><h1>{title}</h1></div>
+  return <div className={`page-heading ${className}`.trim()}><a className="back-link" href={back}>← {backLabel}</a><Eyebrow>{eyebrow}</Eyebrow>{title && <h1>{title}</h1>}</div>
 }
 
 function useArtistDirectoryNarrative() {
@@ -1371,26 +1396,46 @@ const workFormats = [
   ['crew', 'Crew', 'The people behind the picture.', '幕后团队', '让创作发生的人。', '幕後團隊', '讓創作發生的人。'],
 ]
 const workFormatFor = (work) => work.format || (work.photo ? 'photo' : ['peninsula-fathers-day', 'chunwo-dreamgirl-03', 'chow-sang-sang'].includes(work.slug) ? 'reels' : ['chillgood-takoyaki', 'chillgood-animation'].includes(work.slug) ? 'mv' : 'commercial')
-// Keep the complete Work process section in source so it can be restored without rebuilding it.
-const showWorkIntro = false
+// The process story is intentionally kept separate from the existing Work index.
+const showWorkIntro = true
 
 function useWorkIntroMotion() {
   const ref = useRef(null)
-  useEffect(() => {
+  useLayoutEffect(() => {
     const section = ref.current
     if (!section) return undefined
-    section.classList.add('is-motion-ready')
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      section.classList.add('is-inview')
+    section.classList.add('is-motion-ready', 'is-inview')
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduceMotion || window.innerWidth <= 820) {
       return undefined
     }
-    const observer = new IntersectionObserver(([entry]) => {
-      if (!entry.isIntersecting) return
-      section.classList.add('is-inview')
-      observer.disconnect()
-    }, { threshold: 0.14, rootMargin: '0px 0px -9% 0px' })
-    observer.observe(section)
-    return () => observer.disconnect()
+    section.classList.add('is-pinned-story')
+    const story = section.querySelector('.work-story')
+    const panels = gsap.utils.toArray('.work-story-part', story)
+    if (!story || panels.length < 3) return undefined
+    const ctx = gsap.context(() => {
+      gsap.set(panels, { autoAlpha: 0, y: 26, pointerEvents: 'none' })
+      gsap.set(panels[0], { autoAlpha: 1, y: 0, pointerEvents: 'auto' })
+      const processCards = gsap.utils.toArray('.work-process-card', panels[1])
+      gsap.set(processCards, { autoAlpha: 1, y: 0 })
+      const showPanel = (timeline, from, to, at) => timeline.to(from, { autoAlpha: 0, y: -20, pointerEvents: 'none', duration: .3 }, at).fromTo(to, { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, pointerEvents: 'auto', duration: .48 }, at + .16)
+      const timeline = gsap.timeline({
+        defaults: { ease: 'none' },
+        scrollTrigger: {
+          trigger: story,
+          start: 'top top+=80',
+          end: () => `+=${window.innerHeight * 4.8}`,
+          pin: story,
+          scrub: .75,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
+      })
+      showPanel(timeline, panels[0], panels[1], 1.25)
+      showPanel(timeline, panels[1], panels[2], 3.1)
+      requestAnimationFrame(() => ScrollTrigger.refresh())
+    }, section)
+    return () => ctx.revert()
   }, [])
   return ref
 }
@@ -1403,7 +1448,57 @@ function WorkOverview({ language, initialWorkSlug, initialFormat }) {
   const items = workProjects.filter((work) => workFormatFor(work) === format)
   const t = copy[language]
   const localized = language === 'zh-Hant'
-  return <><main id="main" className="subpage subpage--light"><Container><PageHeader className="work-page-heading" eyebrow={`${t.selectedWork} / ${String(workProjects.length).padStart(2, '0')}`} title={t.madeToMove} back="#/" />{showWorkIntro && <section ref={workIntroRef} className="work-intro" aria-labelledby="work-intro-title"><div className="work-intro-copy"><h2 id="work-intro-title">{t.workIntro.title}</h2><p>{t.workIntro.lead}</p><p>{t.workIntro.context}</p></div><div className="work-process" aria-label={t.workIntro.processEyebrow}><p className="work-process-eyebrow">{t.workIntro.processEyebrow}</p><div className="work-process-grid"><svg className="work-process-vine" viewBox="0 0 1200 560" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M 82 118 C 262 72, 540 94, 760 130 S 1000 150, 1110 112 M 82 118 C 126 230, 152 315, 190 420 S 432 424, 618 366 S 920 315, 1086 434" /><g><circle cx="82" cy="118" r="9" /><circle cx="1110" cy="112" r="9" /><circle cx="190" cy="420" r="9" /><circle cx="618" cy="366" r="9" /><circle cx="1086" cy="434" r="9" /></g></svg>{t.workIntro.process.map(([title, description], index) => <article key={title} className="work-process-card" style={{ '--process-delay': `${index * 95}ms` }}><span>{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{description}</p></article>)}</div></div></section>}<div className="work-format-tabs" role="tablist" aria-label={t.workFormats}>{workFormats.map(([id, label, , zhLabel, , zhHantLabel]) => <button key={id} type="button" role="tab" aria-selected={format === id} className={format === id ? 'is-active' : ''} onClick={() => setFormat(id)}>{language === 'en' ? label : localized ? zhHantLabel : zhLabel}</button>)}</div><div className="work-format-heading"><span>{language === 'en' ? current[1] : localized ? current[5] : current[3]}</span><p>{language === 'en' ? current[2] : localized ? current[6] : current[4]}</p></div>{items.length ? <div className={`work-index work-index--${format}`}>{items.map((work, index) => <button type="button" className="work-index-card" onClick={() => setActiveWork(work)} key={work.slug} aria-label={`${t.openWork}: ${work.name}`}><img src={work.poster} alt="" loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><span>{String(index + 1).padStart(2, '0')}</span><div><em>{work.name}</em><strong>{work.brand}</strong><i>▶</i></div><small>{t.openWork} →</small></button>)}</div> : <p className="work-empty">{t.moreWork}</p>}</Container></main>{activeWork && <WorkPlayerModal work={activeWork} language={language} initialMuted={false} onClose={() => setActiveWork(null)} />}</>
+  return <>
+    <main id="main" className="subpage subpage--light">
+      <Container>
+        <PageHeader className="work-page-heading work-page-heading--compact" eyebrow={`${t.selectedWork} / ${String(workProjects.length).padStart(2, '0')}`} title={null} back="#/" />
+        {showWorkIntro && <section ref={workIntroRef} className="work-intro" aria-labelledby="work-intro-title">
+          <div className="work-intro-copy">
+            <h2 id="work-intro-title">{t.workIntro.title}</h2>
+            <p>{t.workIntro.lead}</p>
+            <p>{t.workIntro.context}</p>
+          </div>
+          <div className="work-story">
+          <div className="work-story-part work-secondary-grid">
+            <section className="work-secondary" aria-labelledby="work-why-title">
+              <p className="work-process-eyebrow">{t.workIntro.whyTitle}</p>
+              <h2 id="work-why-title">{t.workIntro.whyTitle}</h2>
+              <ul className="work-secondary-list">
+                {t.workIntro.why.map((item, index) => <li key={item}><span>{String(index + 1).padStart(2, '0')}</span><strong>{item}</strong></li>)}
+              </ul>
+            </section>
+            <section className="work-secondary" aria-labelledby="work-what-title">
+              <p className="work-process-eyebrow">{t.workIntro.whatTitle}</p>
+              <h2 id="work-what-title">{t.workIntro.whatTitle}</h2>
+              <ul className="work-secondary-list work-secondary-list--what">
+                {t.workIntro.what.map((item, index) => <li key={item}><span>{String(index + 1).padStart(2, '0')}</span><strong>{item}</strong></li>)}
+              </ul>
+            </section>
+          </div>
+          <div className="work-story-part work-process" aria-label={t.workIntro.processEyebrow}>
+            <p className="work-process-eyebrow">{t.workIntro.processEyebrow}</p>
+            <div className="work-process-grid">
+              {t.workIntro.process.map(([title, description], index) => <article key={title} tabIndex={0} className="work-process-card" style={{ '--process-delay': `${index * 95}ms` }}><span>{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{description}</p></article>)}
+            </div>
+          </div>
+          <div className="work-story-part work-scope" aria-labelledby="work-scope-title">
+            <div className="work-scope-heading">
+              <p className="work-process-eyebrow">{t.workIntro.scopeEyebrow}</p>
+              <h2 id="work-scope-title">{t.workIntro.scopeTitle}</h2>
+            </div>
+            <ol className="work-scope-list">
+              {t.workIntro.scope.map((item, index) => <li key={item} style={{ '--process-delay': `${index * 75}ms` }}><span>{String(index + 1).padStart(2, '0')}</span><strong>{item}</strong></li>)}
+            </ol>
+          </div>
+          </div>
+        </section>}
+        <div className="work-format-tabs" role="tablist" aria-label={t.workFormats}>{workFormats.map(([id, label, , zhLabel, , zhHantLabel]) => <button key={id} type="button" role="tab" aria-selected={format === id} className={format === id ? 'is-active' : ''} onClick={() => setFormat(id)}>{language === 'en' ? label : localized ? zhHantLabel : zhLabel}</button>)}</div>
+        <div className="work-format-heading"><span>{language === 'en' ? current[1] : localized ? current[5] : current[3]}</span><p>{language === 'en' ? current[2] : localized ? current[6] : current[4]}</p></div>
+        {items.length ? <div className={`work-index work-index--${format}`}>{items.map((work, index) => <button type="button" className="work-index-card" onClick={() => setActiveWork(work)} key={work.slug} aria-label={`${t.openWork}: ${work.name}`}><img src={work.poster} alt="" loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><span>{String(index + 1).padStart(2, '0')}</span><div><em>{work.name}</em><strong>{work.brand}</strong><i>▶</i></div><small>{t.openWork} →</small></button>)}</div> : <p className="work-empty">{t.moreWork}</p>}
+      </Container>
+    </main>
+    {activeWork && <WorkPlayerModal work={activeWork} language={language} initialMuted={false} onClose={() => setActiveWork(null)} />}
+  </>
 }
 
 function WorkDetail({ work }) {
