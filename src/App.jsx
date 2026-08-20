@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { flushSync } from 'react-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Container, Eyebrow, MediaFrame, Section, TextLink } from './design-system'
@@ -449,13 +450,13 @@ function WorkCard({ work, onPlay, t }) {
   </article>
 }
 
-function WorkPlayerModal({ work, initialMuted = false, onClose, language }) {
-  const videoRef = useRef(null)
+function WorkPlayerModal({ work, initialMuted = false, onClose, language, playerRef }) {
+  const fallbackVideoRef = useRef(null)
+  const videoRef = playerRef || fallbackVideoRef
   const isPhoto = Boolean(work.photo)
   const [playing, setPlaying] = useState(false)
   const [muted, setMuted] = useState(initialMuted)
   const [progress, setProgress] = useState(0)
-  const [loading, setLoading] = useState(!isPhoto)
   const videoSrc = isPhoto ? null : `${work.video}?v=${workVideoRevision}`
 
   useEffect(() => {
@@ -465,7 +466,6 @@ function WorkPlayerModal({ work, initialMuted = false, onClose, language }) {
     if (!isPhoto && video) {
       video.defaultMuted = false
       video.muted = false
-      video.load()
       video.play().catch(() => setPlaying(false))
     }
     return () => { window.removeEventListener('keydown', onKeyDown); video?.pause() }
@@ -476,8 +476,7 @@ function WorkPlayerModal({ work, initialMuted = false, onClose, language }) {
     if (!video) return
     if (video.paused) {
       if (video.networkState === HTMLMediaElement.NETWORK_EMPTY) video.load()
-      setLoading(true)
-      video.play().catch(() => { setPlaying(false); setLoading(false) })
+      video.play().catch(() => setPlaying(false))
     }
     else video.pause()
   }
@@ -495,11 +494,11 @@ function WorkPlayerModal({ work, initialMuted = false, onClose, language }) {
 
   return <div className={`work-player-modal ${isPhoto ? 'work-player-modal--photo' : work.portrait ? 'work-player-modal--portrait' : ''}`} role="dialog" aria-modal="true" aria-label={`${work.name} ${isPhoto ? 'image' : 'video'} player`} onMouseDown={closeFromBackdrop}>
     <div className="work-player-dialog" onMouseDown={(event) => event.stopPropagation()}>
-      {isPhoto ? <img className="work-player-video" src={work.poster} alt={`${work.brand} — ${work.name}`} /> : <video ref={videoRef} className="work-player-video" src={videoSrc} poster={work.poster} preload="auto" playsInline muted={muted} style={{ objectPosition: work.position }} onCanPlay={() => setLoading(false)} onWaiting={() => setLoading(true)} onPlaying={() => { setPlaying(true); setLoading(false) }} onPause={() => setPlaying(false)} onEnded={() => { setPlaying(false); setProgress(0); setLoading(false) }} onError={() => { setPlaying(false); setLoading(false) }} onTimeUpdate={(event) => setProgress(event.currentTarget.duration ? event.currentTarget.currentTime / event.currentTarget.duration : 0)} />}
+      {isPhoto ? <img className="work-player-video" src={work.poster} alt={`${work.brand} — ${work.name}`} /> : <video ref={videoRef} className="work-player-video" src={videoSrc} poster={work.poster} preload="auto" autoPlay playsInline muted={muted} style={{ objectPosition: work.position }} onPlaying={() => setPlaying(true)} onPause={() => setPlaying(false)} onEnded={() => { setPlaying(false); setProgress(0) }} onError={() => setPlaying(false)} onTimeUpdate={(event) => setProgress(event.currentTarget.duration ? event.currentTarget.currentTime / event.currentTarget.duration : 0)} />}
       <div className="work-player-meta"><strong>{work.name}</strong><span>{work.category}</span></div>
       {work.artistIds?.length > 0 && <div className="work-player-cast"><span>{language === 'en' ? 'Featured artists' : language === 'zh-Hant' ? '出演藝術家' : '出演艺人'}</span><div>{work.artistIds.map((id) => { const artist = directoryArtists.find((item) => item.id === id); if (!artist) return null; return <a key={id} href={`#/artists?focus=${id}`} onClick={onClose}><img src={artist.src} alt="" /><strong>{artist.display_name}</strong></a> })}</div></div>}
       {!isPhoto && <div className="work-player-controls">
-        <button className="work-control work-control--play" type="button" onClick={togglePlayback} aria-label={playing ? 'Pause video' : loading ? 'Loading video' : 'Play video'}>{playing ? 'Ⅱ' : loading ? '…' : '▶'}</button>
+        <button className="work-control work-control--play" type="button" onClick={togglePlayback} aria-label={playing ? 'Pause video' : 'Play video'}>{playing ? 'Ⅱ' : '▶'}</button>
         <input className="work-progress" type="range" min="0" max="1" step="0.001" value={progress} onChange={seek} aria-label="Video progress" />
         <button className="work-control" type="button" onClick={toggleMuted} aria-label={muted ? 'Unmute video' : 'Mute video'}>{muted ? '🔇' : '🔊'}</button>
       </div>}
@@ -1453,11 +1452,21 @@ function useWorkIntroMotion() {
 function WorkOverview({ language, initialWorkSlug, initialFormat }) {
   const [format, setFormat] = useState(workFormats.some(([id]) => id === initialFormat) ? initialFormat : 'commercial')
   const [activeWork, setActiveWork] = useState(() => workProjects.find((work) => work.slug === initialWorkSlug) || null)
+  const activeVideoRef = useRef(null)
   const workIntroRef = useWorkIntroMotion()
   const current = workFormats.find(([id]) => id === format)
   const items = workProjects.filter((work) => workFormatFor(work) === format)
   const t = copy[language]
   const localized = language === 'zh-Hant'
+  const openWork = (work) => {
+    flushSync(() => setActiveWork(work))
+    if (work.photo) return
+    const video = activeVideoRef.current
+    if (!video) return
+    video.defaultMuted = false
+    video.muted = false
+    video.play().catch(() => {})
+  }
   return <>
     <main id="main" className="subpage subpage--light">
       <Container>
@@ -1504,10 +1513,10 @@ function WorkOverview({ language, initialWorkSlug, initialFormat }) {
         </section>}
         <div className="work-format-tabs" role="tablist" aria-label={t.workFormats}>{workFormats.map(([id, label, , zhLabel, , zhHantLabel]) => <button key={id} type="button" role="tab" aria-selected={format === id} className={format === id ? 'is-active' : ''} onClick={() => setFormat(id)}>{language === 'en' ? label : localized ? zhHantLabel : zhLabel}</button>)}</div>
         <div className="work-format-heading"><span>{language === 'en' ? current[1] : localized ? current[5] : current[3]}</span><p>{language === 'en' ? current[2] : localized ? current[6] : current[4]}</p></div>
-        {items.length ? <div className={`work-index work-index--${format}`}>{items.map((work, index) => <button type="button" className="work-index-card" onClick={() => setActiveWork(work)} key={work.slug} aria-label={`${t.openWork}: ${work.name}`}><img src={work.poster} alt="" loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><span>{String(index + 1).padStart(2, '0')}</span><div><em>{work.name}</em><strong>{work.brand}</strong><i>▶</i></div><small>{t.openWork} →</small></button>)}</div> : <p className="work-empty">{t.moreWork}</p>}
+        {items.length ? <div className={`work-index work-index--${format}`}>{items.map((work, index) => <button type="button" className="work-index-card" onClick={() => openWork(work)} key={work.slug} aria-label={`${t.openWork}: ${work.name}`}><img src={work.poster} alt="" loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><span>{String(index + 1).padStart(2, '0')}</span><div><em>{work.name}</em><strong>{work.brand}</strong><i>▶</i></div><small>{t.openWork} →</small></button>)}</div> : <p className="work-empty">{t.moreWork}</p>}
       </Container>
     </main>
-    {activeWork && <WorkPlayerModal work={activeWork} language={language} initialMuted={false} onClose={() => setActiveWork(null)} />}
+    {activeWork && <WorkPlayerModal work={activeWork} language={language} initialMuted={false} playerRef={activeVideoRef} onClose={() => setActiveWork(null)} />}
   </>
 }
 
