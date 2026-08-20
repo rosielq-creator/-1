@@ -1467,7 +1467,7 @@ function WorkOverview({ language, initialWorkSlug, initialFormat }) {
   return <>
     <main id="main" className="subpage subpage--light">
       <Container>
-        <PageHeader className="work-page-heading" eyebrow={`${t.selectedWork} / ${String(workProjects.length).padStart(2, '0')}`} title={t.madeToMove} back="#/" />
+        <PageHeader className="work-page-heading work-page-heading--compact" eyebrow={`${t.selectedWork} / ${String(workProjects.length).padStart(2, '0')}`} title={null} back="#/" />
         {showWorkIntro && <section ref={workIntroRef} className="work-intro" aria-labelledby="work-intro-title">
           <div className="work-intro-copy">
             <h2 id="work-intro-title">{t.workIntro.title}</h2>
