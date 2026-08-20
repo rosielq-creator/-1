@@ -4,6 +4,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Container, Eyebrow, MediaFrame, Section, TextLink } from './design-system'
 import artistProfilesSource from './data/artist-profiles.json'
+import workVideoSources from './data/work-video-sources.json'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -13,6 +14,19 @@ const assets = `${import.meta.env.BASE_URL}assets/`
 // GitHub Pages and the browser never combine stale byte ranges with a new MP4.
 const workVideoRevision = '20260820b'
 const vineScaleY = 1.035
+
+function withWorkVideoSources(work) {
+  if (!work.video) return work
+  const assetMarker = 'assets/'
+  const assetIndex = work.video.indexOf(assetMarker)
+  const relativeSource = assetIndex >= 0 ? work.video.slice(assetIndex + assetMarker.length) : ''
+  const relativeWeb = workVideoSources[relativeSource]
+  return {
+    ...work,
+    videoHd: work.video,
+    videoWeb: relativeWeb ? `${assets}${relativeWeb}` : work.video,
+  }
+}
 
 const artists = [
   { number: '01', name: 'Amber', slug: 'amber', src: `${assets}artists/thumbs/amber.jpg`, position: '50% 26%', role: 'Digital Muse & Beauty Creator', roleZh: '音乐制作人／时尚艺术家', tags: ['Beauty', 'Fashion', 'Lifestyle'], tagsZh: ['音乐', '时尚', '生活方式'] },
@@ -55,7 +69,7 @@ const works = [
   { name: 'ChillGOOD_TV', slug: 'childgood', category: 'Campaign film', categoryZh: 'Campaign 影片', video: `${assets}work/chillgood-takoyaki.mp4`, poster: `${assets}work/chillgood-cover.jpg`, position: '50% 50%' },
   { name: 'Octopus', slug: 'octopus', category: 'Culture film', categoryZh: '文化内容影片', video: `${assets}work/octopus.mp4`, poster: `${assets}work/octopus-cover.jpg`, position: '50% 50%' },
   { name: 'MGM', slug: 'mgm', category: 'Brand world', categoryZh: '品牌视觉世界', video: `${assets}work/mgm-macau.mp4`, poster: `${assets}work/mgm-cover.jpg`, position: '50% 50%' },
-]
+].map(withWorkVideoSources)
 
 // Work pages use the approved current-project delivery package. Homepage media stays separate.
 const workProjects = [
@@ -81,7 +95,7 @@ const workProjects = [
   { brand: 'KOISEA', name: 'Landscape Cut', slug: 'koisea-landscape', category: 'Fashion & Lifestyle', video: `${assets}work/projects/koisea-landscape.mp4`, poster: `${assets}work/projects/koisea-landscape.png` },
   { brand: 'KOISEA', name: 'Underground Cut', slug: 'koisea-underground', category: 'Fashion & Lifestyle', video: `${assets}work/projects/koisea-underground.mp4`, poster: `${assets}work/projects/koisea-underground.jpg` },
   { brand: 'Maya Kim', name: 'Vlog', slug: 'maya-kim-vlog', category: 'Narrative Frames', format: 'drama', video: `${assets}work/projects/maya-kim-vlog.mp4`, poster: `${assets}work/projects/maya-kim-vlog.jpg` },
-]
+].map(withWorkVideoSources)
 
 const copy = {
   en: {
@@ -439,7 +453,7 @@ function WorkCard({ work, onPlay, t }) {
     setMuted((current) => !current)
   }
 
-  return <article className={`work-card work-card--${work.slug}`}>
+  return <article className={`work-card work-card--${work.slug}`} onPointerEnter={() => prewarmWorkVideo(work)} onPointerDown={() => prewarmWorkVideo(work)}>
     <img className="work-video" src={work.poster} alt="" style={{ objectPosition: work.position }} loading="lazy" decoding="async" />
     <span className="work-name">{work.name}</span><span className="work-category">{isChinese ? work.categoryZh : work.category}</span><span className="work-case">{t.playCase} →</span>
     <div className="work-controls" aria-label={`${work.name} video controls`}>
@@ -450,29 +464,140 @@ function WorkCard({ work, onPlay, t }) {
   </article>
 }
 
+let warmedWorkVideo = null
+
+function prewarmWorkVideo(work) {
+  if (!work?.videoWeb || work.photo || typeof document === 'undefined') return
+  if (warmedWorkVideo?.dataset.src === work.videoWeb) return
+  if (warmedWorkVideo) {
+    warmedWorkVideo.pause()
+    warmedWorkVideo.removeAttribute('src')
+    warmedWorkVideo.load()
+  }
+  const video = document.createElement('video')
+  video.dataset.src = work.videoWeb
+  video.preload = 'auto'
+  video.muted = true
+  video.playsInline = true
+  video.src = work.videoWeb
+  video.load()
+  warmedWorkVideo = video
+}
+
+function waitForVideo(video, eventName, ready, timeout = 15000) {
+  if (ready(video)) return Promise.resolve()
+  return new Promise((resolve, reject) => {
+    const timer = window.setTimeout(() => finish(new Error(`Timed out waiting for ${eventName}`)), timeout)
+    const onReady = () => finish()
+    const onError = () => finish(new Error('Video failed to load'))
+    const finish = (error) => {
+      window.clearTimeout(timer)
+      video.removeEventListener(eventName, onReady)
+      video.removeEventListener('error', onError)
+      if (error) reject(error)
+      else resolve()
+    }
+    video.addEventListener(eventName, onReady, { once: true })
+    video.addEventListener('error', onError, { once: true })
+  })
+}
+
 function WorkPlayerModal({ work, initialMuted = false, onClose, language, playerRef }) {
   const fallbackVideoRef = useRef(null)
-  const videoRef = playerRef || fallbackVideoRef
+  const webVideoRef = playerRef || fallbackVideoRef
+  const hdVideoRef = useRef(null)
+  const qualityRef = useRef('web')
+  const mutedRef = useRef(initialMuted)
   const isPhoto = Boolean(work.photo)
   const [playing, setPlaying] = useState(false)
   const [muted, setMuted] = useState(initialMuted)
   const [progress, setProgress] = useState(0)
-  const videoSrc = isPhoto ? null : `${work.video}?v=${workVideoRevision}`
+  const [quality, setQuality] = useState('web')
+  const [hdRequested, setHdRequested] = useState(false)
+  const [hdUserRequested, setHdUserRequested] = useState(false)
+  const [hdPreparing, setHdPreparing] = useState(false)
+  const webVideoSrc = isPhoto ? null : work.videoWeb || work.video
+  const hdVideoSrc = isPhoto ? null : `${work.videoHd || work.video}?v=${workVideoRevision}`
+  const hasSeparateHd = Boolean(!isPhoto && work.videoHd && work.videoWeb && work.videoHd !== work.videoWeb)
+
+  const activeVideo = () => qualityRef.current === 'hd' ? hdVideoRef.current : webVideoRef.current
 
   useEffect(() => {
-    const video = videoRef.current
+    const video = webVideoRef.current
     const onKeyDown = (event) => { if (event.key === 'Escape') onClose() }
     window.addEventListener('keydown', onKeyDown)
     if (!isPhoto && video) {
-      video.defaultMuted = false
-      video.muted = false
+      video.defaultMuted = initialMuted
+      video.muted = initialMuted
       video.play().catch(() => setPlaying(false))
     }
-    return () => { window.removeEventListener('keydown', onKeyDown); video?.pause() }
-  }, [isPhoto, onClose])
+    return () => {
+      window.removeEventListener('keydown', onKeyDown)
+      video?.pause()
+      hdVideoRef.current?.pause()
+    }
+  }, [initialMuted, isPhoto, onClose])
+
+  useEffect(() => {
+    if (!hdUserRequested || !hdRequested || !hasSeparateHd) return undefined
+    let cancelled = false
+    const handoff = async () => {
+      const webVideo = webVideoRef.current
+      const hdVideo = hdVideoRef.current
+      if (!webVideo || !hdVideo) return
+      try {
+        hdVideo.muted = true
+        hdVideo.volume = webVideo.volume
+        hdVideo.playbackRate = webVideo.playbackRate
+        await waitForVideo(hdVideo, 'loadedmetadata', (video) => video.readyState >= HTMLMediaElement.HAVE_METADATA)
+        hdVideo.currentTime = Math.min(webVideo.currentTime, Math.max(0, hdVideo.duration - .05))
+        await waitForVideo(hdVideo, 'canplay', (video) => video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA)
+        if (Math.abs(hdVideo.currentTime - webVideo.currentTime) > .35) {
+          hdVideo.currentTime = Math.min(webVideo.currentTime, Math.max(0, hdVideo.duration - .05))
+          await waitForVideo(hdVideo, 'canplay', (video) => video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA)
+        }
+        await hdVideo.play()
+        if (cancelled) { hdVideo.pause(); return }
+        if (Math.abs(hdVideo.currentTime - webVideo.currentTime) > .5) hdVideo.currentTime = webVideo.currentTime
+        qualityRef.current = 'hd'
+        setQuality('hd')
+        requestAnimationFrame(() => {
+          if (cancelled) return
+          hdVideo.muted = mutedRef.current
+          webVideo.pause()
+          setHdPreparing(false)
+          setPlaying(!hdVideo.paused)
+        })
+      } catch {
+        if (!cancelled) {
+          setHdPreparing(false)
+          setHdUserRequested(false)
+        }
+      }
+    }
+    handoff()
+    return () => { cancelled = true }
+  }, [hasSeparateHd, hdRequested, hdUserRequested])
+
+  const prepareHd = (userRequested = false) => {
+    if (!hasSeparateHd || qualityRef.current === 'hd') return
+    if (userRequested) {
+      setHdPreparing(true)
+      setHdUserRequested(true)
+    }
+    setHdRequested(true)
+  }
+
+  const onWebPlaying = () => {
+    if (qualityRef.current !== 'web') return
+    setPlaying(true)
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection
+    const slowConnection = connection?.saveData || ['slow-2g', '2g', '3g'].includes(connection?.effectiveType)
+    if (hasSeparateHd && !slowConnection) window.setTimeout(() => prepareHd(false), 2200)
+  }
 
   const togglePlayback = () => {
-    const video = videoRef.current
+    const video = activeVideo()
     if (!video) return
     if (video.paused) {
       if (video.networkState === HTMLMediaElement.NETWORK_EMPTY) video.load()
@@ -483,10 +608,12 @@ function WorkPlayerModal({ work, initialMuted = false, onClose, language, player
   const toggleMuted = () => {
     const nextMuted = !muted
     setMuted(nextMuted)
-    if (videoRef.current) videoRef.current.muted = nextMuted
+    mutedRef.current = nextMuted
+    if (webVideoRef.current) webVideoRef.current.muted = nextMuted
+    if (hdVideoRef.current && qualityRef.current === 'hd') hdVideoRef.current.muted = nextMuted
   }
   const seek = (event) => {
-    const video = videoRef.current
+    const video = activeVideo()
     if (!video?.duration) return
     video.currentTime = Number(event.target.value) * video.duration
   }
@@ -494,13 +621,17 @@ function WorkPlayerModal({ work, initialMuted = false, onClose, language, player
 
   return <div className={`work-player-modal ${isPhoto ? 'work-player-modal--photo' : work.portrait ? 'work-player-modal--portrait' : ''}`} role="dialog" aria-modal="true" aria-label={`${work.name} ${isPhoto ? 'image' : 'video'} player`} onMouseDown={closeFromBackdrop}>
     <div className="work-player-dialog" onMouseDown={(event) => event.stopPropagation()}>
-      {isPhoto ? <img className="work-player-video" src={work.poster} alt={`${work.brand} — ${work.name}`} /> : <video ref={videoRef} className="work-player-video" src={videoSrc} poster={work.poster} preload="auto" autoPlay playsInline muted={muted} style={{ objectPosition: work.position }} onPlaying={() => setPlaying(true)} onPause={() => setPlaying(false)} onEnded={() => { setPlaying(false); setProgress(0) }} onError={() => setPlaying(false)} onTimeUpdate={(event) => setProgress(event.currentTarget.duration ? event.currentTarget.currentTime / event.currentTarget.duration : 0)} />}
+      {isPhoto ? <img className="work-player-video" src={work.poster} alt={`${work.brand} — ${work.name}`} /> : <div className="work-player-media">
+        <video ref={webVideoRef} className={`work-player-video ${quality === 'web' ? 'is-active' : ''}`} src={webVideoSrc} poster={work.poster} preload="auto" autoPlay playsInline muted={muted} style={{ objectPosition: work.position }} onPlaying={onWebPlaying} onPause={() => { if (qualityRef.current === 'web') setPlaying(false) }} onEnded={() => { if (qualityRef.current === 'web') { setPlaying(false); setProgress(0) } }} onError={() => setPlaying(false)} onTimeUpdate={(event) => { if (qualityRef.current === 'web') setProgress(event.currentTarget.duration ? event.currentTarget.currentTime / event.currentTarget.duration : 0) }} />
+        <video ref={hdVideoRef} className={`work-player-video work-player-video--hd ${quality === 'hd' ? 'is-active' : ''}`} src={hdRequested ? hdVideoSrc : undefined} preload={hdRequested ? 'auto' : 'none'} playsInline muted={quality === 'hd' ? muted : true} style={{ objectPosition: work.position }} onPlaying={() => { if (qualityRef.current === 'hd') setPlaying(true) }} onPause={() => { if (qualityRef.current === 'hd') setPlaying(false) }} onEnded={() => { if (qualityRef.current === 'hd') { setPlaying(false); setProgress(0) } }} onTimeUpdate={(event) => { if (qualityRef.current === 'hd') setProgress(event.currentTarget.duration ? event.currentTarget.currentTime / event.currentTarget.duration : 0) }} />
+      </div>}
       <div className="work-player-meta"><strong>{work.name}</strong><span>{work.category}</span></div>
       {work.artistIds?.length > 0 && <div className="work-player-cast"><span>{language === 'en' ? 'Featured artists' : language === 'zh-Hant' ? '出演藝術家' : '出演艺人'}</span><div>{work.artistIds.map((id) => { const artist = directoryArtists.find((item) => item.id === id); if (!artist) return null; return <a key={id} href={`#/artists?focus=${id}`} onClick={onClose}><img src={artist.src} alt="" /><strong>{artist.display_name}</strong></a> })}</div></div>}
       {!isPhoto && <div className="work-player-controls">
         <button className="work-control work-control--play" type="button" onClick={togglePlayback} aria-label={playing ? 'Pause video' : 'Play video'}>{playing ? 'Ⅱ' : '▶'}</button>
         <input className="work-progress" type="range" min="0" max="1" step="0.001" value={progress} onChange={seek} aria-label="Video progress" />
         <button className="work-control" type="button" onClick={toggleMuted} aria-label={muted ? 'Unmute video' : 'Mute video'}>{muted ? '🔇' : '🔊'}</button>
+        {hasSeparateHd && <button className={`work-control work-control--quality ${quality === 'hd' ? 'is-active' : ''}`} type="button" onClick={() => prepareHd(true)} aria-label="Play HD video" aria-pressed={quality === 'hd'} aria-busy={hdPreparing}>HD</button>}
       </div>}
       <button className="work-player-close" type="button" onClick={onClose} aria-label="Close video">×</button>
     </div>
@@ -1513,7 +1644,7 @@ function WorkOverview({ language, initialWorkSlug, initialFormat }) {
         </section>}
         <div className="work-format-tabs" role="tablist" aria-label={t.workFormats}>{workFormats.map(([id, label, , zhLabel, , zhHantLabel]) => <button key={id} type="button" role="tab" aria-selected={format === id} className={format === id ? 'is-active' : ''} onClick={() => setFormat(id)}>{language === 'en' ? label : localized ? zhHantLabel : zhLabel}</button>)}</div>
         <div className="work-format-heading"><span>{language === 'en' ? current[1] : localized ? current[5] : current[3]}</span><p>{language === 'en' ? current[2] : localized ? current[6] : current[4]}</p></div>
-        {items.length ? <div className={`work-index work-index--${format}`}>{items.map((work, index) => <button type="button" className="work-index-card" onClick={() => openWork(work)} key={work.slug} aria-label={`${t.openWork}: ${work.name}`}><img src={work.poster} alt="" loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><span>{String(index + 1).padStart(2, '0')}</span><div><em>{work.name}</em><strong>{work.brand}</strong><i>▶</i></div><small>{t.openWork} →</small></button>)}</div> : <p className="work-empty">{t.moreWork}</p>}
+        {items.length ? <div className={`work-index work-index--${format}`}>{items.map((work, index) => <button type="button" className="work-index-card" onClick={() => openWork(work)} onPointerEnter={() => prewarmWorkVideo(work)} onPointerDown={() => prewarmWorkVideo(work)} onFocus={() => prewarmWorkVideo(work)} key={work.slug} aria-label={`${t.openWork}: ${work.name}`}><img src={work.poster} alt="" loading={index < 2 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : 'auto'} /><span>{String(index + 1).padStart(2, '0')}</span><div><em>{work.name}</em><strong>{work.brand}</strong><i>▶</i></div><small>{t.openWork} →</small></button>)}</div> : <p className="work-empty">{t.moreWork}</p>}
       </Container>
     </main>
     {activeWork && <WorkPlayerModal work={activeWork} language={language} initialMuted={false} playerRef={activeVideoRef} onClose={() => setActiveWork(null)} />}
