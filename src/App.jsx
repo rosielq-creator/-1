@@ -1663,7 +1663,7 @@ function WorkOverview({ language, initialWorkSlug, initialFormat }) {
   return <>
     <main id="main" className="subpage subpage--light work-overview-page">
       <Container>
-        {showWorkIntro && <section ref={workIntroRef} className={`work-intro${language === 'en' ? '' : ' work-intro--zh'}`} aria-labelledby="work-intro-title">
+        {showWorkIntro && <section ref={workIntroRef} className={`work-intro work-intro--${language === 'en' ? 'en' : 'zh'}`} aria-labelledby="work-intro-title">
           <div className="work-intro-shell">
             <section className="work-hero">
               <div className="work-hero-art" aria-hidden="true"><img src={`${assets}work/work-botanical-macro.png`} alt="" /></div>

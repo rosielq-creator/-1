@@ -1337,6 +1337,11 @@ h2,
 .work-process-card p { grid-column:1; grid-row:auto; max-width:470px; margin:clamp(22px,3vw,38px) 0 0; color:rgba(243,245,241,.62); font-size:clamp(16px,1.3vw,20px); line-height:1.35; letter-spacing:-.025em; }
 .work-process-card:focus-visible h3 { color:var(--work-green); }
 .work-process-card:focus-visible::before { transform:scaleX(1.35); }
+.work-intro--en .work-hero h2 { font-size:clamp(76px,10.5vw,170px); line-height:.76; letter-spacing:-.065em; }
+.work-intro--en .work-intro-lead { font-size:clamp(21px,2vw,32px); line-height:1.14; letter-spacing:-.022em; }
+.work-intro--en .work-value h3 { font-size:clamp(40px,4.9vw,79px); line-height:.91; letter-spacing:-.055em; }
+.work-intro--en .work-process-card h3 { font-size:clamp(46px,5.2vw,85px); line-height:.89; letter-spacing:-.06em; }
+.work-intro--en .work-scope-copy h2 { font-size:clamp(51px,6.25vw,102px); line-height:.88; letter-spacing:-.06em; }
 .work-intro--zh .work-hero h2 { font-size:clamp(64px,8.6vw,138px); line-height:.94; letter-spacing:-.055em; }
 .work-intro--zh .work-intro-lead { line-height:1.26; letter-spacing:-.025em; }
 .work-intro--zh .work-values { grid-template-columns:minmax(170px,.34fr) minmax(0,1.66fr); }
@@ -1374,6 +1379,7 @@ h2,
   .work-hero-copy { display:block; }
   .work-intro-kicker { margin-bottom:28px; }
   .work-hero h2 { max-width:550px; font-size:clamp(64px,18vw,116px); }
+  .work-intro--en .work-hero h2 { font-size:clamp(66px,18.6vw,120px); line-height:.81; }
   .work-intro--zh .work-hero h2 { font-size:clamp(56px,15vw,92px); line-height:1; }
   .work-intro-lead { max-width:420px; margin-top:clamp(50px,12vw,90px); font-size:clamp(20px,5.6vw,29px); }
   .work-intro-context { margin-top:20px; font-size:15px; }
@@ -1389,6 +1395,7 @@ h2,
   .work-process-stage { min-height:0; }
   .work-process-card { display:block; }
   .work-process-card h3 { font-size:clamp(46px,12vw,74px); }
+  .work-intro--en .work-process-card h3 { font-size:clamp(48px,12.6vw,77px); line-height:.94; letter-spacing:-.045em; }
   .work-intro--zh .work-process-card h3 { font-size:clamp(36px,10.5vw,62px); line-height:1.1; letter-spacing:-.035em; }
   .work-process-card p { margin-top:22px; font-size:16px; }
   .work-scope { display:block; }
