@@ -124,23 +124,35 @@ const copy = {
     workFormats: 'Work formats', openWork: 'Open work', moreWork: 'More stories are in development.', skip: 'Skip to content', home: 'Green Tomato home', navigation: 'Main navigation', language: 'Language',
     workIntro: {
       title: <>Unleash Your<br /><b>Creativity.</b></>,
-      lead: 'AI Video Production, shaped by human taste. We combine new tools with 20+ years of strategic and production experience to build distinct, brand-consistent stories with the flexibility to respond when culture moves.',
-      context: 'Bring us the brief, audience and places your work needs to live. We turn them into a clear creative direction, a shared production process and adaptable assets for every platform.',
-      processEyebrow: 'How we make it happen',
-      process: [
-        ['Concept Development & Script Creation', 'Transform marketing briefs into captivating scripts, aligning creative narratives with your brand voice and campaign objectives.'],
-        ['Visual Preview & Storyboard Design', 'Visualize mood, pacing and visual language early through AI-generated storyboards, so every stakeholder can align before production begins.'],
-        ['Footage Generation & Asset Creation', 'Create polished visuals, environments and performances with full creative control and room for ideas that conventional production can limit.'],
-        ['Editing & Visual Integration', 'Compose a cohesive story through considered pacing, effects, text, voiceover and music—made to feel like one complete world.'],
-        ['Revision, Sign-off & Final Output', 'Refine quickly with real-time feedback, secure sign-off and prepare multilingual adaptations and format variations for the platforms that matter.'],
+      lead: 'From a first instinct to a final frame, we help ideas find their wildest form.',
+      context: 'AI filmmaking, shaped by human taste. New tools meet two decades of strategy and production experience—so every world feels unmistakably yours.',
+      valuesTitle: 'Why it works.',
+      valuesLead: 'The work opens up when the process does.',
+      values: [
+        ['Move from instinct to image—fast.', 'Get a tangible direction on screen while the energy of the first idea is still alive.'],
+        ['Try more routes before choosing one.', 'Visual exploration lets us test mood, rhythm and possibility before committing the whole production.'],
+        ['Keep the process open while the idea grows.', 'A flexible production rhythm makes room for the unexpected, without losing the thread.'],
       ],
-      scopeEyebrow: 'How we work together',
-      scopeTitle: 'A shared process, from brief to final cut.',
-      scope: ['Pre-production meetings & research', 'Storyboards, feedback & revisions', 'Video production, feedback & revisions', 'Post-production, feedback & revisions'],
-      whyTitle: 'Why it works',
-      why: ['Move from brief to first cut faster', 'Keep more creative directions open', 'Stay flexible as ideas evolve'],
-      whatTitle: 'What we make',
-      what: ['AI video & photography', 'Commercials & brand films', 'TVCs', 'Social reels', 'Music videos', 'Narrative drama'],
+      formatsTitle: 'What we make.',
+      formats: ['AI films & photography', 'Commercials', 'TVCs', 'Social reels', 'Music videos', 'Narrative drama'],
+      processTitle: 'How an idea takes shape.',
+      processLead: 'A film finds its form in conversation, not in a straight line.',
+      process: [
+        ['We begin with the feeling behind the brief.', 'Together, we find the tension, audience and point of view that make the story worth telling.'],
+        ['Then we turn it into a world you can already see.', 'Storyboards and visual studies make a shared instinct tangible before production begins.'],
+        ['We build the picture around that feeling.', 'Image, performance and motion are created with the freedom to discover something better along the way.'],
+        ['We make, test, cut and reshape.', 'Editing, sound and visual integration bring every element into the same emotional register.'],
+        ['Nothing is finished until it feels unmistakably yours.', 'We refine with focused feedback, prepare every final format and sign off together.'],
+      ],
+      scopeTitle: 'How we work together.',
+      scopeLead: 'A shared rhythm from the first conversation to the final sign-off—clear enough to keep moving, open enough for the idea to get better along the way.',
+      scope: [
+        ['Pre-production meetings & research', 'We align the brief, audience, ambition and references before a frame is made.'],
+        ['Storyboards, feedback & revisions', 'Early visual thinking gives everyone something real to react to and refine.'],
+        ['Video production, feedback & revisions', 'We build the world, share progress and shape the work while it is still alive.'],
+        ['Post-production, feedback & revisions', 'Edit, sound, motion and finishing bring the full story into focus.'],
+        ['Final review & sign-off', 'We lock the master, prepare every required format and hand over with confidence.'],
+      ],
     },
   },
   zh: {
@@ -169,23 +181,35 @@ const copy = {
     workFormats: '案例分类', openWork: '查看项目', moreWork: '更多项目正在制作中。', skip: '跳至主要内容', home: 'Green Tomato 首页', navigation: '主导航', language: '语言',
     workIntro: {
       title: <>释放你的<br /><b>创意。</b></>,
-      lead: 'AI 影片制作，由人的审美判断掌舵。我们将新技术与团队逾 20 年的策略及制作经验结合，为品牌打造鲜明、一致，并能随文化脉动灵活回应的叙事。',
-      context: '把品牌 brief、受众与作品投放场景交给我们。我们将它们转化为清晰的创意方向、共同参与的制作流程，以及适配不同平台的内容资产。',
-      processEyebrow: '我们的制作方式',
-      process: [
-        ['概念开发与脚本创作', '将营销 brief 转化为有吸引力的脚本，让创意叙事精准贴合品牌语气与活动目标。'],
-        ['视觉预览与分镜设计', '以 AI 分镜预先建立情绪、节奏与视觉语言，让所有项目成员在制作开始前达成共识。'],
-        ['影像生成与素材创作', '在充分创意掌控下，制作精致的视觉、场景与角色表演，释放传统制作限制以外的想法。'],
-        ['剪辑与视觉整合', '通过节奏、特效、文字、旁白与音乐的细致整合，构成一个完整连贯的品牌世界。'],
-        ['修订、签核与最终交付', '根据即时反馈快速调整，确认签核后制作多语言版本及适配各平台的不同格式。'],
+      lead: '从最初的直觉到最后一帧，我们让想法长成它最有生命力的样子。',
+      context: 'AI 影像制作，由人的审美判断掌舵。新工具结合逾 20 年的策略与制作经验，让每一个视觉世界都真正属于你的品牌。',
+      valuesTitle: '为什么这样做。',
+      valuesLead: '当流程保持开放，创意才有更多可能。',
+      values: [
+        ['更快把直觉变成画面。', '让最初的创意能量还未消退时，方向就已经具象地出现在眼前。'],
+        ['在决定前，多走几条路。', '通过视觉探索测试情绪、节奏与可能性，再决定真正要投入的方向。'],
+        ['让想法在过程中继续生长。', '灵活的制作节奏为意外和新发现留出空间，同时不丢失核心线索。'],
       ],
-      scopeEyebrow: '我们的合作方式',
-      scopeTitle: '从 brief 出发，一起完成最终作品。',
-      scope: ['前期会议与资料研究', '分镜设计、反馈与修订', '视频制作、反馈与修订', '后期制作、反馈与修订'],
-      whyTitle: '为什么这样做',
-      why: ['从 brief 到初剪，更高效', '保留更多创意方向', '随着想法变化，灵活调整'],
-      whatTitle: '我们制作什么',
-      what: ['AI 影片与摄影', '商业广告与品牌影片', 'TVC 电视广告', '社交短片 Reels', '音乐影像 MV', '叙事作品 Drama'],
+      formatsTitle: '我们制作什么。',
+      formats: ['AI 影片与摄影', '商业广告', 'TVC', '社交短片', '音乐影像', '叙事作品'],
+      processTitle: '一个想法如何成形。',
+      processLead: '一支影片的成形，来自对话，而不是一条直线。',
+      process: [
+        ['我们从 brief 背后的感受开始。', '一起找到故事的张力、受众与观点，让创意拥有值得被讲述的理由。'],
+        ['再把它变成看得见的世界。', '分镜和视觉实验让团队在制作开始前，就能对共同的直觉作出判断。'],
+        ['围绕这个感受建立画面。', '影像、角色与动势在制作中被创造出来，也始终保留发现更好可能的自由。'],
+        ['不断剪辑、测试与重塑。', '剪辑、声音与视觉整合让每一个元素都落在同一种情绪里。'],
+        ['直到它真正属于你的品牌。', '集中反馈、完成最终版本、适配每种格式，然后一起签核。'],
+      ],
+      scopeTitle: '我们如何一起工作。',
+      scopeLead: '从第一次对话到最后签核，我们保持同一节奏：足够清晰地持续推进，也为想法在过程中变得更好留出空间。',
+      scope: [
+        ['前期会议与资料研究', '在制作开始前，对齐 brief、受众、目标与视觉参考。'],
+        ['分镜设计、反馈与修订', '尽早把视觉方向变成具体画面，让每个人都能参与判断与优化。'],
+        ['视频制作、反馈与修订', '建立影像世界、分享制作进度，在作品仍在生长时及时调整。'],
+        ['后期制作、反馈与修订', '通过剪辑、声音、动效与精修，让故事的每一部分回到同一焦点。'],
+        ['最终审核与签核', '确认最终母版、准备所有交付格式，然后安心上线。'],
+      ],
     },
   },
 }
@@ -205,23 +229,35 @@ copy['zh-Hant'] = { ...copy.zh,
   est: '創立於香港', scroll: '向下捲動，繼續成長', aboutEyebrow: '關於我們', artistsEyebrow: '藝術家', workEyebrow: '作品', brandsEyebrow: '品牌與服務', contactEyebrow: '聯絡', allArtists: '查看所有藝術家', allWork: '查看全部作品', profile: '查看檔案', playCase: '播放案例', selectedWork: '精選作品', madeToMove: <>為流動<br />而作。</>, workFormats: '作品分類', openWork: '打開作品', moreWork: '更多作品正在製作中。', skip: '跳至主要內容', home: 'Green Tomato 首頁', navigation: '主導覽', language: '語言',
   workIntro: {
     title: <>釋放你的<br /><b>創意。</b></>,
-    lead: 'AI 影片製作，由人的美感判斷掌舵。我們結合新技術與團隊逾 20 年的策略及製作經驗，為品牌建構鮮明、一致，並能隨文化脈動靈活回應的敘事。',
-    context: '把品牌 brief、受眾與作品投放場景交給我們。我們將它們轉化為清晰的創意方向、共同參與的製作流程，以及適配不同平台的內容資產。',
-    processEyebrow: '我們的製作方式',
-    process: [
-      ['概念開發與腳本創作', '將行銷 brief 轉化為引人入勝的腳本，讓創意敘事精準貼合品牌語氣與活動目標。'],
-      ['視覺預覽與分鏡設計', '以 AI 分鏡預先建立情緒、節奏與視覺語言，讓所有專案成員在製作開始前達成共識。'],
-      ['影像生成與素材創作', '在充分創意掌控下，製作精緻的視覺、場景與角色表演，釋放傳統製作限制以外的想法。'],
-      ['剪輯與視覺整合', '透過節奏、特效、文字、旁白與音樂的細緻整合，構成一個完整連貫的品牌世界。'],
-      ['修訂、簽核與最終交付', '依據即時回饋快速調整，完成簽核後製作多語言版本及適配各平台的不同格式。'],
+    lead: '從最初的直覺到最後一幀，我們讓想法長成它最有生命力的樣子。',
+    context: 'AI 影像製作，由人的美感判斷掌舵。新工具結合逾 20 年的策略與製作經驗，讓每一個視覺世界都真正屬於你的品牌。',
+    valuesTitle: '為什麼這樣做。',
+    valuesLead: '當流程保持開放，創意才有更多可能。',
+    values: [
+      ['更快把直覺變成畫面。', '讓最初的創意能量還未消退時，方向就已經具象地出現在眼前。'],
+      ['在決定前，多走幾條路。', '透過視覺探索測試情緒、節奏與可能性，再決定真正要投入的方向。'],
+      ['讓想法在過程中繼續生長。', '靈活的製作節奏為意外和新發現留出空間，同時不丟失核心線索。'],
     ],
-    scopeEyebrow: '我們的合作方式',
-    scopeTitle: '從 brief 出發，一起完成最終作品。',
-    scope: ['前期會議與資料研究', '分鏡設計、回饋與修訂', '影片製作、回饋與修訂', '後期製作、回饋與修訂'],
-    whyTitle: '為什麼這樣做',
-    why: ['從 brief 到初剪，更高效', '保留更多創意方向', '隨著想法變化，靈活調整'],
-    whatTitle: '我們製作什麼',
-    what: ['AI 影片與攝影', '商業廣告與品牌影片', 'TVC 電視廣告', '社交短片 Reels', '音樂影像 MV', '敘事作品 Drama'],
+    formatsTitle: '我們製作什麼。',
+    formats: ['AI 影片與攝影', '商業廣告', 'TVC', '社交短片', '音樂影像', '敘事作品'],
+    processTitle: '一個想法如何成形。',
+    processLead: '一支影片的成形，來自對話，而不是一條直線。',
+    process: [
+      ['我們從 brief 背後的感受開始。', '一起找到故事的張力、受眾與觀點，讓創意擁有值得被講述的理由。'],
+      ['再把它變成看得見的世界。', '分鏡和視覺實驗讓團隊在製作開始前，就能對共同的直覺作出判斷。'],
+      ['圍繞這個感受建立畫面。', '影像、角色與動勢在製作中被創造出來，也始終保留發現更好可能的自由。'],
+      ['不斷剪輯、測試與重塑。', '剪輯、聲音與視覺整合讓每一個元素都落在同一種情緒裡。'],
+      ['直到它真正屬於你的品牌。', '集中回饋、完成最終版本、適配每種格式，然後一起簽核。'],
+    ],
+    scopeTitle: '我們如何一起工作。',
+    scopeLead: '從第一次對話到最後簽核，我們保持同一節奏：足夠清晰地持續推進，也為想法在過程中變得更好留出空間。',
+    scope: [
+      ['前期會議與資料研究', '在製作開始前，對齊 brief、受眾、目標與視覺參考。'],
+      ['分鏡設計、回饋與修訂', '盡早把視覺方向變成具體畫面，讓每個人都能參與判斷與優化。'],
+      ['影片製作、回饋與修訂', '建立影像世界、分享製作進度，在作品仍在生長時及時調整。'],
+      ['後期製作、回饋與修訂', '透過剪輯、聲音、動效與精修，讓故事的每一部分回到同一焦點。'],
+      ['最終審核與簽核', '確認最終母版、準備所有交付格式，然後安心上線。'],
+    ],
   },
 }
 
@@ -1537,16 +1573,17 @@ const workFormats = [
 ]
 const workFormatFor = (work) => work.format || (work.photo ? 'photo' : ['peninsula-fathers-day', 'chunwo-dreamgirl-03', 'chow-sang-sang'].includes(work.slug) ? 'reels' : ['chillgood-takoyaki', 'chillgood-animation'].includes(work.slug) ? 'mv' : 'commercial')
 // Keep the complete Work process section in source so it can be restored without rebuilding it.
-const showWorkIntro = false
+const showWorkIntro = true
 
 function useWorkIntroMotion() {
   const ref = useRef(null)
   useLayoutEffect(() => {
     const section = ref.current
     if (!section) return undefined
-    section.classList.add('is-motion-ready', 'is-inview')
+    section.classList.add('is-motion-ready')
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reduceMotion || window.innerWidth <= 820) {
+      section.classList.add('is-static-story')
       return undefined
     }
     section.classList.add('is-pinned-story')
@@ -1554,25 +1591,50 @@ function useWorkIntroMotion() {
     const panels = gsap.utils.toArray('.work-story-part', story)
     if (!story || panels.length < 3) return undefined
     const ctx = gsap.context(() => {
-      gsap.set(panels, { autoAlpha: 0, y: 26, pointerEvents: 'none' })
-      gsap.set(panels[0], { autoAlpha: 1, y: 0, pointerEvents: 'auto' })
+      const hero = section.querySelector('.work-hero')
+      const art = section.querySelector('.work-hero-art img')
       const processCards = gsap.utils.toArray('.work-process-card', panels[1])
-      gsap.set(processCards, { autoAlpha: 1, y: 0 })
-      const showPanel = (timeline, from, to, at) => timeline.to(from, { autoAlpha: 0, y: -20, pointerEvents: 'none', duration: .3 }, at).fromTo(to, { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, pointerEvents: 'auto', duration: .48 }, at + .16)
+      gsap.fromTo(hero?.querySelectorAll('.work-hero-copy > *') || [], { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: .9, stagger: .1, ease: 'power3.out' })
+      gsap.fromTo(art, { autoAlpha: 0, scale: 1.08, xPercent: 4 }, { autoAlpha: 1, scale: 1, xPercent: 0, duration: 1.35, ease: 'power3.out' })
+      gsap.set(panels, { autoAlpha: 0, y: 34, pointerEvents: 'none' })
+      gsap.set(panels[0], { autoAlpha: 1, y: 0, pointerEvents: 'auto' })
+      gsap.set(processCards, { autoAlpha: 0, y: 24, pointerEvents: 'none' })
+      const showPanel = (timeline, from, to, at) => {
+        const exitDuration = .34
+        timeline
+          .to(from, { autoAlpha: 0, y: -18, pointerEvents: 'none', duration: exitDuration }, at)
+          .fromTo(to, { autoAlpha: 0, y: 34 }, { autoAlpha: 1, y: 0, pointerEvents: 'auto', duration: .5 }, at + exitDuration)
+      }
       const timeline = gsap.timeline({
         defaults: { ease: 'none' },
         scrollTrigger: {
           trigger: story,
           start: 'top top+=80',
-          end: () => `+=${window.innerHeight * 4.8}`,
+          end: () => `+=${window.innerHeight * 5.75}`,
           pin: story,
-          scrub: .75,
+          scrub: .7,
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
       })
-      showPanel(timeline, panels[0], panels[1], 1.25)
-      showPanel(timeline, panels[1], panels[2], 3.1)
+      if (art) timeline.to(art, { xPercent: -5, yPercent: -3, scale: 1.035, duration: 1.15 }, 0)
+      showPanel(timeline, panels[0], panels[1], 1.15)
+      const firstStepAt = 1.72
+      const exitDuration = .28
+      const enterDuration = .42
+      const holdDuration = .42
+      let lastEnterAt = firstStepAt
+      timeline.fromTo(processCards[0], { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, pointerEvents: 'auto', duration: enterDuration }, firstStepAt)
+      processCards.slice(1).forEach((card, index) => {
+        const previous = processCards[index]
+        const exitAt = lastEnterAt + enterDuration + holdDuration
+        const enterAt = exitAt + exitDuration
+        timeline.to(previous, { autoAlpha: 0, y: -18, pointerEvents: 'none', duration: exitDuration }, exitAt)
+        timeline.fromTo(card, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, pointerEvents: 'auto', duration: enterDuration }, enterAt)
+        lastEnterAt = enterAt
+      })
+      showPanel(timeline, panels[1], panels[2], lastEnterAt + enterDuration + holdDuration)
+      if (art) timeline.to(art, { xPercent: -10, yPercent: 4, scale: 1.08, duration: .9 }, lastEnterAt)
       requestAnimationFrame(() => ScrollTrigger.refresh())
     }, section)
     return () => ctx.revert()
@@ -1599,47 +1661,40 @@ function WorkOverview({ language, initialWorkSlug, initialFormat }) {
     video.play().catch(() => {})
   }
   return <>
-    <main id="main" className="subpage subpage--light">
+    <main id="main" className="subpage subpage--light work-overview-page">
       <Container>
-        <PageHeader className="work-page-heading work-page-heading--compact" eyebrow={`${t.selectedWork} / ${String(workProjects.length).padStart(2, '0')}`} title={null} back="#/" />
         {showWorkIntro && <section ref={workIntroRef} className="work-intro" aria-labelledby="work-intro-title">
-          <div className="work-intro-copy">
-            <h2 id="work-intro-title">{t.workIntro.title}</h2>
-            <p>{t.workIntro.lead}</p>
-            <p>{t.workIntro.context}</p>
-          </div>
-          <div className="work-story">
-          <div className="work-story-part work-secondary-grid">
-            <section className="work-secondary" aria-labelledby="work-why-title">
-              <p className="work-process-eyebrow">{t.workIntro.whyTitle}</p>
-              <h2 id="work-why-title">{t.workIntro.whyTitle}</h2>
-              <ul className="work-secondary-list">
-                {t.workIntro.why.map((item, index) => <li key={item}><span>{String(index + 1).padStart(2, '0')}</span><strong>{item}</strong></li>)}
-              </ul>
+          <div className="work-intro-shell">
+            <section className="work-hero">
+              <div className="work-hero-art" aria-hidden="true"><img src={`${assets}work/work-botanical-macro.png`} alt="" /></div>
+              <div className="work-intro-inner work-hero-copy">
+                <p className="work-intro-kicker">AI FILM / STORY / PRODUCTION</p>
+                <h2 id="work-intro-title">{t.workIntro.title}</h2>
+                <p className="work-intro-lead">{t.workIntro.lead}</p>
+                <p className="work-intro-context">{t.workIntro.context}</p>
+              </div>
             </section>
-            <section className="work-secondary" aria-labelledby="work-what-title">
-              <p className="work-process-eyebrow">{t.workIntro.whatTitle}</p>
-              <h2 id="work-what-title">{t.workIntro.whatTitle}</h2>
-              <ul className="work-secondary-list work-secondary-list--what">
-                {t.workIntro.what.map((item, index) => <li key={item}><span>{String(index + 1).padStart(2, '0')}</span><strong>{item}</strong></li>)}
-              </ul>
-            </section>
-          </div>
-          <div className="work-story-part work-process" aria-label={t.workIntro.processEyebrow}>
-            <p className="work-process-eyebrow">{t.workIntro.processEyebrow}</p>
-            <div className="work-process-grid">
-              {t.workIntro.process.map(([title, description], index) => <article key={title} tabIndex={0} className="work-process-card" style={{ '--process-delay': `${index * 95}ms` }}><span>{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{description}</p></article>)}
+            <div className="work-story work-intro-inner">
+              <section className="work-story-part work-values" aria-label={t.workIntro.valuesLead}>
+                <div className="work-values-intro"><h2>{t.workIntro.valuesTitle}</h2><p>{t.workIntro.valuesLead}</p></div>
+                <div className="work-values-list">
+                  {t.workIntro.values.map(([title, text]) => <article key={title} className="work-value"><h3>{title}</h3><p>{text}</p></article>)}
+                </div>
+                <div className="work-format-catalog"><h3>{t.workIntro.formatsTitle}</h3><p className="work-format-list">{t.workIntro.formats.map((item) => <span key={item}>{item}</span>)}</p></div>
+              </section>
+              <section className="work-story-part work-process" aria-label={t.workIntro.processLead}>
+                <div className="work-process-intro"><h2>{t.workIntro.processTitle}</h2><p className="work-process-lead">{t.workIntro.processLead}</p></div>
+                <div className="work-process-stage">
+                  {t.workIntro.process.map(([title, description]) => <article key={title} tabIndex={0} className="work-process-card"><h3>{title}</h3><p>{description}</p></article>)}
+                </div>
+              </section>
+              <section className="work-story-part work-scope" aria-labelledby="work-scope-title">
+                <div className="work-scope-copy"><h2 id="work-scope-title">{t.workIntro.scopeTitle}</h2><p>{t.workIntro.scopeLead}</p></div>
+                <ul className="work-scope-list">
+                  {t.workIntro.scope.map(([title, text]) => <li key={title}><strong>{title}</strong><p>{text}</p></li>)}
+                </ul>
+              </section>
             </div>
-          </div>
-          <div className="work-story-part work-scope" aria-labelledby="work-scope-title">
-            <div className="work-scope-heading">
-              <p className="work-process-eyebrow">{t.workIntro.scopeEyebrow}</p>
-              <h2 id="work-scope-title">{t.workIntro.scopeTitle}</h2>
-            </div>
-            <ol className="work-scope-list">
-              {t.workIntro.scope.map((item, index) => <li key={item} style={{ '--process-delay': `${index * 75}ms` }}><span>{String(index + 1).padStart(2, '0')}</span><strong>{item}</strong></li>)}
-            </ol>
-          </div>
           </div>
         </section>}
         <div className="work-format-tabs" role="tablist" aria-label={t.workFormats}>{workFormats.map(([id, label, , zhLabel, , zhHantLabel]) => <button key={id} type="button" role="tab" aria-selected={format === id} className={format === id ? 'is-active' : ''} onClick={() => setFormat(id)}>{language === 'en' ? label : localized ? zhHantLabel : zhLabel}</button>)}</div>
