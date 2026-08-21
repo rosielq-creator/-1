@@ -1575,7 +1575,7 @@ const workFormatFor = (work) => work.format || (work.photo ? 'photo' : ['peninsu
 // Keep the complete Work process section in source so it can be restored without rebuilding it.
 const showWorkIntro = true
 
-function useWorkIntroMotion() {
+function useWorkIntroMotion(language) {
   const ref = useRef(null)
   useLayoutEffect(() => {
     const section = ref.current
@@ -1619,7 +1619,7 @@ function useWorkIntroMotion() {
       })
       if (art) timeline.to(art, { xPercent: -5, yPercent: -3, scale: 1.035, duration: 1.15 }, 0)
       showPanel(timeline, panels[0], panels[1], 1.15)
-      const firstStepAt = 1.72
+      const firstStepAt = 1.49
       const exitDuration = .28
       const enterDuration = .42
       const holdDuration = .42
@@ -1638,7 +1638,7 @@ function useWorkIntroMotion() {
       requestAnimationFrame(() => ScrollTrigger.refresh())
     }, section)
     return () => ctx.revert()
-  }, [])
+  }, [language])
   return ref
 }
 
@@ -1646,7 +1646,7 @@ function WorkOverview({ language, initialWorkSlug, initialFormat }) {
   const [format, setFormat] = useState(workFormats.some(([id]) => id === initialFormat) ? initialFormat : 'commercial')
   const [activeWork, setActiveWork] = useState(() => workProjects.find((work) => work.slug === initialWorkSlug) || null)
   const activeVideoRef = useRef(null)
-  const workIntroRef = useWorkIntroMotion()
+  const workIntroRef = useWorkIntroMotion(language)
   const current = workFormats.find(([id]) => id === format)
   const items = workProjects.filter((work) => workFormatFor(work) === format)
   const t = copy[language]
